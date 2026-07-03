@@ -26,37 +26,48 @@ const projects = [
 export default function Projects() {
   return (
     <section id="projects">
-      <h2>Selected Projects</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+        <h2>Selected Projects</h2>
+        <span className="font-pixel" style={{ color: 'var(--accent)', fontSize: '2rem' }}>[01]</span>
+      </div>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2px', background: 'var(--border-color)', border: '2px solid var(--border-color)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '24px' }}>
         {projects.map((project, index) => (
           <div
             key={index}
             style={{ 
-              background: 'var(--bg-primary)',
-              padding: '3rem 2rem',
+              background: 'rgba(255,255,255,0.03)',
+              borderRadius: '24px',
+              padding: '3rem 2.5rem',
               display: 'flex', 
               flexDirection: 'column',
-              transition: 'background 0.2s',
+              transition: 'all 0.3s ease',
+              border: '1px solid var(--border-color)'
             }}
-            onMouseOver={(e) => e.currentTarget.style.background = '#f0f0f0'}
-            onMouseOut={(e) => e.currentTarget.style.background = 'var(--bg-primary)'}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+              e.currentTarget.style.borderColor = 'var(--border-color)';
+            }}
           >
             <h3 className="font-serif" style={{ fontSize: '2.5rem', marginBottom: '1rem', fontStyle: 'italic', fontWeight: 400 }}>{project.title}</h3>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', flexGrow: 1, lineHeight: 1.5, fontSize: '1.1rem' }}>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', flexGrow: 1, lineHeight: 1.6, fontSize: '1.1rem' }}>
               {project.description}
             </p>
-            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
               {project.tags.map((tag, i) => (
                 <span 
                   key={i} 
                   className="font-mono"
                   style={{ 
-                    fontSize: '0.75rem', 
-                    padding: '4px 8px', 
-                    border: '1px solid var(--border-color)',
-                    textTransform: 'uppercase',
-                    fontWeight: 700
+                    fontSize: '0.8rem', 
+                    padding: '6px 12px', 
+                    borderRadius: '99px',
+                    background: 'rgba(255,255,255,0.1)',
+                    color: 'var(--text-primary)'
                   }}
                 >
                   {tag}

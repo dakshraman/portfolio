@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;700&family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Doto:wght@900&display=swap');
 
 :root {
-  --bg-primary: #f8f8f8;
-  --text-primary: #111111;
-  --text-secondary: #555555;
-  --border-color: #111111;
-  --accent: #ff4500; /* Subtle brutalist orange accent if needed */
+  --bg-primary: #171819;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --accent: #ff5900;
   
   --font-sans: 'Geist', sans-serif;
   --font-serif: 'Instrument Serif', serif;
   --font-mono: 'Geist Mono', monospace;
+  --font-pixel: 'Doto', sans-serif;
 }
 
 * {
@@ -27,17 +28,18 @@ body {
 }
 
 ::selection {
-  background: var(--text-primary);
-  color: var(--bg-primary);
+  background: var(--accent);
+  color: #fff;
 }
 
 /* Typography Utilities */
 .font-serif { font-family: var(--font-serif); }
 .font-mono { font-family: var(--font-mono); }
 .font-sans { font-family: var(--font-sans); }
+.font-pixel { font-family: var(--font-pixel); }
 
 .text-huge {
-  font-size: clamp(4rem, 12vw, 12rem);
+  font-size: clamp(3.5rem, 10vw, 8rem);
   line-height: 0.9;
   letter-spacing: -0.02em;
 }
@@ -47,45 +49,68 @@ h1, h2, h3, h4 {
 }
 
 h2 {
-  font-size: clamp(3rem, 6vw, 5rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-family: var(--font-sans);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.04em;
   margin-bottom: 2rem;
   line-height: 1;
 }
 
-/* Brutalist Layouts */
+/* Brutalist Layouts -> Smooth Dark Minimalist */
 section {
-  padding: 80px 24px;
+  padding: 100px 24px;
   max-width: 1400px;
   margin: 0 auto;
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 section:last-of-type {
   border-bottom: none;
 }
 
-/* Brutalist Button */
+/* Modern Rounded Buttons */
 .btn-brutal {
-  display: inline-block;
-  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
   font-size: 1rem;
-  text-transform: uppercase;
-  background: transparent;
-  color: var(--text-primary);
-  border: 2px solid var(--border-color);
-  padding: 16px 32px;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 9999px;
+  padding: 14px 28px;
   text-decoration: none;
-  font-weight: 700;
-  transition: all 0.2s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .btn-brutal:hover {
-  background: var(--text-primary);
-  color: var(--bg-primary);
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  padding: 14px 28px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  border-color: var(--text-primary);
 }
 
 /* Scrollbar */
@@ -97,7 +122,11 @@ section:last-of-type {
   border-left: 1px solid var(--border-color);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--text-primary);
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.4);
 }
 
 /* Marquee Animation */
@@ -112,9 +141,9 @@ section:last-of-type {
   display: flex;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  border-top: 2px solid var(--border-color);
-  border-bottom: 2px solid var(--border-color);
-  padding: 1rem 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 0;
   background: var(--bg-primary);
 }
 
@@ -124,11 +153,12 @@ section:last-of-type {
 }
 
 .marquee-item {
-  font-family: var(--font-mono);
+  font-family: var(--font-pixel);
   font-size: 1.5rem;
   text-transform: uppercase;
   padding: 0 2rem;
   display: flex;
   align-items: center;
   gap: 2rem;
+  color: var(--accent);
 }
