@@ -4,9 +4,16 @@ import { motion } from 'framer-motion';
 
 const experiences = [
   {
+    role: 'Software Engineer',
+    company: 'InsideSoftwares',
+    period: '2025/12 – Present',
+    location: 'Remote',
+    description: 'Developing scalable applications and ensuring optimal performance across the software development lifecycle.'
+  },
+  {
     role: 'Full Stack Laravel Developer',
     company: 'AK Software Solutions',
-    period: '2025/06 – Present',
+    period: '2025/06 – 2025/12',
     location: 'Dehradun, India',
     description: 'Leading end-to-end web development utilizing the Laravel ecosystem. Architecting robust backend services and ensuring high performance and security for client deliverables.'
   },
