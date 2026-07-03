@@ -1,7 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-
 const projects = [
   {
     title: 'Sewa Foundation Platform',
@@ -15,12 +13,12 @@ const projects = [
   },
   {
     title: 'Medzzi Telehealth App',
-    description: 'Developed secure backend architecture for a healthcare platform managing complex doctor-patient appointment scheduling, both online and offline.',
+    description: 'Developed secure backend architecture for a healthcare platform managing complex doctor-patient appointment scheduling.',
     tags: ['Laravel', 'Backend']
   },
   {
     title: 'Enterprise School ERP',
-    description: 'Built a highly customizable institutional management system handling secure online payments, dynamic payroll, and academic messaging at scale.',
+    description: 'Built a highly customizable institutional management system handling secure online payments, dynamic payroll, and academic messaging.',
     tags: ['Full Stack', 'ERP']
   }
 ];
@@ -28,54 +26,46 @@ const projects = [
 export default function Projects() {
   return (
     <section id="projects">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, type: 'spring' }}
-      >
-        <h2>Selected Work</h2>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-              className="glass-card"
-              style={{ display: 'flex', flexDirection: 'column' }}
-            >
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'white' }}>{project.title}</h3>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', flexGrow: 1, lineHeight: 1.6 }}>
-                {project.description}
-              </p>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                {project.tags.map((tag, i) => (
-                  <span 
-                    key={i} 
-                    style={{ 
-                      fontSize: '0.75rem', 
-                      padding: '6px 12px', 
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                      borderRadius: '9999px',
-                      color: 'var(--accent-blue)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      fontWeight: 600
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+      <h2>Selected Projects</h2>
+      
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2px', background: 'var(--border-color)', border: '2px solid var(--border-color)' }}>
+        {projects.map((project, index) => (
+          <div
+            key={index}
+            style={{ 
+              background: 'var(--bg-primary)',
+              padding: '3rem 2rem',
+              display: 'flex', 
+              flexDirection: 'column',
+              transition: 'background 0.2s',
+            }}
+            onMouseOver={(e) => e.currentTarget.style.background = '#f0f0f0'}
+            onMouseOut={(e) => e.currentTarget.style.background = 'var(--bg-primary)'}
+          >
+            <h3 className="font-serif" style={{ fontSize: '2.5rem', marginBottom: '1rem', fontStyle: 'italic', fontWeight: 400 }}>{project.title}</h3>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', flexGrow: 1, lineHeight: 1.5, fontSize: '1.1rem' }}>
+              {project.description}
+            </p>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {project.tags.map((tag, i) => (
+                <span 
+                  key={i} 
+                  className="font-mono"
+                  style={{ 
+                    fontSize: '0.75rem', 
+                    padding: '4px 8px', 
+                    border: '1px solid var(--border-color)',
+                    textTransform: 'uppercase',
+                    fontWeight: 700
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
