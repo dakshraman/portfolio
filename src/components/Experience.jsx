@@ -35,36 +35,50 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section id="experience" aria-labelledby="experience-heading">
+    <section id="experience">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, type: 'spring' }}
       >
-        <h2 id="experience-heading" style={{ fontSize: '2.5rem', marginBottom: '3rem' }}>
-          Professional <span style={{ fontStyle: 'italic', color: 'var(--color-muted)' }}>Experience</span>
-        </h2>
+        <h2>Experience</h2>
         
-        <div style={{ display: 'grid', gap: '2rem' }}>
-          {experiences.map((exp, index) => (
-            <div key={index} className="editorial-card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '1rem' }}>
-                <h3 style={{ fontSize: '1.5rem', margin: 0 }}>{exp.role}</h3>
-                <span className="text-muted" style={{ fontSize: '0.875rem', fontFamily: 'Inter, sans-serif' }}>
-                  {exp.period}
-                </span>
-              </div>
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <strong style={{ fontWeight: 600 }}>{exp.company}</strong>
-                <span className="text-muted" aria-hidden="true">•</span>
-                <span className="text-muted" style={{ fontSize: '0.875rem' }}>{exp.location}</span>
-              </div>
-              <p className="text-muted" style={{ marginTop: '0.5rem' }}>
-                {exp.description}
-              </p>
-            </div>
-          ))}
+        <div style={{ position: 'relative', paddingLeft: '32px' }}>
+          {/* Timeline Line */}
+          <div style={{ position: 'absolute', left: '11px', top: 0, bottom: 0, width: '2px', background: 'linear-gradient(to bottom, var(--accent-blue), var(--accent-purple), transparent)' }} />
+          
+          <div style={{ display: 'grid', gap: '2rem' }}>
+            {experiences.map((exp, index) => (
+              <motion.div 
+                key={index} 
+                className="glass-card" 
+                style={{ position: 'relative' }}
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: index * 0.1, type: 'spring' }}
+              >
+                {/* Timeline Dot */}
+                <div style={{ position: 'absolute', left: '-36px', top: '40px', width: '10px', height: '10px', borderRadius: '50%', background: 'var(--bg-primary)', border: '2px solid var(--accent-blue)', boxShadow: '0 0 10px var(--accent-blue)' }} />
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white' }}>{exp.role}</h3>
+                  <span style={{ fontSize: '0.875rem', color: 'var(--accent-purple)', fontWeight: 600, padding: '4px 12px', background: 'rgba(139, 92, 246, 0.1)', borderRadius: '20px' }}>
+                    {exp.period}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1rem' }}>
+                  <strong style={{ fontWeight: 500, color: '#e2e8f0' }}>{exp.company}</strong>
+                  <span style={{ color: 'var(--text-secondary)' }}>•</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>{exp.location}</span>
+                </div>
+                <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                  {exp.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.div>
     </section>

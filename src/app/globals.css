@@ -1,57 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --color-background: #ffffff;
-  --color-foreground: #0f1115;
-  --color-card: #fafafa;
-  --color-border: #e8e8e8;
-  --color-primary: #000000;
-  --color-secondary: #374151;
-  --color-accent: #111827;
-  --color-success: #059669;
-  --color-muted: #8e8e93;
-
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-  --space-3xl: 64px;
-
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
-  --shadow-xl: 0 24px 48px rgba(0,0,0,0.1);
-  --shadow-2xl: 0 32px 64px rgba(0,0,0,0.12);
-  --shadow-glow: 0 0 60px rgba(0,0,0,0.08);
-  --shadow-glow-accent: 0 0 80px rgba(17,24,39,0.15);
-
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #000000;
-    --color-foreground: #fafafa;
-    --color-card: #0a0a0a;
-    --color-border: #1a1a1a;
-    --color-primary: #ffffff;
-    --color-secondary: #d4d4d4;
-    --color-accent: #3b82f6;
-    --color-success: #10b981;
-    --color-muted: #71717a;
-
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
-    --shadow-lg: 0 12px 32px rgba(0,0,0,0.4);
-    --shadow-xl: 0 24px 48px rgba(0,0,0,0.5);
-    --shadow-2xl: 0 32px 64px rgba(0,0,0,0.6);
-    --shadow-glow: 0 0 60px rgba(255,255,255,0.04);
-    --shadow-glow-accent: 0 0 80px rgba(59,130,246,0.15);
-  }
+  --bg-primary: #030305;
+  --bg-secondary: #0a0a0f;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-hover: rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -61,174 +19,113 @@
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Space Grotesk', sans-serif;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 500;
-  line-height: 1.1;
-  color: var(--color-primary);
+::selection {
+  background: var(--accent-purple);
+  color: white;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Glassmorphism Utilities */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 32px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Typography Helpers */
-.text-accent {
-  color: var(--color-accent);
-}
-.text-muted {
-  color: var(--color-muted);
-}
-.text-center {
-  text-align: center;
+.glass-card:hover {
+  background: var(--glass-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.2);
+  transform: translateY(-5px);
 }
 
-/* Sections & Layout */
+/* Typography */
+.text-gradient {
+  background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Layout */
 section {
-  padding: var(--space-3xl) var(--space-lg);
+  padding: 100px 24px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 10;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Accessible Focus States */
-:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 2px;
-}
-
-/* Primary Pill Button */
-.btn-pill-solid {
-  background-color: var(--color-primary);
-  color: var(--color-background);
-  font-family: 'Inter', sans-serif;
+h2 {
+  font-size: 3.5rem;
   font-weight: 700;
-  text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: 0.15em;
+  margin-bottom: 3rem;
+  letter-spacing: -0.02em;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  color: white;
   padding: 16px 32px;
   border-radius: 9999px;
-  transition: all 0.3s var(--ease-spring);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
   border: none;
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-}
-
-.btn-pill-solid:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
-}
-
-.btn-pill-solid:active {
-  transform: translateY(0) scale(0.98);
-}
-
-/* Outline Pill Button */
-.btn-pill-outline {
-  background-color: transparent;
-  color: var(--color-foreground);
-  font-family: 'Inter', sans-serif;
-  border: 1px solid var(--color-border);
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  padding: 16px 32px;
-  border-radius: 9999px;
-  transition: all 0.3s var(--ease-spring);
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: white;
+  padding: 16px 32px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: 1px solid rgba(255,255,255,0.2);
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
 }
 
-.btn-pill-outline:hover {
-  border-color: var(--color-foreground);
-  background: var(--color-card);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: var(--shadow-md);
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.4);
 }
 
-/* Editorial Card */
-.editorial-card {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  transition: all 0.4s var(--ease-spring);
-  padding: var(--space-xl);
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
 }
-
-.editorial-card:hover {
-  border-color: var(--color-foreground);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
 }
-
-/* 3D Editorial Card */
-.editorial-card-3d {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: 20px;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  transition: all 0.4s var(--ease-spring);
-  padding: var(--space-xl);
-  display: block;
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 5px;
 }
-
-.editorial-card-3d:hover {
-  border-color: var(--color-foreground);
-  box-shadow: var(--shadow-xl), var(--shadow-glow);
-  transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
-}
-
-/* Animation utilities */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.animate-shimmer { 
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple);
 }
