@@ -193,12 +193,42 @@ function ProjectCard({ project, index }) {
         }}
       />
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 1 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 1, marginBottom: '1.5rem' }}>
         <span style={{ fontSize: '0.7rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
           {String(index + 1).padStart(2, '0')}
         </span>
         <div style={{ color, opacity: 0.7, transition: 'all 0.4s ease', transform: isHovered ? 'scale(1.1)' : 'scale(1)' }}>
           <ProjectIcon icon={project.icon} />
+        </div>
+      </div>
+      
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+        <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', color: 'var(--fg)', fontFamily: 'var(--font-heading)', fontWeight: 700 }}>
+          {project.title}
+        </h3>
+        <p style={{ color: 'var(--fg-muted)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem', flexGrow: 1 }}>
+          {project.description}
+        </p>
+        
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: 'auto' }}>
+          {project.tags.map((tag, i) => (
+            <span 
+              key={i} 
+              style={{ 
+                fontSize: '0.65rem', 
+                padding: '4px 10px', 
+                background: 'rgba(255,255,255,0.05)', 
+                borderRadius: 'var(--radius-sm)', 
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: 'var(--fg)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                fontFamily: 'var(--font-heading)'
+              }}
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
     </article>
