@@ -1,7 +1,11 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, createContext, useContext } from 'react';
 import Loader from './Loader';
+
+const LoaderContext = createContext(true);
+
+export const useLoader = () => useContext(LoaderContext);
 
 export default function LoaderWrapper({ children }) {
   const [loading, setLoading] = useState(true);
@@ -11,7 +15,7 @@ export default function LoaderWrapper({ children }) {
   }, []);
 
   return (
-    <>
+    <LoaderContext.Provider value={loading}>
       {loading && <Loader onComplete={handleComplete} />}
       <div style={{
         opacity: loading ? 0 : 1,
@@ -19,6 +23,6 @@ export default function LoaderWrapper({ children }) {
       }}>
         {children}
       </div>
-    </>
+    </LoaderContext.Provider>
   );
 }
