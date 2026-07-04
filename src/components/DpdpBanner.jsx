@@ -1,83 +1,90 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ShieldCheck, X } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 export default function DpdpBanner() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    // Only show if user hasn't consented yet
     const hasConsented = localStorage.getItem('dpdp-consent');
-    if (!hasConsented) {
-      setIsVisible(true);
-    }
+    if (!hasConsented) setTimeout(() => setIsVisible(true), 1500);
   }, []);
 
   const handleAccept = () => {
     localStorage.setItem('dpdp-consent', 'true');
-    setIsVisible(false);
+    setIsAnimating(true);
+    setTimeout(() => setIsVisible(false), 300);
+  };
+
+  const handleDecline = () => {
+    setIsAnimating(true);
+    setTimeout(() => setIsVisible(false), 300);
   };
 
   if (!isVisible) return null;
 
   return (
-    <div 
-      className="glass-strong"
+    <div
+      role="dialog"
+      aria-labelledby="dpdp-title"
+      aria-describedby="dpdp-desc"
       style={{
         position: 'fixed',
-        bottom: '24px',
-        left: '24px',
-        right: '24px',
-        maxWidth: '1200px',
+        bottom: '16px',
+        left: '16px',
+        right: '16px',
+        maxWidth: '680px',
         margin: '0 auto',
-        padding: '24px',
-        borderRadius: '16px',
+        padding: '16px 20px',
+        borderRadius: 'var(--radius-lg)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '16px',
+        gap: '12px',
         zIndex: 9999,
-        boxShadow: 'var(--shadow-xl)',
-        border: '1px solid var(--color-border)',
-        animation: 'slideUp 0.5s var(--ease-spring) forwards'
+        background: 'rgba(15, 23, 42, 0.85)',
+        backdropFilter: 'blur(24px) saturate(1.5)',
+        WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
+        border: '1px solid rgba(51, 65, 85, 0.4)',
+        boxShadow: '0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.03)',
+        opacity: isAnimating ? 0 : 1,
+        transform: isAnimating ? 'translateY(20px)' : 'translateY(0)',
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
-      role="dialog"
-      aria-labelledby="dpdp-banner-title"
-      aria-describedby="dpdp-banner-desc"
     >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', flex: '1 1 300px' }}>
-        <ShieldCheck size={24} className="text-accent" aria-hidden="true" style={{ marginTop: '4px', flexShrink: 0 }} />
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', flex: '1 1 280px' }}>
+        <ShieldCheck size={18} style={{ color: 'var(--accent)', marginTop: '2px', flexShrink: 0 }} aria-hidden="true" />
         <div>
-          <h3 id="dpdp-banner-title" style={{ fontSize: '1.25rem', marginBottom: '8px' }}>Privacy & Data Consent</h3>
-          <p id="dpdp-banner-desc" className="text-muted" style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>
-            In compliance with the Digital Personal Data Protection Act (2026), this website uses cookies to measure performance and improve your experience. We do not sell your personal data. Read our <a href="#" style={{ textDecoration: 'underline' }}>Privacy Policy</a>.
+          <h3 id="dpdp-title" style={{ fontSize: '0.85rem', fontWeight: 500, marginBottom: '3px' }}>Privacy & Data Consent</h3>
+          <p id="dpdp-desc" style={{ fontSize: '0.75rem', lineHeight: 1.6, color: 'var(--fg-muted)' }}>
+            This website uses cookies to measure performance. We do not sell your data.
           </p>
         </div>
       </div>
-      <div style={{ display: 'flex', gap: '12px' }}>
-        <button 
-          onClick={() => setIsVisible(false)}
-          className="btn-pill-outline"
-          aria-label="Decline cookies"
-        >
-          Decline
-        </button>
-        <button 
-          onClick={handleAccept}
-          className="btn-pill-solid"
-          aria-label="Accept cookies"
-        >
-          Accept
-        </button>
+
+      <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+        <button onClick={handleDecline} aria-label="Decline cookies"
+          style={{
+            fontFamily: 'var(--font-sans)', fontSize: '0.75rem', fontWeight: 500, padding: '6px 14px',
+            borderRadius: 'var(--radius-full)', border: '1px solid rgba(51, 65, 85, 0.4)', background: 'transparent',
+            color: 'var(--fg-muted)', cursor: 'pointer', transition: 'all 0.2s ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--fg-dim)'; e.currentTarget.style.color = 'var(--fg)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(51, 65, 85, 0.4)'; e.currentTarget.style.color = 'var(--fg-muted)'; }}
+        >Decline</button>
+        <button onClick={handleAccept} aria-label="Accept cookies"
+          style={{
+            fontFamily: 'var(--font-sans)', fontSize: '0.75rem', fontWeight: 500, padding: '6px 14px',
+            borderRadius: 'var(--radius-full)', border: 'none', background: 'var(--accent)', color: 'var(--bg)',
+            cursor: 'pointer', transition: 'all 0.2s ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = '#16A34A'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--accent)'; }}
+        >Accept</button>
       </div>
-      <style jsx>{`
-        @keyframes slideUp {
-          from { transform: translateY(100px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-      `}</style>
     </div>
   );
 }
