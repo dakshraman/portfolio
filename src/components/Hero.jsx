@@ -110,7 +110,7 @@ export default function Hero() {
         borderRadius: 'var(--radius-xl)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'clamp(1.5rem, 3vw, 3rem)'
+        gap: 'clamp(1.5rem, 2vw, 2rem)'
       }}>
         <div style={fadeUp}>
           <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--fg-muted)', display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
@@ -119,48 +119,54 @@ export default function Hero() {
           </p>
         </div>
 
-        <div style={{ position: 'relative', zIndex: 2 }}>
-          <h1 
-            className="text-display" 
-            style={{ fontWeight: 700, marginBottom: '1.5rem', cursor: 'default' }}
-            onMouseEnter={handleNameHover}
-          >
-            <span style={{ display: 'block', ...fadeUp1 }}>
-              <TextScramble text={siteConfig.name.split(' ')[0]} trigger={scrambleTrigger} />
-            </span>
-            <span style={{ display: 'block', color: 'var(--fg-dim)', fontSize: '0.7em', lineHeight: 1.1, ...fadeUp2 }}>
-              <TextScramble text={siteConfig.name.split(' ')[1]} trigger={scrambleTrigger} />
-            </span>
-          </h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap', ...fadeUp3 }}>
-            <div style={{ width: 'clamp(60px, 15vw, 120px)', height: '2px', background: 'var(--accent)' }} />
-            <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: 'var(--fg-muted)', fontFamily: 'var(--font-heading)', fontWeight: 500, letterSpacing: '-0.01em' }}>
-              {siteConfig.role}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem', justifyContent: 'space-between', alignItems: 'center' }}>
+          
+          {/* Left Column: Name and Role */}
+          <div style={{ position: 'relative', zIndex: 2, flex: '1 1 400px' }}>
+            <h1 
+              className="text-display" 
+              style={{ fontWeight: 700, marginBottom: '1.5rem', cursor: 'default' }}
+              onMouseEnter={handleNameHover}
+            >
+              <span style={{ display: 'block', ...fadeUp1 }}>
+                <TextScramble text={siteConfig.name.split(' ')[0]} trigger={scrambleTrigger} />
+              </span>
+              <span style={{ display: 'block', color: 'var(--fg-dim)', fontSize: '0.7em', lineHeight: 1.1, ...fadeUp2 }}>
+                <TextScramble text={siteConfig.name.split(' ')[1]} trigger={scrambleTrigger} />
+              </span>
+            </h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap', ...fadeUp3 }}>
+              <div style={{ width: 'clamp(60px, 15vw, 120px)', height: '2px', background: 'var(--accent)' }} />
+              <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: 'var(--fg-muted)', fontFamily: 'var(--font-heading)', fontWeight: 500, letterSpacing: '-0.01em' }}>
+                {siteConfig.role}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Tagline and Buttons */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'flex-start', position: 'relative', zIndex: 2, flex: '1 1 400px', ...fadeUp4 }}>
+            <p style={{ maxWidth: '520px', fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', lineHeight: 1.7, color: 'var(--fg-muted)' }}>
+              {siteConfig.tagline}{' '}
+              <span style={{ color: 'var(--fg)' }}>{siteConfig.description}</span>
             </p>
-          </div>
-        </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2.5rem', justifyContent: 'space-between', alignItems: 'flex-end', position: 'relative', zIndex: 2, ...fadeUp4 }}>
-          <p style={{ maxWidth: '520px', fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', lineHeight: 1.7, color: 'var(--fg-muted)' }}>
-            {siteConfig.tagline}{' '}
-            <span style={{ color: 'var(--fg)' }}>{siteConfig.description}</span>
-          </p>
-
-          <div style={{ display: 'flex', gap: '12px', flexShrink: 0, flexWrap: 'wrap' }}>
-            <MagneticButton href="#projects" className="btn-primary">
-              Selected Work
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </MagneticButton>
-            <MagneticButton href="/resume.pdf" className="btn-ghost" style={{ backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)' }} download>
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                <path d="M8 2v8m0 0L5 7m3 3l3-3M3 12h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              Download CV
-            </MagneticButton>
-            <MagneticButton href="#contact" className="btn-ghost" style={{ backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)' }}>Contact Me</MagneticButton>
+            <div style={{ display: 'flex', gap: '12px', flexShrink: 0, flexWrap: 'wrap' }}>
+              <MagneticButton href="#projects" className="btn-primary">
+                Selected Work
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </MagneticButton>
+              <MagneticButton href="/resume.pdf" className="btn-ghost" style={{ backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)' }} download>
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 2v8m0 0L5 7m3 3l3-3M3 12h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Download CV
+              </MagneticButton>
+              <MagneticButton href="#contact" className="btn-ghost" style={{ backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)' }}>Contact Me</MagneticButton>
+            </div>
           </div>
+          
         </div>
       </div>
 
