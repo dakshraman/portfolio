@@ -72,8 +72,8 @@ export default function Navigation() {
           padding: isCompact ? '0 20px' : '0 24px',
           borderRadius: 'var(--radius-full)',
           background: isScrolled
-            ? 'rgba(10, 10, 11, 0.92)'
-            : 'rgba(10, 10, 11, 0.65)',
+            ? 'var(--nav-bg-scrolled)'
+            : 'var(--nav-bg)',
           backdropFilter: 'blur(32px) saturate(1.8)',
           WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
           border: '2px solid rgba(237, 237, 239, 0.1)',
