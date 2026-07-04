@@ -41,25 +41,42 @@ function AnimatedCounter({ value }) {
 
 function RevealLine({ children, delay = 0 }) {
   const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setIsVisible(true);
+      return;
+    }
     if (!ref.current) return;
     const el = ref.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
-            el.style.clipPath = 'inset(0 0% 0 0)';
+            setIsVisible(true);
           }, delay * 1000);
           observer.disconnect();
         }
       },
-      { threshold: 0.85 }
+      { threshold: 0.1 } // Lower threshold so it triggers earlier
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, [delay]);
-  return <div ref={ref} style={{ overflow: 'hidden', clipPath: 'inset(0 100% 0 0)', transition: 'clip-path 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>{children}</div>;
+
+  return (
+    <div 
+      ref={ref} 
+      style={{ 
+        overflow: 'hidden', 
+        clipPath: isVisible ? 'inset(0 0% 0 0)' : 'inset(0 100% 0 0)', 
+        transition: 'clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1)' 
+      }}
+    >
+      {children}
+    </div>
+  );
 }
 
 export default function About() {

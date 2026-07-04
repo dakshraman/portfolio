@@ -161,9 +161,9 @@ export const aboutStats = [
 ];
 
 export const aboutText = [
-  'I\u2019m a senior full-stack developer with deep expertise in Laravel and Flutter, building products that scale from startup MVPs to enterprise-grade systems.',
-  'My approach bridges backend reliability with cross-platform mobility\u2014every architecture decision is made with performance, security, and developer experience in mind.',
-  'When I\u2019m not shipping code, I\u2019m exploring system design patterns, contributing to open-source, and staying sharp on emerging tech.',
+  'I’m a professional Software Developer and Freelancer with deep expertise in Laravel and Flutter. I specialize in building robust, scalable products ranging from startup MVPs to enterprise-grade systems.',
+  'My approach bridges backend reliability with cross-platform mobility—every architectural decision is made with performance, security, and the end-user experience in mind.',
+  'As a freelancer, I partner closely with clients to turn their ideas into high-quality digital solutions. When I’m not shipping code, I’m exploring system design patterns and staying sharp on emerging tech.',
 ];
 
 export const navLinks = [
