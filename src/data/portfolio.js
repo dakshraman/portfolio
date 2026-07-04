@@ -7,15 +7,15 @@ export const siteConfig = {
   linkedin: 'https://linkedin.com/in/dakshraman',
   instagram: 'https://instagram.com/dakshraman',
   telegram: 'https://t.me/dakshraman',
-  availability: 'Available for new opportunities',
-  tagline: 'Making complex digital products for companies that move forward.',
+  availability: 'Available for freelance & consulting',
+  tagline: 'Freelance software engineer & IT consultant — building scalable backend systems and cross-platform apps.',
   description:
-    'Combining reliable backend functionality with high-quality cross-platform architecture.',
+    'Hire me for Laravel, Flutter, and full-stack development. I architect robust digital products for startups and enterprises.',
 };
 
 export const experiences = [
   {
-    role: 'Software Engineer',
+  role: 'Freelance Software Engineer & IT Consultant',
     company: 'InsideSoftwares',
     period: '2025 \u2013 Present',
     location: 'Remote',
@@ -54,6 +54,7 @@ export const experiences = [
 
 export const projects = [
   {
+    title: 'E-Learning Platform',
     description:
       'A cross-platform e-learning ecosystem with live streaming and on-demand lectures for nonprofits.',
     tags: ['Flutter', 'iOS', 'Android'],
@@ -61,6 +62,7 @@ export const projects = [
     icon: 'learning',
   },
   {
+    title: 'E-Commerce API Sync',
     description:
       'Real-time REST API sync between a high-traffic web storefront and a companion mobile app.',
     tags: ['API Design', 'Laravel'],
@@ -68,6 +70,7 @@ export const projects = [
     icon: 'commerce',
   },
   {
+    title: 'Telehealth Backend',
     description:
       'Secure backend for a telehealth platform managing doctor-patient scheduling and consultations.',
     tags: ['Laravel', 'Backend'],
@@ -75,6 +78,7 @@ export const projects = [
     icon: 'health',
   },
   {
+    title: 'Institutional ERP System',
     description:
       'Customizable institutional management with payments, payroll, and academic messaging.',
     tags: ['Full Stack', 'ERP'],
@@ -82,6 +86,7 @@ export const projects = [
     icon: 'enterprise',
   },
   {
+    title: 'Laravel AI Debugger',
     description:
       'AI-powered debugging assistant for Laravel applications using CLI tools and intelligent error analysis.',
     tags: ['PHP', 'Laravel', 'AI'],
@@ -90,6 +95,7 @@ export const projects = [
     github: 'https://github.com/dakshraman/laravel-ai-debugger',
   },
   {
+    title: 'AnonChat',
     description:
       'Real-time anonymous chat platform with end-to-end encrypted messaging and ephemeral rooms.',
     tags: ['PHP', 'WebSockets', 'Encryption'],
@@ -98,6 +104,7 @@ export const projects = [
     github: 'https://github.com/dakshraman/anonchat',
   },
   {
+    title: 'Messager',
     description:
       'Cross-platform messaging app with real-time updates, media sharing, and push notifications.',
     tags: ['Dart', 'Flutter', 'Firebase'],
@@ -106,6 +113,7 @@ export const projects = [
     github: 'https://github.com/dakshraman/Messager',
   },
   {
+    title: 'Weather Forecast App',
     description:
       'Weather forecast web application with interactive maps, hourly forecasts, and location-based alerts.',
     tags: ['JavaScript', 'HTML', 'CSS'],
@@ -114,6 +122,7 @@ export const projects = [
     github: 'https://github.com/dakshraman/Weather_forecast_web_application',
   },
   {
+    title: 'AI Image Enhancer',
     description:
       'AI image enhancement tool using machine learning models for super-resolution and noise reduction.',
     tags: ['Python', 'AI', 'ML'],
@@ -122,6 +131,7 @@ export const projects = [
     github: 'https://github.com/dakshraman/AI-Image-Enhancer',
   },
   {
+    title: 'Virtual Assistant',
     description:
       'Voice-controlled virtual assistant with natural language processing and smart home integration.',
     tags: ['Python', 'NLP', 'AI'],
@@ -130,6 +140,7 @@ export const projects = [
     github: 'https://github.com/dakshraman/Virtual-Assistant',
   },
   {
+    title: 'Laravel Browser Guard',
     description:
       'Laravel middleware for browser fingerprinting, bot detection, and rate limiting with minimal config.',
     tags: ['PHP', 'Laravel', 'Security'],
@@ -138,6 +149,7 @@ export const projects = [
     github: 'https://github.com/dakshraman/laravel-browser-guard',
   },
   {
+    title: 'Dating Platform',
     description:
       'Feature-rich dating platform with matching algorithms, real-time chat, and profile verification.',
     tags: ['PHP', 'Laravel', 'WebSocket'],

@@ -20,6 +20,7 @@ export async function generateMetadata({ params }) {
       type: 'article',
       publishedTime: post.date,
       tags: post.tags,
+      authors: ['Raman Daksh'],
     },
   };
 }
@@ -158,12 +159,39 @@ export default async function BlogPost({ params }) {
   const post = blogs.find((b) => b.slug === slug);
   if (!post) notFound();
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    author: {
+      '@type': 'Person',
+      name: 'Raman Daksh',
+      url: 'https://dakshraman.in',
+    },
+    publisher: {
+      '@type': 'Person',
+      name: 'Raman Daksh',
+      url: 'https://dakshraman.in',
+    },
+    keywords: post.tags.join(', '),
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://dakshraman.in/blog/${post.slug}`,
+    },
+  };
+
   return (
     <main style={{
       maxWidth: '760px',
       margin: '0 auto',
       padding: '8rem 1.5rem 4rem',
     }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <Link
         href="/#blog"
         style={{
