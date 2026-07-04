@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://dakshraman.in/sitemap.xml
