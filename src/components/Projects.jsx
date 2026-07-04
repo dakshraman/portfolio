@@ -207,11 +207,6 @@ function ProjectCard({ project, index }) {
             transform: isHovered ? 'scale(1.05)' : 'scale(1)' 
           }}
         >
-          {isHovered && (
-            <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, animation: 'fadeInRight 0.3s ease forwards' }}>
-              View
-            </span>
-          )}
           <ProjectIcon icon={project.icon} />
         </div>
       </div>
