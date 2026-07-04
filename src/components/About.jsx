@@ -39,45 +39,7 @@ function AnimatedCounter({ value }) {
   return <span ref={ref} style={{ fontVariantNumeric: 'tabular-nums' }}>{count || value}</span>;
 }
 
-function RevealLine({ children, delay = 0 }) {
-  const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setIsVisible(true);
-      return;
-    }
-    if (!ref.current) return;
-    const el = ref.current;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            setIsVisible(true);
-          }, delay * 1000);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 } // Lower threshold so it triggers earlier
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [delay]);
-
-  return (
-    <div 
-      ref={ref} 
-      style={{ 
-        overflow: 'hidden', 
-        clipPath: isVisible ? 'inset(0 0% 0 0)' : 'inset(0 100% 0 0)', 
-        transition: 'clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1)' 
-      }}
-    >
-      {children}
-    </div>
-  );
-}
 
 export default function About() {
   const sectionRef = useRef(null);
@@ -110,11 +72,11 @@ export default function About() {
       <div className="about-grid" style={{ marginBottom: '4rem' }}>
         <div>
           {aboutText.map((text, i) => (
-            <RevealLine key={i} delay={i * 0.1}>
+            <div key={i} style={{ animationDelay: `${i * 0.1}s` }} className="about-text-line">
               <p style={{ fontSize: '1.05rem', lineHeight: 1.85, color: 'var(--fg-muted)', marginBottom: '1.5rem' }}>
                 {text}
               </p>
-            </RevealLine>
+            </div>
           ))}
         </div>
 
