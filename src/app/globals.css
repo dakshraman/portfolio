@@ -67,8 +67,8 @@ body {
 /* Glassmorphism - Utility */
 .glass {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
 }
@@ -76,8 +76,8 @@ body {
 .brutal-border {
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
   background: var(--bg-card);
 }
 
@@ -212,8 +212,8 @@ h1, h2, h3, h4, h5, h6 {
 /* Card base - Glassmorphic */
 .card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 1.75rem;
@@ -226,6 +226,8 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-4px);
   border-color: rgba(254, 127, 45, 0.3); /* Accent glow border on hover */
   background: var(--bg-card-hover);
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
 }
 
 /* Alternating section backgrounds */
@@ -251,36 +253,4 @@ h1, h2, h3, h4, h5, h6 {
     scroll-behavior: auto !important;
   }
   .brutal-border { box-shadow: none; }
-}
-
-/* Light Mode */
-html.light {
-  --bg: #FAFAFA;
-  --bg-elevated: #FFFFFF;
-  --bg-muted: #F4F4F5;
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #F8F8FA;
-  --fg: #09090B;
-  --fg-muted: #3F3F46;
-  --fg-dim: #71717A;
-  --accent: #4F46E5;
-  --accent-glow: rgba(79, 70, 229, 0.08);
-  --accent-glow-strong: rgba(79, 70, 229, 0.15);
-  --nav-bg: rgba(255, 255, 255, 0.65);
-  --nav-bg-scrolled: rgba(255, 255, 255, 0.92);
-  --border: rgba(9, 9, 11, 0.08);
-  --border-thick: #09090B;
-  --shadow-card: 4px 4px 0px rgba(9, 9, 11, 0.12);
-  --shadow-card-hover: 6px 6px 0px rgba(79, 70, 229, 0.2);
-}
-
-html.light body {
-  background-color: var(--bg);
-  color: var(--fg);
-}
-
-html.light .tag {
-  background: rgba(79, 70, 229, 0.05);
-  border-color: rgba(79, 70, 229, 0.12);
-  color: #4F46E5;
 }

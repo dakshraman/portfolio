@@ -2,7 +2,6 @@ import './globals.css';
 import Navigation from '@/components/Navigation';
 import AmbientBackground from '@/components/AmbientBackground';
 import BackToTop from '@/components/BackToTop';
-import ThemeToggle from '@/components/ThemeToggle';
 import DpdpBanner from '@/components/DpdpBanner';
 import LoaderWrapper from '@/components/LoaderWrapper';
 
@@ -116,7 +115,6 @@ export default function RootLayout({ children }) {
           <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
           <DpdpBanner />
           <BackToTop />
-          <ThemeToggle />
         </LoaderWrapper>
       </body>
     </html>
