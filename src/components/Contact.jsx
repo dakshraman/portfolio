@@ -23,7 +23,7 @@ function MagneticText({ text }) {
         if (dist < maxDist) {
           const strength = (1 - dist / maxDist) * 8;
           letter.style.transform = `translate(${-dx * strength * 0.01}px, ${-dy * strength * 0.01}px)`;
-          letter.style.color = `rgba(94, 106, 210, ${1 - dist / maxDist * 0.5})`;
+          letter.style.color = `rgba(254, 127, 45, ${1 - dist / maxDist * 0.5})`;
         } else {
           letter.style.transform = 'translate(0, 0)';
           letter.style.color = '';
@@ -76,7 +76,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="contact" className="section contact-section" style={{ paddingBottom: '80px', background: 'radial-gradient(ellipse at 80% 50%, rgba(236, 72, 153, 0.04) 0%, transparent 60%)' }}>
+    <section ref={sectionRef} id="contact" className="section contact-section" style={{ paddingBottom: '80px', background: 'radial-gradient(ellipse at 80% 50%, rgba(254, 127, 45, 0.04) 0%, transparent 60%)' }}>
       <p className="section-label" style={{ textAlign: 'center' }}>
         [07] What&apos;s next?
       </p>
@@ -117,7 +117,7 @@ export default function Contact() {
           justifyContent: 'center',
           gap: '2rem 3rem',
           flexWrap: 'wrap',
-          borderTop: '2px solid var(--border-thick)',
+          borderTop: '1px solid var(--border)',
           paddingTop: '2.5rem',
           fontStyle: 'normal',
         }}

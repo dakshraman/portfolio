@@ -1,23 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg: #050506;
-  --bg-elevated: #0a0a0c;
-  --bg-muted: #121214;
-  --bg-card: #0a0a0c;
-  --bg-card-hover: #121214;
-  --fg: #EDEDEF;
-  --fg-muted: #8A8F98;
-  --fg-dim: #56565C;
-  --accent: #5E6AD2;
-  --accent-glow: rgba(94, 106, 210, 0.15);
-  --accent-glow-strong: rgba(94, 106, 210, 0.3);
-  --accent-secondary: #A855F7;
-  --accent-warm: #F59E0B;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-thick: #EDEDEF;
-  --shadow-card: 4px 4px 0px rgba(237, 237, 239, 0.08);
-  --shadow-card-hover: 6px 6px 0px rgba(94, 106, 210, 0.15);
+  --bg: #000000;
+  --bg-elevated: #000000;
+  --bg-muted: #233D4D;
+  --bg-card: rgba(35, 61, 77, 0.15);
+  --bg-card-hover: rgba(35, 61, 77, 0.3);
+  --fg: #EAECF0;
+  --fg-muted: rgba(234, 236, 240, 0.6);
+  --fg-dim: rgba(234, 236, 240, 0.4);
+  --accent: #FE7F2D;
+  --accent-glow: rgba(254, 127, 45, 0.15);
+  --accent-glow-strong: rgba(254, 127, 45, 0.3);
+  --accent-secondary: #233D4D;
+  --accent-warm: #FE7F2D;
+  --border: rgba(234, 236, 240, 0.08);
+  --border-thick: rgba(234, 236, 240, 0.15);
+  --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-card-hover: 0 8px 32px 0 rgba(254, 127, 45, 0.15);
   --destructive: #EF4444;
 
   --font-heading: 'Archivo', system-ui, -apple-system, sans-serif;
@@ -34,10 +34,10 @@
   --space-4xl: 96px;
   --space-5xl: 128px;
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
   --radius-full: 9999px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -62,10 +62,21 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--fg-dim); border-radius: 2px; }
 
-/* Neo Brutalism - Thick Border Utility */
-.brutal-border {
-  border: 2px solid var(--border-thick);
+/* Glassmorphism - Utility */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
+}
+
+.brutal-border {
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: var(--bg-card);
 }
 
 /* Section */
@@ -132,7 +143,7 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
 
-/* Buttons - Brutalist */
+/* Buttons - Glassmorphic */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -143,23 +154,24 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 14px 32px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-full);
   background: var(--accent);
-  color: #fff;
-  border: 2px solid var(--fg);
+  color: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   text-decoration: none;
-  transition: all 0.15s var(--ease-out);
-  box-shadow: 3px 3px 0px var(--fg);
+  transition: all 0.2s var(--ease-out);
+  box-shadow: 0 4px 12px var(--accent-glow-strong);
 }
 
 .btn-primary:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px var(--fg);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px var(--accent-glow-strong);
+  background: #ff914d;
 }
 
 .btn-primary:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px var(--fg);
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px var(--accent-glow-strong);
 }
 
 .btn-ghost {
@@ -172,48 +184,55 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 14px 32px;
-  border-radius: var(--radius-sm);
-  background: transparent;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--fg);
-  border: 2px solid var(--fg);
+  border: 1px solid var(--border);
   text-decoration: none;
-  transition: all 0.15s var(--ease-out);
-  box-shadow: 3px 3px 0px var(--fg);
+  transition: all 0.2s var(--ease-out);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .btn-ghost:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px var(--fg);
-  background: rgba(255, 255, 255, 0.03);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn-ghost:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px var(--fg);
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Card base - Brutalist */
+/* Card base - Glassmorphic */
 .card {
   background: var(--bg-card);
-  border: 2px solid var(--border-thick);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 1.75rem;
-  transition: all 0.2s var(--ease-out);
+  transition: all 0.3s var(--ease-out);
   box-shadow: var(--shadow-card);
 }
 
 .card:hover {
   box-shadow: var(--shadow-card-hover);
-  transform: translate(-2px, -2px);
+  transform: translateY(-4px);
+  border-color: rgba(254, 127, 45, 0.3); /* Accent glow border on hover */
+  background: var(--bg-card-hover);
 }
 
 /* Alternating section backgrounds */
 .section-alt {
-  background: linear-gradient(180deg, transparent 0%, rgba(94, 106, 210, 0.02) 50%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(35, 61, 77, 0.1) 50%, transparent 100%);
 }
 
 .section-alt-purple {
-  background: linear-gradient(180deg, transparent 0%, rgba(168, 85, 247, 0.02) 50%, transparent 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(254, 127, 45, 0.05) 50%, transparent 100%);
 }
 
 /* Mobile Responsive */

@@ -71,8 +71,8 @@ export default function Skills() {
       className="skills-section"
       style={{
         overflow: 'hidden',
-        borderTop: '2px solid var(--border-thick)',
-        borderBottom: '2px solid var(--border-thick)',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
         padding: '2rem 0',
         background: 'var(--bg-elevated)',
         position: 'relative',

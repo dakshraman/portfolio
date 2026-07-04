@@ -40,21 +40,31 @@ export default function Experience() {
             aria-label={`${exp.role} at ${exp.company}`}
             style={{
               padding: '2rem 1.5rem',
-              borderTop: i === 0 ? '2px solid var(--border-thick)' : '2px solid var(--border-thick)',
-              borderRadius: '0',
+              borderTop: '1px solid var(--border)',
+              borderRadius: 'var(--radius-md)',
               transition: 'all 0.3s ease',
               background: 'transparent',
               position: 'relative',
+              border: '1px solid transparent',
+              borderTopColor: 'var(--border)',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = 'var(--bg-card)';
-              e.currentTarget.style.borderLeft = '2px solid var(--accent)';
-              e.currentTarget.style.paddingLeft = 'calc(1.5rem - 2px)';
+              e.currentTarget.style.backdropFilter = 'blur(16px)';
+              e.currentTarget.style.WebkitBackdropFilter = 'blur(16px)';
+              e.currentTarget.style.border = '1px solid var(--border)';
+              e.currentTarget.style.borderColor = 'rgba(254, 127, 45, 0.3)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.borderLeft = 'none';
-              e.currentTarget.style.paddingLeft = '1.5rem';
+              e.currentTarget.style.backdropFilter = 'none';
+              e.currentTarget.style.WebkitBackdropFilter = 'none';
+              e.currentTarget.style.border = '1px solid transparent';
+              e.currentTarget.style.borderTopColor = 'var(--border)';
+              e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
             <div className="exp-grid">
