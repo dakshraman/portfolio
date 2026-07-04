@@ -197,40 +197,57 @@ function ProjectCard({ project, index }) {
         <span style={{ fontSize: '0.7rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
           {String(index + 1).padStart(2, '0')}
         </span>
-        <div style={{ color, opacity: 0.7, transition: 'all 0.4s ease', transform: isHovered ? 'scale(1.1)' : 'scale(1)' }}>
+        <div 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '12px',
+            color: isHovered ? color : 'var(--fg-dim)', 
+            transition: 'all 0.4s ease', 
+            transform: isHovered ? 'scale(1.05)' : 'scale(1)' 
+          }}
+        >
+          {isHovered && (
+            <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, animation: 'fadeInRight 0.3s ease forwards' }}>
+              View
+            </span>
+          )}
           <ProjectIcon icon={project.icon} />
         </div>
       </div>
       
       <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-        <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', color: 'var(--fg)', fontFamily: 'var(--font-heading)', fontWeight: 700 }}>
+        <h3 
+          style={{ 
+            fontSize: '1.25rem', 
+            marginBottom: '0.75rem', 
+            color: isHovered ? color : 'var(--fg)', 
+            fontFamily: 'var(--font-heading)', 
+            fontWeight: 700,
+            transition: 'color 0.3s ease'
+          }}
+        >
           {project.title}
         </h3>
-        <p style={{ color: 'var(--fg-muted)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem', flexGrow: 1 }}>
+        <p style={{ color: 'var(--fg-muted)', fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.75rem', flexGrow: 1 }}>
           {project.description}
         </p>
         
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: 'auto' }}>
           {project.tags.map((tag, i) => (
-            <span 
-              key={i} 
-              style={{ 
-                fontSize: '0.65rem', 
-                padding: '4px 10px', 
-                background: 'rgba(255,255,255,0.05)', 
-                borderRadius: 'var(--radius-sm)', 
-                border: '1px solid rgba(255,255,255,0.1)',
-                color: 'var(--fg)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                fontFamily: 'var(--font-heading)'
-              }}
-            >
+            <span key={i} className="tag">
               {tag}
             </span>
           ))}
         </div>
       </div>
+      
+      <style jsx>{`
+        @keyframes fadeInRight {
+          from { opacity: 0; transform: translateX(-10px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+      `}</style>
     </article>
   );
 }
