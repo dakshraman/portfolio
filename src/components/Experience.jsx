@@ -1,92 +1,77 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { experiences } from '@/data/portfolio';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Experience() {
   const sectionRef = useRef(null);
-  const headingRef = useRef(null);
-  const itemsRef = useRef([]);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const section = sectionRef.current;
+    if (!section) return;
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(headingRef.current,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' } }
-      );
-
-      itemsRef.current.forEach((item, i) => {
-        if (!item) return;
-        gsap.fromTo(item,
-          { opacity: 0, x: -40 },
-          { opacity: 1, x: 0, duration: 0.8, ease: 'expo.out',
-            scrollTrigger: { trigger: item, start: 'top 88%' },
-            delay: i * 0.08 }
-        );
-      });
-    }, sectionRef);
-
-    // Fallback
-    const fallback = setTimeout(() => {
-      if (headingRef.current) headingRef.current.style.opacity = '1';
-      itemsRef.current.forEach((item) => { if (item) item.style.opacity = '1'; });
-    }, 4000);
-
-    return () => { ctx.revert(); clearTimeout(fallback); };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          section.classList.add('visible');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} id="experience" className="section">
+    <section ref={sectionRef} id="experience" className="section experience-section">
       <div style={{ marginBottom: '3.5rem' }}>
         <p className="section-label">[02] Experience</p>
-        <h2 ref={headingRef} className="text-heading">Where I&apos;ve worked</h2>
+        <h2 className="text-heading">Where I&apos;ve worked</h2>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
         {experiences.map((exp, i) => (
-          <div
+          <article
             key={i}
-            ref={(el) => (itemsRef.current[i] = el)}
             data-cursor="pointer"
+            className="exp-row"
+            aria-label={`${exp.role} at ${exp.company}`}
             style={{
               padding: '2rem 1.5rem',
-              borderTop: '1px solid var(--border-subtle)',
+              borderTop: i === 0 ? '2px solid var(--border-thick)' : '2px solid var(--border-thick)',
               borderRadius: '0',
-              transition: 'background 0.3s ease',
+              transition: 'all 0.3s ease',
               background: 'transparent',
+              position: 'relative',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.3)';
-              e.currentTarget.style.borderRadius = 'var(--radius-md)';
+              e.currentTarget.style.background = 'var(--bg-card)';
+              e.currentTarget.style.borderLeft = '2px solid var(--accent)';
+              e.currentTarget.style.paddingLeft = 'calc(1.5rem - 2px)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.borderRadius = '0';
+              e.currentTarget.style.borderLeft = 'none';
+              e.currentTarget.style.paddingLeft = '1.5rem';
             }}
           >
-            {/* Mobile-first stacked layout */}
             <div className="exp-grid">
               <div className="exp-company">
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 500, marginBottom: '0.3rem' }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.3rem', fontFamily: 'var(--font-heading)', letterSpacing: '-0.01em' }}>
                   {exp.company}
                 </h3>
-                <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--fg-dim)' }}>
+                <p style={{ fontSize: '0.7rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   {exp.location}
                 </p>
-                <span className="font-mono exp-period-mobile" style={{ fontSize: '0.7rem', color: 'var(--fg-dim)', marginTop: '0.25rem' }}>
+                <span className="exp-period-mobile" style={{ fontSize: '0.65rem', color: 'var(--fg-dim)', marginTop: '0.25rem', display: 'none' }}>
                   {exp.period}
                 </span>
               </div>
 
               <div className="exp-role">
-                <h4 style={{ fontSize: '1.35rem', fontWeight: 400, marginBottom: '0.5rem' }}>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>
                   {exp.role}
                 </h4>
                 <p style={{ color: 'var(--fg-muted)', lineHeight: 1.7, fontSize: '0.9rem' }}>
@@ -100,12 +85,12 @@ export default function Experience() {
               </div>
 
               <div className="exp-period" style={{ textAlign: 'right' }}>
-                <span className="font-mono" style={{ fontSize: '0.8rem', color: 'var(--fg-dim)' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   {exp.period}
                 </span>
               </div>
             </div>
-          </div>
+          </article>
         ))}
       </div>
 
@@ -125,6 +110,24 @@ export default function Experience() {
           .exp-period { display: none; }
           .exp-period-mobile { display: block; }
         }
+      `}</style>
+      <style jsx>{`
+        .experience-section > * {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .experience-section.visible > * {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .experience-section > *:nth-child(1) { transition-delay: 0s; }
+        .experience-section > *:nth-child(2) { transition-delay: 0.1s; }
+        .experience-section > *:nth-child(3) { transition-delay: 0.15s; }
+        .experience-section > *:nth-child(4) { transition-delay: 0.2s; }
+        .experience-section > *:nth-child(5) { transition-delay: 0.25s; }
+        .experience-section > *:nth-child(6) { transition-delay: 0.3s; }
+        .experience-section > *:nth-child(7) { transition-delay: 0.35s; }
       `}</style>
     </section>
   );

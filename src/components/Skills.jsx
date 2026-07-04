@@ -1,166 +1,161 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { skills } from '@/data/portfolio';
+import { Icon } from '@iconify/react';
 
-gsap.registerPlugin(ScrollTrigger);
+const skillIcons = {
+  'Laravel': 'carbon:logo-laravel',
+  'Flutter': 'logos:flutter',
+  'React.js': 'logos:react',
+  'Python': 'logos:python',
+  'Dart': 'logos:dart',
+  'PHP': 'logos:php',
+  'Firebase': 'logos:firebase',
+  'Java': 'logos:java',
+  'C++': 'logos:c-plus-plus',
+  'SQL': 'cib:mysql',
+  'Linux': 'logos:linux-tux',
+  'Cyber Security': 'mdi:shield-lock',
+  'Shopify': 'logos:shopify',
+  'WordPress': 'logos:wordpress',
+  'System Architecture': 'mdi:sitemap',
+  'API Design': 'mdi:api',
+};
+
+const skillColors = {
+  'Laravel': '#FF2D20',
+  'Flutter': '#02569B',
+  'React.js': '#61DAFB',
+  'Python': '#3776AB',
+  'Dart': '#0175C2',
+  'PHP': '#777BB4',
+  'Firebase': '#FFCA28',
+  'Java': '#ED8B00',
+  'C++': '#00599C',
+  'SQL': '#336791',
+  'Linux': '#FCC624',
+  'Cyber Security': '#EE1111',
+  'Shopify': '#96BF48',
+  'WordPress': '#21759B',
+  'System Architecture': '#FF6B6B',
+  'API Design': '#4ECDC4',
+};
 
 export default function Skills() {
   const sectionRef = useRef(null);
-  const track1Ref = useRef(null);
-  const track2Ref = useRef(null);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const section = sectionRef.current;
+    if (!section) return;
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(track1Ref.current,
-        { opacity: 0, x: -50 },
-        { opacity: 1, x: 0, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 85%' } }
-      );
-
-      gsap.fromTo(track2Ref.current,
-        { opacity: 0, x: 50 },
-        { opacity: 1, x: 0, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top 85%' },
-          delay: 0.2 }
-      );
-    }, sectionRef);
-
-    // Fallback
-    const fallback = setTimeout(() => {
-      [track1Ref, track2Ref].forEach((r) => {
-        if (r.current) r.current.style.opacity = '1';
-      });
-    }, 4000);
-
-    return () => { ctx.revert(); clearTimeout(fallback); };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          section.classList.add('visible');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
-  const duplicated1 = [...skills, ...skills, ...skills, ...skills];
-  const duplicated2 = [...skills.slice().reverse(), ...skills.slice().reverse(), ...skills.slice().reverse(), ...skills.slice().reverse()];
+  const duplicated = [...skills, ...skills, ...skills, ...skills, ...skills, ...skills];
 
   return (
     <div
       ref={sectionRef}
+      className="skills-section"
       style={{
         overflow: 'hidden',
-        borderTop: '1px solid var(--border-subtle)',
-        borderBottom: '1px solid var(--border-subtle)',
-        padding: '2.5rem 0',
-        background: 'rgba(15, 23, 42, 0.3)',
+        borderTop: '2px solid var(--border-thick)',
+        borderBottom: '2px solid var(--border-thick)',
+        padding: '2rem 0',
+        background: 'var(--bg-elevated)',
         position: 'relative',
       }}
     >
-      {/* Fade edges */}
       <div
         style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          bottom: 0,
-          width: '150px',
-          background: 'linear-gradient(to right, var(--bg), transparent)',
-          zIndex: 2,
-          pointerEvents: 'none',
+          position: 'absolute', left: 0, top: 0, bottom: 0, width: '150px',
+          background: 'linear-gradient(to right, var(--bg-elevated), transparent)',
+          zIndex: 2, pointerEvents: 'none',
         }}
       />
       <div
         style={{
-          position: 'absolute',
-          right: 0,
-          top: 0,
-          bottom: 0,
-          width: '150px',
-          background: 'linear-gradient(to left, var(--bg), transparent)',
-          zIndex: 2,
-          pointerEvents: 'none',
+          position: 'absolute', right: 0, top: 0, bottom: 0, width: '150px',
+          background: 'linear-gradient(to left, var(--bg-elevated), transparent)',
+          zIndex: 2, pointerEvents: 'none',
         }}
       />
 
-      {/* Track 1 - left to right */}
-      <div ref={track1Ref} style={{ marginBottom: '1rem' }}>
-        <div className="marquee-track" style={{ animationDuration: '35s' }}>
-          {duplicated1.map((skill, i) => (
-            <div
-              key={i}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1.5rem',
-                padding: '0 2rem',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <span
-                className="font-mono"
+      <h2 style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', clip: 'rect(0,0,0,0)' }}>Skills & Technologies</h2>
+      <div>
+        <ul className="marquee-track" style={{ animationDuration: '60s', listStyle: 'none', margin: 0, padding: 0 }}>
+          {duplicated.map((skill, i) => {
+            const icon = skillIcons[skill] || 'mdi:code-tags';
+            const color = skillColors[skill] || 'var(--accent)';
+            return (
+              <li
+                key={i}
                 style={{
-                  fontSize: '0.95rem',
-                  fontWeight: 500,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  color: 'var(--accent)',
-                  textShadow: '0 0 20px var(--accent-glow)',
+                  display: 'flex', alignItems: 'center', gap: '1rem',
+                  padding: '0 1.5rem', whiteSpace: 'nowrap',
                 }}
               >
-                {skill}
-              </span>
-              <span
-                style={{
-                  width: '4px',
-                  height: '4px',
-                  borderRadius: '50%',
-                  background: 'var(--border)',
-                  flexShrink: 0,
-                }}
-              />
-            </div>
-          ))}
-        </div>
+                <Icon icon={icon} width={18} height={18} style={{ color, flexShrink: 0 }} />
+                <span
+                  style={{
+                    fontSize: '0.8rem', fontWeight: 700,
+                    textTransform: 'uppercase', letterSpacing: '0.05em',
+                    color: 'var(--fg)',
+                    fontFamily: 'var(--font-heading)',
+                  }}
+                >
+                  {skill}
+                </span>
+                <span
+                  style={{
+                    width: '4px', height: '4px', borderRadius: '50%',
+                    background: 'var(--fg-dim)', flexShrink: 0,
+                  }}
+                  aria-hidden="true"
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
-
-      {/* Track 2 - right to left (reverse) */}
-      <div ref={track2Ref}>
-        <div className="marquee-track" style={{ animationDirection: 'reverse', animationDuration: '40s' }}>
-          {duplicated2.map((skill, i) => (
-            <div
-              key={i}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1.5rem',
-                padding: '0 2rem',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <span
-                className="font-mono"
-                style={{
-                  fontSize: '0.85rem',
-                  fontWeight: 400,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  color: 'var(--fg-dim)',
-                }}
-              >
-                {skill}
-              </span>
-              <span
-                style={{
-                  width: '3px',
-                  height: '3px',
-                  borderRadius: '50%',
-                  background: 'var(--border-subtle)',
-                  flexShrink: 0,
-                }}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+      <style jsx>{`
+        .marquee-track {
+          display: flex;
+          width: fit-content;
+          animation: marquee 60s linear infinite;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .skills-section > * {
+          opacity: 0;
+          transform: translateX(-30px);
+          transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .skills-section.visible > * {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        .skills-section > *:nth-child(1) { transition-delay: 0s; }
+        .skills-section > *:nth-child(2) { transition-delay: 0.05s; }
+        .skills-section > *:nth-child(3) { transition-delay: 0.1s; }
+        @media (prefers-reduced-motion: reduce) {
+          .marquee-track { animation: none; }
+        }
+      `}</style>
     </div>
   );
 }

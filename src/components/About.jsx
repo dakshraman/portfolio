@@ -1,11 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { aboutText, aboutStats, skills } from '@/data/portfolio';
-
-gsap.registerPlugin(ScrollTrigger);
+import { aboutText, aboutStats } from '@/data/portfolio';
 
 function AnimatedCounter({ value }) {
   const [count, setCount] = useState(0);
@@ -18,20 +14,26 @@ function AnimatedCounter({ value }) {
     const numericValue = parseInt(value.replace(/[^0-9]/g, ''), 10);
     if (isNaN(numericValue)) return;
 
-    const trigger = ScrollTrigger.create({
-      trigger: el,
-      start: 'top 85%',
-      onEnter: () => {
-        if (hasAnimated.current) return;
-        hasAnimated.current = true;
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: numericValue, duration: 1.5, ease: 'expo.out',
-          onUpdate: () => setCount(Math.round(obj.val)),
-        });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const obj = { val: 0 };
+          const duration = 1500;
+          const start = performance.now();
+          const animate = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 4);
+            setCount(Math.round(eased * numericValue));
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
       },
-    });
-    return () => trigger.kill();
+      { threshold: 0.85 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [value]);
 
   return <span ref={ref} style={{ fontVariantNumeric: 'tabular-nums' }}>{count || value}</span>;
@@ -42,57 +44,54 @@ function RevealLine({ children, delay = 0 }) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!ref.current) return;
-    gsap.fromTo(ref.current,
-      { clipPath: 'inset(0 100% 0 0)' },
-      { clipPath: 'inset(0 0% 0 0)', duration: 1, ease: 'expo.out',
-        scrollTrigger: { trigger: ref.current, start: 'top 85%' }, delay }
+    const el = ref.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            el.style.clipPath = 'inset(0 0% 0 0)';
+          }, delay * 1000);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.85 }
     );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, [delay]);
-  return <div ref={ref} style={{ overflow: 'hidden' }}>{children}</div>;
+  return <div ref={ref} style={{ overflow: 'hidden', clipPath: 'inset(0 100% 0 0)', transition: 'clip-path 1s cubic-bezier(0.16, 1, 0.3, 1)' }}>{children}</div>;
 }
 
 export default function About() {
   const sectionRef = useRef(null);
-  const headingRef = useRef(null);
-  const textRef = useRef(null);
-  const statsRef = useRef(null);
-  const stackRef = useRef(null);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(headingRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: 'expo.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' } });
-      gsap.fromTo(Array.from(textRef.current?.children || []), { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'expo.out',
-        scrollTrigger: { trigger: textRef.current, start: 'top 80%' } });
-      gsap.fromTo(Array.from(statsRef.current?.children || []), { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, stagger: 0.1, ease: 'expo.out',
-        scrollTrigger: { trigger: statsRef.current, start: 'top 85%' } });
-      gsap.fromTo(Array.from(stackRef.current?.children || []), { opacity: 0, scale: 0.7, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.04, ease: 'back.out(1.7)',
-        scrollTrigger: { trigger: stackRef.current, start: 'top 85%' } });
-    }, sectionRef);
+    const section = sectionRef.current;
+    if (!section) return;
 
-    // Fallback
-    const fallback = setTimeout(() => {
-      [headingRef, textRef, statsRef, stackRef].forEach((r) => {
-        if (r.current) {
-          const els = r.current.children ? Array.from(r.current.children) : [r.current];
-          els.forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          section.classList.add('visible');
+          observer.disconnect();
         }
-      });
-    }, 4000);
-
-    return () => { ctx.revert(); clearTimeout(fallback); };
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} id="about" className="section">
+    <section ref={sectionRef} id="about" className="section about-section">
       <div style={{ marginBottom: '3.5rem' }}>
         <p className="section-label">[03] About</p>
-        <h2 ref={headingRef} className="text-heading">A bit about me</h2>
+        <h2 className="text-heading">A bit about me</h2>
       </div>
 
       <div className="about-grid" style={{ marginBottom: '4rem' }}>
-        <div ref={textRef}>
+        <div>
           {aboutText.map((text, i) => (
             <RevealLine key={i} delay={i * 0.1}>
               <p style={{ fontSize: '1.05rem', lineHeight: 1.85, color: 'var(--fg-muted)', marginBottom: '1.5rem' }}>
@@ -102,41 +101,33 @@ export default function About() {
           ))}
         </div>
 
-        <div ref={statsRef}>
-          {aboutStats.map((stat, i) => (
-            <div
-              key={i}
-              style={{
-                padding: '1.25rem 1.5rem',
-                borderBottom: i < aboutStats.length - 1 ? '1px solid var(--border-subtle)' : 'none',
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: '1rem',
-                borderRadius: 'var(--radius-sm)',
-                transition: 'background 0.3s ease',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(30, 41, 59, 0.3)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
-            >
-              <span style={{ fontSize: '2.75rem', fontWeight: 600, color: 'var(--accent)', lineHeight: 1, textShadow: '0 0 30px var(--accent-glow)' }}>
-                <AnimatedCounter value={stat.value} />
-              </span>
-              <span className="font-mono" style={{ fontSize: '0.8rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <p className="font-mono" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--fg-dim)', marginBottom: '1rem' }}>
-          Tech Stack
-        </p>
-        <div ref={stackRef} style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-          {skills.map((skill) => (
-            <span key={skill} className="tag">{skill}</span>
-          ))}
+        <div>
+          {aboutStats.map((stat, i) => {
+            const colors = ['#5E6AD2', '#A855F7', '#F59E0B', '#EF4444'];
+            const color = colors[i % colors.length];
+            return (
+              <div
+                key={i}
+                className="card"
+                style={{
+                  padding: '1.25rem 1.5rem',
+                  marginBottom: '12px',
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  gap: '1rem',
+                  border: '2px solid var(--border-thick)',
+                  boxShadow: '3px 3px 0px rgba(237, 237, 239, 0.08)',
+                }}
+              >
+                <span style={{ fontSize: '2.75rem', fontWeight: 700, color, lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
+                  <AnimatedCounter value={stat.value} />
+                </span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
+                  {stat.label}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -152,6 +143,21 @@ export default function About() {
             gap: 2rem;
           }
         }
+      `}</style>
+      <style jsx>{`
+        .about-section > * {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .about-section.visible > * {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .about-section > *:nth-child(1) { transition-delay: 0s; }
+        .about-section > *:nth-child(2) { transition-delay: 0.1s; }
+        .about-section > *:nth-child(3) { transition-delay: 0.2s; }
+        .about-section > *:nth-child(4) { transition-delay: 0.3s; }
       `}</style>
     </section>
   );

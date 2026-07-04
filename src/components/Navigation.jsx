@@ -1,14 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { navLinks, siteConfig } from '@/data/portfolio';
 
 export default function Navigation() {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
   const [scrollState, setScrollState] = useState('top');
   const [activeSection, setActiveSection] = useState('');
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const onScroll = () => {
       const y = window.scrollY;
       if (y < 80) setScrollState('top');
@@ -30,7 +38,10 @@ export default function Navigation() {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   const isCompact = scrollState !== 'top';
@@ -46,7 +57,7 @@ export default function Navigation() {
         zIndex: 1000,
         display: 'flex',
         justifyContent: 'center',
-        padding: isCompact ? '10px 16px' : '16px 24px',
+        padding: isCompact ? '10px 16px' : '20px 24px',
         transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
@@ -56,25 +67,24 @@ export default function Navigation() {
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
-          maxWidth: isCompact ? '720px' : '100%',
+          maxWidth: isCompact ? '720px' : '1300px',
           height: isCompact ? '48px' : '56px',
           padding: isCompact ? '0 20px' : '0 24px',
           borderRadius: 'var(--radius-full)',
           background: isScrolled
-            ? 'rgba(15, 23, 42, 0.85)'
-            : 'rgba(15, 23, 42, 0.5)',
-          backdropFilter: 'blur(24px) saturate(1.8)',
-          WebkitBackdropFilter: 'blur(24px) saturate(1.8)',
-          border: '1px solid rgba(51, 65, 85, 0.4)',
+            ? 'rgba(10, 10, 11, 0.92)'
+            : 'rgba(10, 10, 11, 0.65)',
+          backdropFilter: 'blur(32px) saturate(1.8)',
+          WebkitBackdropFilter: 'blur(32px) saturate(1.8)',
+          border: '2px solid rgba(237, 237, 239, 0.1)',
           boxShadow: isScrolled
-            ? '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.05)'
-            : '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
+            ? '4px 4px 0px rgba(237, 237, 239, 0.06)'
+            : '0 4px 16px rgba(0, 0, 0, 0.15)',
           transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
           overflow: 'hidden',
           position: 'relative',
         }}
       >
-        {/* Scroll progress bar inside the pill */}
         <div
           style={{
             position: 'absolute',
@@ -91,7 +101,7 @@ export default function Navigation() {
             style={{
               height: '100%',
               width: `${scrollProgress * 100}%`,
-              background: 'linear-gradient(to right, var(--accent), rgba(34, 197, 94, 0.4))',
+              background: 'linear-gradient(to right, var(--accent), var(--accent-glow))',
               boxShadow: '0 0 8px var(--accent-glow)',
               transition: 'width 0.15s linear',
               borderRadius: '1px',
@@ -99,18 +109,18 @@ export default function Navigation() {
           />
         </div>
 
-        {/* Logo */}
         <a
-          href="#"
+          href="/"
           style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: isCompact ? '0.85rem' : '0.9rem',
-            fontWeight: 600,
+            fontFamily: 'var(--font-heading)',
+            fontSize: isCompact ? '0.85rem' : '0.95rem',
+            fontWeight: 700,
             color: 'var(--fg)',
             textDecoration: 'none',
-            letterSpacing: '-0.01em',
+            letterSpacing: '0.02em',
             transition: 'all 0.4s ease',
             flexShrink: 0,
+            textTransform: 'uppercase',
           }}
         >
           {isCompact ? (
@@ -122,14 +132,14 @@ export default function Navigation() {
             <>
               {siteConfig.name.split(' ')[0]}
               <span style={{ color: 'var(--accent)', textShadow: '0 0 16px var(--accent-glow-strong)' }}>.</span>
+              <span style={{ color: 'var(--fg-dim)', fontWeight: 500 }}>{siteConfig.name.split(' ')[1]}</span>
             </>
           )}
         </a>
 
-        {/* Nav links - visible in both states, smaller when compact */}
         <div
           style={{
-            display: 'flex',
+            display: isMobile ? 'none' : 'flex',
             alignItems: 'center',
             gap: isCompact ? '16px' : '24px',
             transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -138,56 +148,40 @@ export default function Navigation() {
           {navLinks.map((link) => (
             <a
               key={link.href}
-              href={link.href}
+              href={isHome ? link.href : `/${link.href}`}
               style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: isCompact ? '0.65rem' : '0.75rem',
+                fontFamily: 'var(--font-heading)',
+                fontSize: isCompact ? '0.65rem' : '0.7rem',
                 color: activeSection === link.href.replace('#', '')
                   ? 'var(--accent)'
                   : 'var(--fg-muted)',
                 textDecoration: 'none',
                 textTransform: 'uppercase',
-                letterSpacing: '0.08em',
+                letterSpacing: '0.1em',
                 transition: 'color 0.3s ease',
                 position: 'relative',
                 padding: '4px 0',
+                fontWeight: 600,
               }}
             >
               {link.label}
-              <span
-                style={{
-                  position: 'absolute',
-                  bottom: '-2px',
-                  left: 0,
-                  right: 0,
-                  height: '1px',
-                  background: 'var(--accent)',
-                  transform: activeSection === link.href.replace('#', '') ? 'scaleX(1)' : 'scaleX(0)',
-                  transformOrigin: 'right',
-                  transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                  boxShadow: activeSection === link.href.replace('#', '') ? '0 0 8px var(--accent-glow)' : 'none',
-                }}
-              />
             </a>
           ))}
         </div>
 
-        {/* Contact CTA */}
         <a
-          href="#contact"
+          href={isHome ? '#contact' : '/#contact'}
+          className="btn-ghost"
           style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.7rem',
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            color: isCompact ? 'var(--accent)' : 'var(--bg)',
-            background: isCompact ? 'transparent' : 'var(--accent)',
-            border: isCompact ? '1px solid var(--accent)' : 'none',
+            fontSize: '0.65rem',
+            padding: isCompact ? '6px 14px' : '8px 18px',
+            boxShadow: isCompact ? '2px 2px 0px var(--fg)' : '3px 3px 0px var(--fg)',
+            border: '2px solid var(--fg)',
             borderRadius: 'var(--radius-full)',
-            padding: isCompact ? '4px 12px' : '8px 18px',
-            textDecoration: 'none',
-            transition: 'all 0.4s ease',
+            background: isCompact ? 'transparent' : 'var(--accent)',
+            color: isCompact ? 'var(--fg)' : 'var(--bg)',
+            borderColor: isCompact ? 'var(--fg)' : 'var(--accent)',
+            boxShadow: isCompact ? '2px 2px 0px var(--fg)' : 'none',
             flexShrink: 0,
             whiteSpace: 'nowrap',
           }}
