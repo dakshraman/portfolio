@@ -1,37 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-
 export default function AmbientBackground() {
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    let rafId;
-    let time = 0;
-
-    const animate = () => {
-      time += 0.0015;
-      const blobs = containerRef.current?.querySelectorAll('.ambient-blob');
-      if (blobs) {
-        blobs.forEach((blob, i) => {
-          const speed = (i + 1) * 0.3;
-          const x = Math.sin(time * speed + i * 2.1) * 12;
-          const y = Math.cos(time * speed * 0.5 + i * 1.7) * 10;
-          blob.style.transform = `translate(${x}%, ${y}%)`;
-        });
-      }
-      rafId = requestAnimationFrame(animate);
-    };
-    rafId = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(rafId);
-  }, []);
-
   return (
     <div
-      ref={containerRef}
       aria-hidden="true"
       style={{
         position: 'fixed',
@@ -41,40 +12,22 @@ export default function AmbientBackground() {
         zIndex: 0,
       }}
     >
-      {/* Top-right blue blob */}
-      <div
-        className="ambient-blob"
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         style={{
-          position: 'absolute',
-          top: '-20%',
-          right: '-15%',
-          width: '60vw',
-          height: '60vw',
-          maxWidth: '700px',
-          maxHeight: '700px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(37, 99, 235, 0.07) 0%, transparent 70%)',
-          filter: 'blur(80px)',
-          willChange: 'transform',
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: 0.4,
+          filter: 'blur(4px)',
+          transition: 'opacity 0.5s ease',
         }}
-      />
-      {/* Bottom-left purple blob */}
-      <div
-        className="ambient-blob"
-        style={{
-          position: 'absolute',
-          bottom: '-25%',
-          left: '-20%',
-          width: '55vw',
-          height: '55vw',
-          maxWidth: '650px',
-          maxHeight: '650px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 70%)',
-          filter: 'blur(80px)',
-          willChange: 'transform',
-        }}
-      />
+      >
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_080021_d598092b-c4c2-4e53-8e46-94cf9064cd50.mp4" type="video/mp4" />
+      </video>
     </div>
   );
 }
