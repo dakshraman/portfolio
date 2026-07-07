@@ -187,6 +187,7 @@ export default async function BlogPost({ params }) {
       maxWidth: '760px',
       margin: '0 auto',
       padding: '8rem 1.5rem 4rem',
+      backdropFilter: 'blur(50px)',
     }}>
       <script
         type="application/ld+json"

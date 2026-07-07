@@ -68,11 +68,8 @@ body {
 .glass {
   background: var(--bg-card);
   backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
-  position: relative;
-  isolation: isolate;
 }
 
 .brutal-border {
@@ -215,23 +212,19 @@ h1, h2, h3, h4, h5, h6 {
 .card {
   background: var(--bg-card);
   backdrop-filter: blur(50px);
-  -webkit-backdrop-filter: blur(50px);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 1.75rem;
   transition: all 0.3s var(--ease-out);
   box-shadow: var(--shadow-card);
-  position: relative;
-  isolation: isolate;
 }
 
 .card:hover {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-4px);
-  border-color: rgba(254, 127, 45, 0.3); /* Accent glow border on hover */
+  border-color: rgba(254, 127, 45, 0.3);
   background: var(--bg-card-hover);
   backdrop-filter: blur(100px);
-  -webkit-backdrop-filter: blur(100px);
 }
 
 /* Alternating section backgrounds */
