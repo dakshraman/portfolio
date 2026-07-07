@@ -15,12 +15,12 @@ export const siteConfig = {
 
 export const experiences = [
   {
-  role: 'Freelance Software Engineer & IT Consultant',
+    role: 'Laravel Developer',
     company: 'InsideSoftwares',
     period: '2025 \u2013 Present',
-    location: 'Remote',
+    location: 'Dehradun, India',
     description:
-      'Developing scalable applications and ensuring optimal performance across the software development lifecycle.',
+      'Designed and built production-grade Laravel applications from concept to deployment, ensuring clean architecture and optimal performance.',
     technologies: ['Laravel', 'Flutter', 'REST APIs'],
   },
   {
