@@ -71,6 +71,8 @@ body {
   -webkit-backdrop-filter: blur(50px);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-card);
+  position: relative;
+  isolation: isolate;
 }
 
 .brutal-border {
@@ -219,6 +221,8 @@ h1, h2, h3, h4, h5, h6 {
   padding: 1.75rem;
   transition: all 0.3s var(--ease-out);
   box-shadow: var(--shadow-card);
+  position: relative;
+  isolation: isolate;
 }
 
 .card:hover {
