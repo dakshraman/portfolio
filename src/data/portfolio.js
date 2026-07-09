@@ -144,7 +144,47 @@ export const aboutText = [
   'As a freelancer, I partner closely with clients to turn their ideas into high-quality digital solutions. When I’m not shipping code, I’m exploring system design patterns and staying sharp on emerging tech.',
 ];
 
+export const services = [
+  {
+    title: 'Laravel Development',
+    description: 'Custom web application development using the Laravel ecosystem — from MVP to enterprise-grade platforms.',
+    features: ['REST API Development', 'Admin Panels', 'Queue & Job Processing', 'Payment Integrations'],
+    icon: 'laravel',
+  },
+  {
+    title: 'Flutter App Development',
+    description: 'Cross-platform mobile applications for Android and iOS from a single Dart codebase.',
+    features: ['Native Performance', 'State Management', 'Custom UI/UX', 'App Store Deployment'],
+    icon: 'flutter',
+  },
+  {
+    title: 'API Design & Development',
+    description: 'Scalable, well-documented RESTful APIs designed for performance, security, and developer experience.',
+    features: ['RESTful Architecture', 'Authentication & Authorization', 'API Documentation', 'Rate Limiting'],
+    icon: 'api',
+  },
+  {
+    title: 'System Architecture',
+    description: 'End-to-end architecture design for web and mobile systems — focused on scalability, maintainability, and cost-efficiency.',
+    features: ['Tech Stack Selection', 'Database Design', 'Cloud Infrastructure', 'Scalability Planning'],
+    icon: 'architecture',
+  },
+  {
+    title: 'Full-Stack Development',
+    description: 'Complete web application development from database schema to polished frontend interface.',
+    features: ['Backend APIs', 'Frontend Integration', 'Database Management', 'DevOps & Deployment'],
+    icon: 'fullstack',
+  },
+  {
+    title: 'IT Consulting',
+    description: 'Technical consulting for startups and businesses — code audits, architecture reviews, and technology strategy.',
+    features: ['Code Audits', 'Tech Stack Advisory', 'Performance Optimization', 'Team Mentoring'],
+    icon: 'consulting',
+  },
+];
+
 export const navLinks = [
+  { label: 'Services', href: '#services' },
   { label: 'Work', href: '#projects' },
   { label: 'Experience', href: '#experience' },
   { label: 'About', href: '#about' },

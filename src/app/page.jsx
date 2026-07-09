@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import Projects from '@/components/Projects';
+import Services from '@/components/Services';
 import Experience from '@/components/Experience';
 import About from '@/components/About';
 import Testimonials from '@/components/Testimonials';
@@ -15,8 +16,11 @@ export default function Home() {
       <div className="section-alt">
         <Projects />
       </div>
-      <Experience />
       <div className="section-alt-purple">
+        <Services />
+      </div>
+      <Experience />
+      <div className="section-alt">
         <About />
       </div>
       <Testimonials />
