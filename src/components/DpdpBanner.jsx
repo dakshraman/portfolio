@@ -19,6 +19,7 @@ export default function DpdpBanner() {
   };
 
   const handleDecline = () => {
+    localStorage.setItem('dpdp-consent', 'false');
     setIsAnimating(true);
     setTimeout(() => setIsVisible(false), 300);
   };

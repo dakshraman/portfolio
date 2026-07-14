@@ -169,7 +169,7 @@ function ProjectCard({ project, index }) {
       aria-label={`${project.category} project: ${project.description.slice(0, 60)}...`}
       style={{
         transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, transform 0.2s ease',
+        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease',
         display: 'flex',
         flexDirection: 'column',
         gap: '1.25rem',

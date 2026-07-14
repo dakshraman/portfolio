@@ -63,7 +63,7 @@ export default function Skills() {
     return () => observer.disconnect();
   }, []);
 
-  const duplicated = [...skills, ...skills, ...skills, ...skills, ...skills, ...skills];
+  const duplicated = [...skills, ...skills];
 
   return (
     <div

@@ -184,8 +184,8 @@ export const services = [
 ];
 
 export const navLinks = [
-  { label: 'Services', href: '#services' },
   { label: 'Work', href: '#projects' },
+  { label: 'Services', href: '#services' },
   { label: 'Experience', href: '#experience' },
   { label: 'About', href: '#about' },
   { label: 'Blog', href: '#blog' },

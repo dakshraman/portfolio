@@ -29,7 +29,15 @@ export default function Navigation() {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(totalHeight > 0 ? y / totalHeight : 0);
 
-      const sections = navLinks.map((l) => l.href.replace('#', ''));
+      const sections = navLinks
+        .map((l) => l.href.replace('#', ''))
+        .sort((a, b) => {
+          const elA = document.getElementById(a);
+          const elB = document.getElementById(b);
+          if (!elA) return 1;
+          if (!elB) return -1;
+          return elA.offsetTop - elB.offsetTop;
+        });
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
         if (el && el.getBoundingClientRect().top <= 200) {

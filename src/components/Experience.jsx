@@ -27,7 +27,7 @@ export default function Experience() {
   return (
     <section ref={sectionRef} id="experience" className="section experience-section">
       <div style={{ marginBottom: '3.5rem' }}>
-        <p className="section-label">[02] Experience</p>
+        <p className="section-label">[03] Experience</p>
         <h2 className="text-heading">Where I&apos;ve worked</h2>
       </div>
 

@@ -157,7 +157,7 @@ export default function Hero() {
                   <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </MagneticButton>
-              <MagneticButton href="/resume.pdf" className="btn-ghost" style={{ backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)' }} download>
+              <MagneticButton href="/Raman-Daksh.pdf" className="btn-ghost" style={{ backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)' }} download>
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                   <path d="M8 2v8m0 0L5 7m3 3l3-3M3 12h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

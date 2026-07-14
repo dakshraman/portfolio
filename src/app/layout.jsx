@@ -2,6 +2,7 @@ import './globals.css';
 import Navigation from '@/components/Navigation';
 import AmbientBackground from '@/components/AmbientBackground';
 import BackToTop from '@/components/BackToTop';
+import CustomCursor from '@/components/CustomCursor';
 import LoaderWrapper from '@/components/LoaderWrapper';
 
 export const metadata = {
@@ -112,6 +113,7 @@ export default function RootLayout({ children }) {
         <LoaderWrapper>
           <Navigation />
           <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
+          <CustomCursor />
           <BackToTop />
         </LoaderWrapper>
       </body>

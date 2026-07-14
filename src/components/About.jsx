@@ -36,7 +36,9 @@ function AnimatedCounter({ value }) {
     return () => observer.disconnect();
   }, [value]);
 
-  return <span ref={ref} style={{ fontVariantNumeric: 'tabular-nums' }}>{count || value}</span>;
+  const suffix = value.replace(/[0-9]/g, '');
+  const display = count ? `${count}${suffix}` : value;
+  return <span ref={ref} style={{ fontVariantNumeric: 'tabular-nums' }}>{display}</span>;
 }
 
 
