@@ -146,40 +146,79 @@ export const aboutText = [
 
 export const services = [
   {
+    slug: 'laravel-development',
     title: 'Laravel Development',
     description: 'Custom web application development using the Laravel ecosystem — from MVP to enterprise-grade platforms.',
     features: ['REST API Development', 'Admin Panels', 'Queue & Job Processing', 'Payment Integrations'],
     icon: 'laravel',
+    seoDescription: 'Hire a freelance Laravel developer in India for custom web applications, REST APIs, admin panels, and enterprise-grade platforms. 4+ years of Laravel experience.',
   },
   {
+    slug: 'flutter-app-development',
     title: 'Flutter App Development',
     description: 'Cross-platform mobile applications for Android and iOS from a single Dart codebase.',
     features: ['Native Performance', 'State Management', 'Custom UI/UX', 'App Store Deployment'],
     icon: 'flutter',
+    seoDescription: 'Hire a freelance Flutter developer for cross-platform mobile apps. Android and iOS development from a single codebase. Expert Flutter developer in India.',
   },
   {
+    slug: 'api-design-development',
     title: 'API Design & Development',
     description: 'Scalable, well-documented RESTful APIs designed for performance, security, and developer experience.',
     features: ['RESTful Architecture', 'Authentication & Authorization', 'API Documentation', 'Rate Limiting'],
     icon: 'api',
+    seoDescription: 'REST API development services by a freelance API developer. Scalable, secure, and well-documented APIs built with Laravel.',
   },
   {
+    slug: 'system-architecture',
     title: 'System Architecture',
     description: 'End-to-end architecture design for web and mobile systems — focused on scalability, maintainability, and cost-efficiency.',
     features: ['Tech Stack Selection', 'Database Design', 'Cloud Infrastructure', 'Scalability Planning'],
     icon: 'architecture',
+    seoDescription: 'System architecture consulting by a freelance software architect. End-to-end design for scalable web and mobile systems.',
   },
   {
+    slug: 'full-stack-development',
     title: 'Full-Stack Development',
     description: 'Complete web application development from database schema to polished frontend interface.',
     features: ['Backend APIs', 'Frontend Integration', 'Database Management', 'DevOps & Deployment'],
     icon: 'fullstack',
+    seoDescription: 'Full-stack web development services by a freelance full-stack developer. From database design to deployment.',
   },
   {
+    slug: 'it-consulting',
     title: 'IT Consulting',
     description: 'Technical consulting for startups and businesses — code audits, architecture reviews, and technology strategy.',
     features: ['Code Audits', 'Tech Stack Advisory', 'Performance Optimization', 'Team Mentoring'],
     icon: 'consulting',
+    seoDescription: 'IT consulting services by an experienced freelance IT consultant. Code audits, architecture reviews, and technology strategy.',
+  },
+];
+
+export const faqItems = [
+  {
+    question: 'How much does it cost to hire a freelance Laravel developer?',
+    answer: 'Rates vary by project complexity. For most Laravel projects, I charge between $40-80/hr or offer fixed-price quotes. Contact me with your project details for an accurate estimate.',
+  },
+  {
+    question: 'Can you work in my timezone?',
+    answer: 'Yes. Based in Dehradun, India (IST, UTC+5:30), I\'m flexible with overlapping hours for US, UK, EU, and APAC clients. Most projects use async communication with 2-3 weekly sync calls.',
+  },
+  {
+    question: 'How long does a typical project take?',
+    answer: 'A standard MVP or REST API can be delivered in 2-4 weeks. Complex enterprise systems may take 2-3 months. I provide a detailed timeline during the proposal stage.',
+  },
+  {
+    question: 'Do you provide ongoing maintenance after project delivery?',
+    answer: 'Yes. I offer monthly retainer packages for maintenance, updates, and support. This includes bug fixes, security patches, and performance monitoring.',
+  },
+  {
+    question: 'What technologies do you specialize in?',
+    answer: 'I specialize in Laravel for backend development, Flutter for cross-platform mobile apps, REST API design, and full-stack architecture. I also work with React, Vue.js, Firebase, and various cloud platforms.',
+  },
+  {
+    question: 'How do we get started?',
+    answer: 'Contact me via email or the contact form. We\'ll have a free discovery call to discuss your project, requirements, timeline, and budget. From there, I\'ll provide a detailed proposal and we can begin.',
   },
 ];
 

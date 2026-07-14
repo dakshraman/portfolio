@@ -8,6 +8,7 @@ import Blog from '@/components/Blog';
 import Skills from '@/components/Skills';
 import GitHub from '@/components/GitHub';
 import Contact from '@/components/Contact';
+import Faq from '@/components/Faq';
 
 export default function Home() {
   return (
@@ -31,6 +32,7 @@ export default function Home() {
       <div className="section-alt-purple">
         <GitHub />
       </div>
+      <Faq />
       <Contact />
     </main>
   );

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
-import { blogs } from '@/data/portfolio';
+import { blogs, siteConfig } from '@/data/portfolio';
 
 export function generateStaticParams() {
   return blogs.map((b) => ({ slug: b.slug }));
@@ -13,7 +13,8 @@ export async function generateMetadata({ params }) {
   if (!post) return {};
   return {
     title: post.title,
-    description: post.excerpt,
+    description: `${post.excerpt} Written by Raman Daksh, freelance Laravel & Flutter developer in India.`,
+    keywords: [...post.tags, 'Freelance Developer', 'Raman Daksh', 'Laravel Developer', 'Flutter Developer', 'Freelancer India'],
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -21,6 +22,14 @@ export async function generateMetadata({ params }) {
       publishedTime: post.date,
       tags: post.tags,
       authors: ['Raman Daksh'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+    },
+    alternates: {
+      canonical: `https://dakshraman.in/blog/${post.slug}`,
     },
   };
 }
@@ -31,17 +40,15 @@ function formatDate(dateStr) {
   });
 }
 
-function renderContent(content) {
+function renderContent(content, slug) {
   const lines = content.split('\n');
   const elements = [];
   let inCodeBlock = false;
   let codeLines = [];
-  let codeLang = '';
 
   lines.forEach((line, i) => {
     if (line.startsWith('```') && !inCodeBlock) {
       inCodeBlock = true;
-      codeLang = line.slice(3).trim();
       codeLines = [];
       return;
     }
@@ -154,6 +161,64 @@ function renderContent(content) {
   return elements;
 }
 
+const relatedCta = {
+  'building-scalable-rest-apis-with-laravel': {
+    text: 'Need a scalable REST API for your project?',
+    link: '/services/api-design-development',
+    label: 'Hire a freelance API developer →',
+  },
+  'flutter-state-management-bloc-vs-provider-2025': {
+    text: 'Building a Flutter app?',
+    link: '/services/flutter-app-development',
+    label: 'Hire a freelance Flutter developer →',
+  },
+  'laravel-vs-django-2025': {
+    text: 'Decided on Laravel for your next project?',
+    link: '/services/laravel-development',
+    label: 'Hire a freelance Laravel developer →',
+  },
+  'laravel-performance-optimization-guide': {
+    text: 'Need help optimizing your Laravel application?',
+    link: '/services/laravel-development',
+    label: 'Get Laravel performance consulting →',
+  },
+  'securing-laravel-apps-beyond-the-basics': {
+    text: 'Want to secure your Laravel application?',
+    link: '/services/it-consulting',
+    label: 'Get IT consulting for your project →',
+  },
+  'how-to-hire-freelance-laravel-developer': {
+    text: 'Looking for a Laravel developer?',
+    link: '/services/laravel-development',
+    label: 'Hire me for your Laravel project →',
+  },
+  'firebase-for-laravel-real-time-features': {
+    text: 'Need real-time features in your Laravel app?',
+    link: '/services/full-stack-development',
+    label: 'Hire a full-stack developer →',
+  },
+  'laravel-reverb-vs-other-websockets': {
+    text: 'Building a real-time application?',
+    link: '/services/laravel-development',
+    label: 'Hire a Laravel developer with Reverb expertise →',
+  },
+  'cross-platform-deployment-flutter-to-ios-android': {
+    text: 'Need help deploying your Flutter app?',
+    link: '/services/flutter-app-development',
+    label: 'Hire a freelance Flutter developer →',
+  },
+  'how-i-built-ai-debugging-tool-for-laravel': {
+    text: 'Building developer tools or need Laravel expertise?',
+    link: '/services/laravel-development',
+    label: 'Hire a freelance Laravel developer →',
+  },
+  'ai-powered-development-tools-2025': {
+    text: 'Using AI tools but need an experienced developer to validate the code?',
+    link: '/services/full-stack-development',
+    label: 'Hire a full-stack developer →',
+  },
+};
+
 export default async function BlogPost({ params }) {
   const { slug } = await params;
   const post = blogs.find((b) => b.slug === slug);
@@ -175,12 +240,24 @@ export default async function BlogPost({ params }) {
       name: 'Raman Daksh',
       url: 'https://dakshraman.in',
     },
-    keywords: post.tags.join(', '),
+    keywords: [...post.tags, 'Freelance Developer', 'Raman Daksh'].join(', '),
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `https://dakshraman.in/blog/${post.slug}`,
     },
   };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://dakshraman.in' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://dakshraman.in/#blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://dakshraman.in/blog/${post.slug}` },
+    ],
+  };
+
+  const cta = relatedCta[slug];
 
   return (
     <main style={{
@@ -192,6 +269,10 @@ export default async function BlogPost({ params }) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <Link
         href="/#blog"
@@ -249,11 +330,32 @@ export default async function BlogPost({ params }) {
       </div>
 
       <article>
-        {renderContent(post.content)}
+        {renderContent(post.content, post.slug)}
       </article>
 
+      {cta && (
+        <div className="card" style={{
+          marginTop: '2.5rem', padding: '1.5rem',
+          border: '2px solid var(--accent-glow-strong)',
+        }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--fg-muted)', marginBottom: '0.75rem' }}>
+            {cta.text}
+          </p>
+          <Link
+            href={cta.link}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              fontFamily: 'var(--font-heading)', fontSize: '0.8rem',
+              fontWeight: 700, color: 'var(--accent)', textDecoration: 'none',
+            }}
+          >
+            {cta.label}
+          </Link>
+        </div>
+      )}
+
       <div style={{
-        marginTop: '3rem',
+        marginTop: '2rem',
         paddingTop: '2rem',
         borderTop: '1px solid var(--border)',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -271,6 +373,16 @@ export default async function BlogPost({ params }) {
           <Icon icon="mdi:arrow-left" width={16} height={16} />
           All Posts
         </Link>
+        <a
+          href={`mailto:${siteConfig.email}?subject=Question about: ${post.title}`}
+          style={{
+            fontFamily: 'var(--font-heading)', fontSize: '0.75rem',
+            fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
+            color: 'var(--fg-dim)', textDecoration: 'none',
+          }}
+        >
+          Have a question?
+        </a>
       </div>
     </main>
   );
