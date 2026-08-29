@@ -51,7 +51,7 @@ export default function GitHub() {
         <h2 className="text-heading">GitHub</h2>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '16px' }} role="list">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '16px' }}>
         {PINNED_REPOS.map((repo) => (
           <article
             key={repo.name}

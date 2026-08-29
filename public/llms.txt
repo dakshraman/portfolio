@@ -1,23 +1,23 @@
 # Raman Daksh - Freelance Software Engineer & DevOps Consultant
 
-> Freelance software engineer and IT consultant based in Dehradun, India. Specializing in Laravel, Flutter, DevOps, and full-stack architecture. 4+ years building scalable backend systems, cross-platform mobile apps, and cloud infrastructure for startups and enterprises.
+Freelance software engineer and IT consultant based in Dehradun, India. Specializing in Laravel, Flutter, DevOps, and full-stack architecture. 4+ years building scalable backend systems, cross-platform mobile apps, and cloud infrastructure for startups and enterprises.
 
 ## Services
 
-- **Laravel Development** — Custom web apps, REST APIs, admin panels, payment integrations, queue processing
-- **Flutter App Development** — Cross-platform Android & iOS apps from a single Dart codebase
-- **API Design & Development** — Scalable, well-documented RESTful APIs with authentication and rate limiting
-- **DevOps & Cloud** — CI/CD pipelines, Docker containerization, cloud deployment, server management
-- **System Architecture** — Tech stack selection, database design, cloud infrastructure, scalability planning
-- **Full-Stack Development** — End-to-end web apps from database to polished frontend
-- **IT Consulting** — Code audits, architecture reviews, performance optimization, team mentoring
+- [Laravel Development](https://dakshraman.in/services/laravel-development) - Custom web apps, REST APIs, admin panels, payment integrations, queue processing
+- [Flutter App Development](https://dakshraman.in/services/flutter-app-development) - Cross-platform Android & iOS apps from a single Dart codebase
+- [API Design & Development](https://dakshraman.in/services/api-design-development) - Scalable, well-documented RESTful APIs with authentication and rate limiting
+- [DevOps & Cloud](https://dakshraman.in/services/devops) - CI/CD pipelines, Docker containerization, cloud deployment, server management
+- [System Architecture](https://dakshraman.in/services/system-architecture) - Tech stack selection, database design, cloud infrastructure, scalability planning
+- [Full-Stack Development](https://dakshraman.in/services/full-stack-development) - End-to-end web apps from database to polished frontend
+- [IT Consulting](https://dakshraman.in/services/it-consulting) - Code audits, architecture reviews, performance optimization, team mentoring
 
 ## Key Projects
 
-- **Devkit** — TypeScript developer toolkit and utility library (github.com/dakshraman/devkit)
-- **Borrow Nearby** — Location-based peer-to-peer lending platform (Flutter + Laravel API)
-- **Advanced School ERP** — Comprehensive school management system with academics, messaging, payments, payroll
-- **Laravel AI Debugger** — Open source AI debugging assistant for Laravel (800+ GitHub stars)
+- [Devkit](https://github.com/dakshraman/devkit) - TypeScript developer toolkit and utility library
+- [Borrow Nearby](https://github.com/dakshraman/borrow-nearby) - Location-based peer-to-peer lending platform (Flutter + Laravel API)
+- [Advanced School ERP](https://github.com/dakshraman/schoolerp-parent) - Comprehensive school management system with academics, messaging, payments, payroll
+- [Laravel AI Debugger](https://github.com/dakshraman/laravel-ai-debugger) - Open source AI debugging assistant for Laravel (800+ stars)
 
 ## Tech Stack
 
@@ -25,18 +25,25 @@ Laravel, Flutter, React.js, Python, Dart, PHP, Firebase, Java, C++, SQL, Linux, 
 
 ## Experience
 
-- **Laravel Developer** at InsideSoftwares (2025–Present)
-- **Full Stack Laravel Developer** at AK Software Solutions (2025)
-- **API Developer (Laravel/Flutter)** at Pearl Organisation (2024–2025)
+- [InsideSoftwares](https://dakshraman.in/#experience) - Laravel Developer (2025–Present)
+- [AK Software Solutions](https://dakshraman.in/#experience) - Full Stack Laravel Developer (2025)
+- [Pearl Organisation](https://dakshraman.in/#experience) - API Developer Laravel/Flutter (2024–2025)
+
+## Blog
+
+- [Building Scalable REST APIs with Laravel](https://dakshraman.in/blog/building-scalable-rest-apis-with-laravel) - Deep dive into high-performance API design with Laravel, Redis, and queues
+- [Flutter State Management: BLoC vs Provider](https://dakshraman.in/blog/flutter-state-management-bloc-vs-provider-2025) - Honest comparison with real-world benchmarks
+- [Laravel Reverb vs Pusher vs Soketi](https://dakshraman.in/blog/laravel-reverb-vs-other-websockets) - WebSocket comparison with benchmarks and cost analysis
+- [Laravel vs Django in 2025](https://dakshraman.in/blog/laravel-vs-django-2025) - Data-driven framework comparison
 
 ## Contact
 
-- Email: ramandaksh6161@gmail.com
-- GitHub: https://github.com/dakshraman
-- LinkedIn: https://linkedin.com/in/dakshraman
-- Telegram: https://t.me/dakshraman
-- Portfolio: https://dakshraman.in
+- [Email](mailto:ramandaksh6161@gmail.com) - ramandaksh6161@gmail.com
+- [GitHub](https://github.com/dakshraman) - Open source projects and contributions
+- [LinkedIn](https://linkedin.com/in/dakshraman) - Professional network
+- [Telegram](https://t.me/dakshraman) - Direct message
+- [Portfolio](https://dakshraman.in) - Full portfolio and case studies
 
-## Hiring Info
+## Hiring
 
-Available for freelance, consulting, and remote positions. Based in Dehradun, India (IST, UTC+5:30). Flexible with US, UK, EU, and APAC timezones. Rates: $40–80/hr or fixed-price quotes.
+Available for freelance, consulting, and remote positions. Rates: $40–80/hr or fixed-price quotes. Contact for a free discovery call.

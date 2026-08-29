@@ -23,7 +23,7 @@ export default function Faq() {
   const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
 
   return (
-    <section className="section" style={{ paddingTop: 0 }}>
+    <section className="section" style={{ paddingTop: 0 }} aria-label="Frequently asked questions">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
