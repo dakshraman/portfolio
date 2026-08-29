@@ -222,7 +222,36 @@ export const faqItems = [
   },
 ];
 
+export const highlights = [
+  {
+    title: 'Devkit',
+    description: 'A developer toolkit and utility library built with TypeScript. Modular, typed, and designed for rapid project scaffolding.',
+    tags: ['TypeScript', 'Developer Tools', 'SDK'],
+    github: 'https://github.com/dakshraman/devkit',
+    accent: '#5E6AD2',
+    icon: 'toolkit',
+  },
+  {
+    title: 'Borrow Nearby',
+    description: 'A location-based peer-to-peer lending platform. Frontend app with a Laravel API backend enabling users to borrow and lend items locally.',
+    tags: ['Flutter', 'Laravel', 'API', 'Mobile'],
+    github: 'https://github.com/dakshraman/borrow-nearby',
+    backend: 'https://github.com/dakshraman/borrow-nearby-backend',
+    accent: '#22C55E',
+    icon: 'local',
+  },
+  {
+    title: 'Advanced School ERP',
+    description: 'A comprehensive school management system — academics, messaging, online payments, payroll, and student lifecycle management.',
+    tags: ['ERP', 'Full Stack', 'Laravel'],
+    github: 'https://github.com/dakshraman/schoolerp-parent',
+    accent: '#F59E0B',
+    icon: 'enterprise',
+  },
+];
+
 export const navLinks = [
+  { label: 'Highlights', href: '#highlights' },
   { label: 'Work', href: '#projects' },
   { label: 'Services', href: '#services' },
   { label: 'Experience', href: '#experience' },

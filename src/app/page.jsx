@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero';
+import Highlights from '@/components/Highlights';
 import Projects from '@/components/Projects';
 import Services from '@/components/Services';
 import Experience from '@/components/Experience';
@@ -14,6 +15,9 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <div className="section-alt">
+        <Highlights />
+      </div>
       <div className="section-alt">
         <Projects />
       </div>
