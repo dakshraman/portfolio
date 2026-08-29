@@ -68,6 +68,18 @@ const ServiceIcon = ({ icon }) => {
         <path d="M28 28L24 24" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.3" />
       </svg>
     ),
+    devops: (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <path d="M10 20C10 14.477 14.477 10 20 10C25.523 10 30 14.477 30 20C30 25.523 25.523 30 20 30" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M20 30C14.477 30 10 25.523 10 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 3" />
+        <circle cx="20" cy="20" r="3" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M6 20H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M26 20H34" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M20 6V14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M30 10L26 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M10 10L14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
   };
   return icons[icon] || icons.api;
 };

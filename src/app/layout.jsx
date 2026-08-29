@@ -11,7 +11,16 @@ export const metadata = {
     template: '%s | Raman Daksh',
   },
   description: 'Hire Raman Daksh — a freelance software engineer and IT consultant in Dehradun, India. Specializing in Laravel, Flutter, and full-stack architecture. 4+ years building scalable apps for startups and enterprises.',
-  keywords: ['Freelance Software Engineer', 'Freelance Laravel Developer', 'Freelance Flutter Developer', 'IT Consultant', 'Laravel Developer', 'Flutter Developer', 'Full Stack Developer', 'REST API', 'Freelancer India', 'Hire Laravel Developer', 'Hire Freelancer', 'Cross-Platform Development', 'Raman Daksh', 'Dehradun Freelancer', 'Uttarakhand Developer', 'Remote Laravel Developer'],
+  keywords: [
+    'Freelance Software Engineer', 'Freelance Laravel Developer', 'Freelance Flutter Developer',
+    'Freelance DevOps Engineer', 'DevOps Consultant India', 'IT Consultant',
+    'Laravel Developer', 'Flutter Developer', 'Full Stack Developer', 'REST API',
+    'Freelancer India', 'Hire Laravel Developer', 'Hire Flutter Developer',
+    'Hire DevOps Engineer', 'Hire Freelancer', 'Cross-Platform Development',
+    'CI/CD Pipeline', 'Docker Consultant', 'Cloud Deployment India',
+    'Raman Daksh', 'Dehradun Freelancer', 'Uttarakhand Developer',
+    'Remote Laravel Developer', 'Remote Flutter Developer', 'Remote DevOps Engineer',
+  ],
   authors: [{ name: 'Raman Daksh' }],
   creator: 'Raman Daksh',
   metadataBase: new URL('https://dakshraman.in'),
@@ -70,14 +79,15 @@ const personJsonLd = {
   ],
   hasOccupation: {
     '@type': 'Occupation',
-    name: 'Freelance Software Engineer',
-    description: 'Providing freelance software development and IT consulting services including Laravel development, Flutter app development, API design, and system architecture.',
-    skills: 'Laravel, Flutter, PHP, Python, REST API Design, System Architecture, Full Stack Development',
+    name: 'Freelance Software Engineer & DevOps Consultant',
+    description: 'Providing freelance software development, DevOps, and IT consulting services including Laravel development, Flutter app development, API design, cloud deployment, and system architecture.',
+    skills: 'Laravel, Flutter, PHP, Python, REST API Design, System Architecture, Full Stack Development, DevOps, Docker, CI/CD, Cloud Deployment',
   },
   knowsAbout: [
     'Laravel', 'Flutter', 'PHP', 'Python', 'REST API', 'System Architecture',
     'Full Stack Development', 'API Design', 'Database Design', 'Mobile Development',
     'Cloud Architecture', 'DevOps', 'Firebase', 'React', 'Dart',
+    'Docker', 'CI/CD', 'Linux', 'Nginx', 'AWS', 'DigitalOcean',
   ],
   makesOffer: [
     {
@@ -102,6 +112,14 @@ const personJsonLd = {
         '@type': 'Service',
         name: 'REST API Design & Development',
         description: 'Scalable, well-documented RESTful APIs designed for performance, security, and developer experience.',
+      },
+    },
+    {
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: 'DevOps & Cloud Infrastructure',
+        description: 'CI/CD pipelines, Docker containerization, cloud deployment, and server management for startups and enterprises.',
       },
     },
     {

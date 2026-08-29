@@ -1,31 +1,42 @@
-# Raman Daksh - Portfolio
+# Raman Daksh - Freelance Software Engineer & DevOps Consultant
 
-> Senior Full Stack Developer specializing in Laravel, Flutter, and cross-platform architecture. Building scalable backend systems and beautiful mobile apps.
+> Freelance software engineer and IT consultant based in Dehradun, India. Specializing in Laravel, Flutter, DevOps, and full-stack architecture. 4+ years building scalable backend systems, cross-platform mobile apps, and cloud infrastructure for startups and enterprises.
 
-## Sections
+## Services
 
-- Hero: Personal introduction and role
-- Projects: Selected work and open source projects
-- Experience: Professional work history
-- About: Personal background, stats, and tech stack
-- Testimonials: Client and colleague recommendations
-- Blog: Technical writing and tutorials
-- Skills: Technology expertise showcase (marquee)
-- GitHub: Open source repositories
-- Contact: Email and social links
+- **Laravel Development** — Custom web apps, REST APIs, admin panels, payment integrations, queue processing
+- **Flutter App Development** — Cross-platform Android & iOS apps from a single Dart codebase
+- **API Design & Development** — Scalable, well-documented RESTful APIs with authentication and rate limiting
+- **DevOps & Cloud** — CI/CD pipelines, Docker containerization, cloud deployment, server management
+- **System Architecture** — Tech stack selection, database design, cloud infrastructure, scalability planning
+- **Full-Stack Development** — End-to-end web apps from database to polished frontend
+- **IT Consulting** — Code audits, architecture reviews, performance optimization, team mentoring
 
-## Key Links
+## Key Projects
 
-- GitHub: https://github.com/dakshraman
-- LinkedIn: https://linkedin.com/in/dakshraman
-- Instagram: https://instagram.com/dakshraman
-- Telegram: https://t.me/dakshraman
-- Resume: https://dakshraman.in/resume.pdf
+- **Devkit** — TypeScript developer toolkit and utility library (github.com/dakshraman/devkit)
+- **Borrow Nearby** — Location-based peer-to-peer lending platform (Flutter + Laravel API)
+- **Advanced School ERP** — Comprehensive school management system with academics, messaging, payments, payroll
+- **Laravel AI Debugger** — Open source AI debugging assistant for Laravel (800+ GitHub stars)
 
 ## Tech Stack
 
-Laravel, Flutter, React.js, Python, Dart, PHP, Firebase, Java, C++, SQL, Linux, Shopify, WordPress
+Laravel, Flutter, React.js, Python, Dart, PHP, Firebase, Java, C++, SQL, Linux, Docker, CI/CD, Shopify, WordPress
 
-## About
+## Experience
 
-Raman Daksh is a Software Engineer from Dehradun, India with expertise in full-stack development, system architecture, and cross-platform applications. Passionate about building scalable solutions and contributing to open source.
+- **Laravel Developer** at InsideSoftwares (2025–Present)
+- **Full Stack Laravel Developer** at AK Software Solutions (2025)
+- **API Developer (Laravel/Flutter)** at Pearl Organisation (2024–2025)
+
+## Contact
+
+- Email: ramandaksh6161@gmail.com
+- GitHub: https://github.com/dakshraman
+- LinkedIn: https://linkedin.com/in/dakshraman
+- Telegram: https://t.me/dakshraman
+- Portfolio: https://dakshraman.in
+
+## Hiring Info
+
+Available for freelance, consulting, and remote positions. Based in Dehradun, India (IST, UTC+5:30). Flexible with US, UK, EU, and APAC timezones. Rates: $40–80/hr or fixed-price quotes.

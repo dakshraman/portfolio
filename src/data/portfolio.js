@@ -170,6 +170,14 @@ export const services = [
     seoDescription: 'REST API development services by a freelance API developer. Scalable, secure, and well-documented APIs built with Laravel.',
   },
   {
+    slug: 'devops',
+    title: 'DevOps & Cloud',
+    description: 'CI/CD pipelines, Docker containerization, cloud deployment, and infrastructure automation for faster, reliable releases.',
+    features: ['CI/CD Pipelines', 'Docker & Containers', 'Cloud Deployment', 'Server Management'],
+    icon: 'devops',
+    seoDescription: 'Freelance DevOps engineer in India. Docker, CI/CD pipelines, cloud deployment, server management, and infrastructure automation services.',
+  },
+  {
     slug: 'system-architecture',
     title: 'System Architecture',
     description: 'End-to-end architecture design for web and mobile systems — focused on scalability, maintainability, and cost-efficiency.',
@@ -209,12 +217,16 @@ export const faqItems = [
     answer: 'A standard MVP or REST API can be delivered in 2-4 weeks. Complex enterprise systems may take 2-3 months. I provide a detailed timeline during the proposal stage.',
   },
   {
+    question: 'Do you provide DevOps and deployment services?',
+    answer: 'Yes. I handle CI/CD pipeline setup, Docker containerization, cloud deployment (AWS, DigitalOcean), server configuration, and ongoing infrastructure management. This is included with full-stack projects or available as a standalone service.',
+  },
+  {
     question: 'Do you provide ongoing maintenance after project delivery?',
     answer: 'Yes. I offer monthly retainer packages for maintenance, updates, and support. This includes bug fixes, security patches, and performance monitoring.',
   },
   {
     question: 'What technologies do you specialize in?',
-    answer: 'I specialize in Laravel for backend development, Flutter for cross-platform mobile apps, REST API design, and full-stack architecture. I also work with React, Vue.js, Firebase, and various cloud platforms.',
+    answer: 'I specialize in Laravel for backend development, Flutter for cross-platform mobile apps, REST API design, DevOps (Docker, CI/CD, cloud deployment), and full-stack architecture. I also work with React, Vue.js, Firebase, and various cloud platforms.',
   },
   {
     question: 'How do we get started?',
