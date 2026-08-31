@@ -47,7 +47,7 @@ export default function Blog() {
           <article className="card" aria-label={`Featured post: ${featured.title}`}>
           <Link
             href={`/blog/${featured.slug}`}
-            data-cursor="pointer"
+           
             style={{
               display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem',
               textDecoration: 'none', color: 'var(--fg)',
@@ -85,7 +85,7 @@ export default function Blog() {
             <article key={post.slug} className="card" aria-label={`Blog post: ${post.title}`}>
             <Link
               href={`/blog/${post.slug}`}
-              data-cursor="pointer"
+             
               style={{
                 display: 'flex', flexDirection: 'column', gap: '0.75rem',
                 textDecoration: 'none', color: 'var(--fg)',

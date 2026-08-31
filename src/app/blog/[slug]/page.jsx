@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import { blogs, siteConfig } from '@/data/portfolio';
+import blogContent from '@/data/blog-content';
 
 export function generateStaticParams() {
   return blogs.map((b) => ({ slug: b.slug }));
@@ -330,7 +331,7 @@ export default async function BlogPost({ params }) {
       </div>
 
       <article>
-        {renderContent(post.content, post.slug)}
+        {renderContent(blogContent[post.slug] || '', post.slug)}
       </article>
 
       {cta && (

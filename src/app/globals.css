@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 :root {
   --bg: #000000;
   --bg-elevated: #000000;
@@ -24,7 +22,7 @@
 
   --font-heading: 'Archivo', system-ui, -apple-system, sans-serif;
   --font-body: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Space Grotesk', ui-monospace, monospace;
+  --font-mono: 'SF Mono', 'Fira Code', ui-monospace, monospace;
 
   --space-xs: 4px;
   --space-sm: 8px;

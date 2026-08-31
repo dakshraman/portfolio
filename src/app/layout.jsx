@@ -2,7 +2,6 @@ import './globals.css';
 import Navigation from '@/components/Navigation';
 import AmbientBackground from '@/components/AmbientBackground';
 import BackToTop from '@/components/BackToTop';
-import CustomCursor from '@/components/CustomCursor';
 import LoaderWrapper from '@/components/LoaderWrapper';
 
 export const metadata = {
@@ -180,6 +179,11 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        />
+        <meta name="theme-color" content="#FE7F2D" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -198,7 +202,6 @@ export default function RootLayout({ children }) {
         <LoaderWrapper>
           <Navigation />
           <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
-          <CustomCursor />
           <BackToTop />
         </LoaderWrapper>
       </body>

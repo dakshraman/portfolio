@@ -36,7 +36,7 @@ function MagneticText({ text }) {
   }, []);
 
   return (
-    <span ref={containerRef} data-cursor="pointer" style={{ display: 'inline-block' }}>
+    <span ref={containerRef} style={{ display: 'inline-block' }}>
       {text.split('').map((char, i) => (
         <span
           key={i}
@@ -102,7 +102,7 @@ export default function Contact() {
             transition: 'text-shadow 0.3s ease',
             fontFamily: 'var(--font-heading)',
           }}
-          data-cursor="pointer"
+         
           onMouseEnter={(e) => { e.currentTarget.style.textShadow = '0 0 40px var(--accent-glow-strong)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.textShadow = 'none'; }}
         >

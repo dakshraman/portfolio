@@ -66,7 +66,7 @@ export default function GitHub() {
               href={`https://github.com/dakshraman/${repo.name}`}
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor="pointer"
+             
               style={{
                 display: 'flex', flexDirection: 'column', gap: '0.75rem',
                 textDecoration: 'none', color: 'var(--fg)',
@@ -117,7 +117,7 @@ export default function GitHub() {
           target="_blank"
           rel="noopener noreferrer"
           className="btn-ghost"
-          data-cursor="pointer"
+         
           style={{ gap: '8px' }}
         >
           View All Repositories

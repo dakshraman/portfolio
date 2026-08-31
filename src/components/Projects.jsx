@@ -164,7 +164,7 @@ function ProjectCard({ project, index }) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setIsHovered(false); }}
-      data-cursor="pointer"
+     
       className="card"
       aria-label={`${project.category} project: ${project.description.slice(0, 60)}...`}
       style={{
@@ -175,7 +175,7 @@ function ProjectCard({ project, index }) {
         gap: '1.25rem',
         overflow: 'hidden',
         position: 'relative',
-        cursor: 'none',
+        cursor: 'pointer',
       }}
     >
       <div

@@ -18,7 +18,7 @@ export default function BackToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Back to top"
-      data-cursor="pointer"
+     
       style={{
         position: 'fixed', bottom: '24px', right: '24px', zIndex: 999,
         width: '44px', height: '44px', borderRadius: 'var(--radius-sm)',

@@ -55,6 +55,18 @@ export default function ServiceIcon({ icon }) {
         <circle cx="20" cy="26" r="1.5" fill="currentColor" opacity="0.6" />
       </svg>
     ),
+    devops: (
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="14" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M14 20H26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M20 14V26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="20" cy="20" r="4" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="12" cy="12" r="2" fill="currentColor" opacity="0.4" />
+        <circle cx="28" cy="28" r="2" fill="currentColor" opacity="0.4" />
+        <circle cx="12" cy="28" r="2" fill="currentColor" opacity="0.4" />
+        <circle cx="28" cy="12" r="2" fill="currentColor" opacity="0.4" />
+      </svg>
+    ),
   };
   return icons[icon] || icons.api;
 }

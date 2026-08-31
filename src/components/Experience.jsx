@@ -35,7 +35,7 @@ export default function Experience() {
         {experiences.map((exp, i) => (
           <article
             key={i}
-            data-cursor="pointer"
+           
             className="exp-row"
             aria-label={`${exp.role} at ${exp.company}`}
             style={{

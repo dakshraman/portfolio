@@ -74,7 +74,8 @@ function MagneticButton({ children, href, className, style, download }) {
     };
   }, []);
 
-  return <a ref={btnRef} href={href} className={className} style={style} data-cursor="pointer" download={download}>{children}</a>;
+  return <a ref={btnRef} href={href} className={className} style={style} 
+ download={download}>{children}</a>;
 }
 
 export default function Hero() {
@@ -170,20 +171,11 @@ export default function Hero() {
         </div>
       </div>
 
-      <div style={{ position: 'absolute', bottom: '30px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', zIndex: 2, animation: 'float 3s ease-in-out infinite' }}>
-        <span style={{ fontSize: '0.6rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.15em', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>Scroll</span>
-        <div style={{ width: '1px', height: '32px', background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />
-      </div>
-
       <style jsx>{`
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        @keyframes float { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
         @keyframes heroFadeUp {
           from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
           to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        @media (max-width: 768px) {
-          .scroll-indicator { display: none !important; }
         }
       `}</style>
     </header>

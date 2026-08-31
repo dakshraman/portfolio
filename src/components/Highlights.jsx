@@ -49,14 +49,14 @@ function HighlightCard({ item, index }) {
   }, []);
 
   return (
-    <a
+    <div
       ref={cardRef}
-      href={item.github}
-      target="_blank"
-      rel="noopener noreferrer"
       className="highlight-card"
-      data-cursor="pointer"
-      style={{ '--accent-color': item.accent, animationDelay: `${index * 0.1}s` }}
+      role="link"
+      tabIndex={0}
+      onClick={() => window.open(item.github, '_blank', 'noopener,noreferrer')}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') window.open(item.github, '_blank', 'noopener,noreferrer'); }}
+      style={{ '--accent-color': item.accent, animationDelay: `${index * 0.1}s`, cursor: 'pointer' }}
     >
       <div className="highlight-card-inner">
         {/* Accent bar */}
@@ -243,7 +243,7 @@ function HighlightCard({ item, index }) {
           to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-    </a>
+    </div>
   );
 }
 
