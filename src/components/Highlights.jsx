@@ -98,39 +98,24 @@ function HighlightCard({ item, index }) {
         .highlight-card {
           display: block;
           position: relative;
-          border: 2px solid var(--border);
+          border: 1px solid var(--glass-border);
           border-radius: var(--radius-lg);
-          background: var(--bg-elevated);
+          background: var(--glass-bg);
+          backdrop-filter: var(--glass-blur);
+          -webkit-backdrop-filter: var(--glass-blur);
           text-decoration: none;
           color: inherit;
           overflow: hidden;
           transition: border-color 0.3s ease, box-shadow 0.3s ease;
           animation: highlightFadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both;
         }
-        .highlight-card::before {
-          content: '';
-          position: absolute;
-          top: 6px;
-          left: 6px;
-          right: -6px;
-          bottom: -6px;
-          border: 2px solid var(--accent-color);
-          border-radius: var(--radius-lg);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          pointer-events: none;
-          z-index: -1;
-        }
         .highlight-card:hover {
           border-color: var(--accent-color);
-          box-shadow: 6px 6px 0 var(--accent-color);
-        }
-        .highlight-card:hover::before {
-          opacity: 0.3;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--accent-color);
         }
         .highlight-card:active {
-          transform: translate(2px, 2px) !important;
-          box-shadow: 2px 2px 0 var(--accent-color);
+          transform: translateY(2px) !important;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
         .highlight-card-inner {
           padding: clamp(1.5rem, 3vw, 2rem);
@@ -154,12 +139,14 @@ function HighlightCard({ item, index }) {
         .highlight-icon-wrap {
           width: 40px;
           height: 40px;
-          border: 2px solid var(--border);
+          border: 1px solid var(--glass-border);
           border-radius: var(--radius-md);
           display: flex;
           align-items: center;
           justify-content: center;
-          background: var(--bg);
+          background: var(--glass-bg);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           color: var(--accent-color);
           transition: border-color 0.3s ease, background 0.3s ease;
         }
@@ -184,7 +171,7 @@ function HighlightCard({ item, index }) {
           font-weight: 600;
           color: var(--fg-muted);
           padding: 4px 8px;
-          border: 1px solid var(--border);
+          border: 1px solid var(--glass-border);
           border-radius: var(--radius-sm);
           transition: all 0.3s ease;
         }
@@ -228,10 +215,10 @@ function HighlightCard({ item, index }) {
           font-family: var(--font-heading);
           font-weight: 600;
           padding: 4px 10px;
-          border: 1px solid var(--border);
+          border: 1px solid var(--glass-border);
           border-radius: var(--radius-sm);
           color: var(--fg-muted);
-          background: var(--bg);
+          background: transparent;
           transition: all 0.3s ease;
         }
         .highlight-card:hover .highlight-tag {

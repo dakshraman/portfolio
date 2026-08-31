@@ -126,16 +126,14 @@ export default function Services() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              border: '2px solid var(--border-thick)',
-              boxShadow: `4px 4px 0px ${sectionColor}22`,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = `6px 6px 0px ${sectionColor}44`;
-              e.currentTarget.style.borderColor = `${sectionColor}44`;
+              e.currentTarget.style.boxShadow = `0 8px 32px ${sectionColor}22`;
+              e.currentTarget.style.borderColor = `${sectionColor}33`;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = `4px 4px 0px ${sectionColor}22`;
-              e.currentTarget.style.borderColor = 'var(--border-thick)';
+              e.currentTarget.style.boxShadow = 'var(--glass-shadow)';
+              e.currentTarget.style.borderColor = 'var(--glass-border)';
             }}
           >
             <div
@@ -143,8 +141,10 @@ export default function Services() {
                 width: '48px',
                 height: '48px',
                 borderRadius: '12px',
-                background: `${sectionColor}15`,
-                border: `1px solid ${sectionColor}30`,
+                background: `${sectionColor}10`,
+                border: `1px solid ${sectionColor}20`,
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

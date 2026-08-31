@@ -43,27 +43,27 @@ export default function Experience() {
               borderTop: '1px solid var(--border)',
               borderRadius: 'var(--radius-md)',
               transition: 'all 0.3s ease',
-              background: 'transparent',
+              background: 'var(--glass-bg)',
+              backdropFilter: 'var(--glass-blur)',
+              WebkitBackdropFilter: 'var(--glass-blur)',
               position: 'relative',
-              border: '1px solid transparent',
-              borderTopColor: 'var(--border)',
+              border: '1px solid var(--glass-border)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'var(--bg-card)';
-              e.currentTarget.style.backdropFilter = 'blur(16px)';
-              e.currentTarget.style.WebkitBackdropFilter = 'blur(16px)';
-              e.currentTarget.style.border = '1px solid var(--border)';
-              e.currentTarget.style.borderColor = 'rgba(254, 127, 45, 0.3)';
-              e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)';
+              e.currentTarget.style.background = 'var(--glass-bg-hover)';
+              e.currentTarget.style.backdropFilter = 'var(--glass-blur-heavy)';
+              e.currentTarget.style.WebkitBackdropFilter = 'var(--glass-blur-heavy)';
+              e.currentTarget.style.border = '1px solid var(--glass-border-hover)';
+              e.currentTarget.style.borderColor = 'rgba(254, 127, 45, 0.2)';
+              e.currentTarget.style.boxShadow = 'var(--glass-shadow-hover)';
               e.currentTarget.style.transform = 'translateY(-2px)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.backdropFilter = 'none';
-              e.currentTarget.style.WebkitBackdropFilter = 'none';
-              e.currentTarget.style.border = '1px solid transparent';
-              e.currentTarget.style.borderTopColor = 'var(--border)';
-              e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.background = 'var(--glass-bg)';
+              e.currentTarget.style.backdropFilter = 'var(--glass-blur)';
+              e.currentTarget.style.WebkitBackdropFilter = 'var(--glass-blur)';
+              e.currentTarget.style.border = '1px solid var(--glass-border)';
+              e.currentTarget.style.boxShadow = 'var(--glass-shadow)';
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >

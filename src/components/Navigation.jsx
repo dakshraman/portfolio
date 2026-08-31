@@ -81,9 +81,7 @@ export default function Navigation() {
           height: isScrolled ? '46px' : '54px',
           padding: isScrolled ? '0 14px' : '0 22px',
           borderRadius: '9999px',
-          background: isScrolled
-            ? 'rgba(10, 10, 11, 0.82)'
-            : 'rgba(10, 10, 11, 0.55)',
+          background: isScrolled ? 'var(--nav-bg-scrolled)' : 'var(--nav-bg)',
           backdropFilter: 'blur(40px) saturate(1.8)',
           WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
           border: '1px solid',
@@ -236,8 +234,8 @@ export default function Navigation() {
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               style={{
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'var(--glass-bg)',
+                border: '1px solid var(--glass-border)',
                 borderRadius: '9999px',
                 width: isScrolled ? '30px' : '34px',
                 height: isScrolled ? '30px' : '34px',
@@ -248,8 +246,8 @@ export default function Navigation() {
                 color: 'var(--fg)',
                 transition: 'all 0.3s ease',
                 padding: 0,
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
+                backdropFilter: 'var(--glass-blur)',
+                WebkitBackdropFilter: 'var(--glass-blur)',
               }}
             >
               <svg
@@ -290,7 +288,7 @@ export default function Navigation() {
           pointerEvents: mobileOpen ? 'auto' : 'none',
           marginTop: mobileOpen ? '8px' : '0',
           borderRadius: '20px',
-          background: 'rgba(10, 10, 11, 0.85)',
+          background: 'var(--nav-bg-scrolled)',
           backdropFilter: 'blur(40px) saturate(1.8)',
           WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
           border: '1px solid rgba(255, 255, 255, 0.06)',

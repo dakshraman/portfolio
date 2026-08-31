@@ -45,15 +45,13 @@ export default function Testimonials() {
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '1.25rem',
-                border: '2px solid var(--border-thick)',
-                boxShadow: `4px 4px 0px ${color}22`,
                 margin: 0,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = `6px 6px 0px ${color}44`;
+                e.currentTarget.style.boxShadow = `0 8px 32px ${color}15`;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = `4px 4px 0px ${color}22`;
+                e.currentTarget.style.boxShadow = 'var(--glass-shadow)';
               }}
             >
               <Icon
@@ -70,7 +68,7 @@ export default function Testimonials() {
                   style={{
                     width: '40px', height: '40px', borderRadius: '50%',
                     background: `linear-gradient(135deg, ${color}33, ${color}11)`,
-                    border: `2px solid ${color}44`,
+                    border: `1px solid ${color}33`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontFamily: 'var(--font-heading)', fontSize: '0.75rem', fontWeight: 700,
                     color, flexShrink: 0,

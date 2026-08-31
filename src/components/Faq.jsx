@@ -42,8 +42,6 @@ export default function Faq() {
               style={{
                 padding: '1.25rem 1.5rem',
                 cursor: 'pointer',
-                border: '2px solid var(--border-thick)',
-                boxShadow: '3px 3px 0px rgba(237, 237, 239, 0.08)',
               }}
               onClick={() => toggle(i)}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(i); }}

@@ -96,8 +96,6 @@ export default function About() {
                   display: 'flex',
                   alignItems: 'baseline',
                   gap: '1rem',
-                  border: '2px solid var(--border-thick)',
-                  boxShadow: '3px 3px 0px rgba(237, 237, 239, 0.08)',
                 }}
               >
                 <span style={{ fontSize: '2.75rem', fontWeight: 700, color, lineHeight: 1, fontFamily: 'var(--font-heading)' }}>

@@ -22,26 +22,28 @@ export default function BackToTop() {
       style={{
         position: 'fixed', bottom: '24px', right: '24px', zIndex: 999,
         width: '44px', height: '44px', borderRadius: 'var(--radius-sm)',
-        background: 'var(--bg-card)',
-        border: '2px solid var(--border-thick)',
+        background: 'var(--glass-bg)',
+        border: '1px solid var(--glass-border)',
         color: 'var(--accent)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         cursor: 'none',
         transition: 'all 0.15s var(--ease-out)',
-        boxShadow: '2px 2px 0px var(--border-thick)',
+        boxShadow: 'var(--glass-shadow)',
+        backdropFilter: 'var(--glass-blur)',
+        WebkitBackdropFilter: 'var(--glass-blur)',
         animation: 'fadeIn 0.3s ease',
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.background = 'var(--accent)';
         e.currentTarget.style.color = 'var(--bg)';
         e.currentTarget.style.borderColor = 'var(--accent)';
-        e.currentTarget.style.boxShadow = '3px 3px 0px var(--accent)';
+        e.currentTarget.style.boxShadow = '0 4px 20px rgba(254, 127, 45, 0.3)';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'var(--bg-card)';
+        e.currentTarget.style.background = 'var(--glass-bg)';
         e.currentTarget.style.color = 'var(--accent)';
-        e.currentTarget.style.borderColor = 'var(--border-thick)';
-        e.currentTarget.style.boxShadow = '2px 2px 0px var(--border-thick)';
+        e.currentTarget.style.borderColor = 'var(--glass-border)';
+        e.currentTarget.style.boxShadow = 'var(--glass-shadow)';
       }}
     >
       <Icon icon="mdi:chevron-up" width={22} height={22} />

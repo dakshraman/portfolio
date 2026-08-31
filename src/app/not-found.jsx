@@ -8,23 +8,34 @@ export default function NotFound() {
       alignItems: 'center', justifyContent: 'center', textAlign: 'center',
       padding: '2rem',
     }}>
-      <Icon icon="mdi:alert-circle-outline" width={80} height={80} style={{ color: 'var(--accent)', marginBottom: '1.5rem', opacity: 0.6 }} />
-      <h1 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 700, color: 'var(--fg)', lineHeight: 1, marginBottom: '0.5rem' }}>
-        404
-      </h1>
-      <p style={{ fontSize: '1.2rem', color: 'var(--fg-muted)', marginBottom: '2rem', maxWidth: '400px' }}>
-        This page doesn&apos;t exist. It might have been moved or the link is broken.
-      </p>
-      <Link href="/" style={{
-        display: 'inline-flex', alignItems: 'center', gap: '8px',
-        fontFamily: 'var(--font-sans)', fontSize: '0.9rem', fontWeight: 500,
-        background: 'var(--accent)', color: 'var(--bg)',
-        border: 'none', borderRadius: 'var(--radius-full)',
-        padding: '14px 32px', textDecoration: 'none',
+      <div style={{
+        background: 'var(--glass-bg)',
+        backdropFilter: 'var(--glass-blur)', WebkitBackdropFilter: 'var(--glass-blur)',
+        border: '1px solid var(--glass-border)',
+        borderRadius: 'var(--radius-xl)',
+        padding: 'clamp(2rem, 5vw, 4rem)',
+        boxShadow: 'var(--glass-shadow)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
       }}>
-        <Icon icon="mdi:home-outline" width={18} height={18} />
-        Back to Home
-      </Link>
+        <Icon icon="mdi:alert-circle-outline" width={80} height={80} style={{ color: 'var(--accent)', marginBottom: '1.5rem', opacity: 0.6 }} />
+        <h1 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 700, color: 'var(--fg)', lineHeight: 1, marginBottom: '0.5rem' }}>
+          404
+        </h1>
+        <p style={{ fontSize: '1.2rem', color: 'var(--fg-muted)', marginBottom: '2rem', maxWidth: '400px' }}>
+          This page doesn&apos;t exist. It might have been moved or the link is broken.
+        </p>
+        <Link href="/" style={{
+          display: 'inline-flex', alignItems: 'center', gap: '8px',
+          fontFamily: 'var(--font-sans)', fontSize: '0.9rem', fontWeight: 500,
+          background: 'var(--accent)', color: 'var(--bg)',
+          border: 'none', borderRadius: 'var(--radius-full)',
+          padding: '14px 32px', textDecoration: 'none',
+          boxShadow: '0 4px 20px rgba(254, 127, 45, 0.3)',
+        }}>
+          <Icon icon="mdi:home-outline" width={18} height={18} />
+          Back to Home
+        </Link>
+      </div>
     </main>
   );
 }
