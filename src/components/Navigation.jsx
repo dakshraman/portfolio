@@ -12,6 +12,8 @@ export default function Navigation() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef(null);
+  const menuRef = useRef(null);
+  const [menuHeight, setMenuHeight] = useState(0);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -19,6 +21,15 @@ export default function Navigation() {
     window.addEventListener('scroll', close, { once: true });
     return () => window.removeEventListener('scroll', close);
   }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!menuRef.current) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setMenuHeight(entry.contentRect.height);
+    });
+    observer.observe(menuRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -53,6 +64,8 @@ export default function Navigation() {
   }, []);
 
   const isScrolled = scrollState === 'scrolled';
+  const collapsedHeight = isScrolled ? 46 : 54;
+  const totalHeight = collapsedHeight + (mobileOpen ? menuHeight : 0);
 
   return (
     <div
@@ -67,7 +80,7 @@ export default function Navigation() {
         flexDirection: 'column',
         alignItems: 'center',
         padding: isScrolled ? '10px 16px' : '18px 24px',
-        transition: 'padding 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: 'padding 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
         pointerEvents: 'none',
       }}
     >
@@ -94,7 +107,8 @@ export default function Navigation() {
           boxShadow: isScrolled
             ? '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06)'
             : '0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-          transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+          transition: 'border-radius 0.6s cubic-bezier(0.32, 0.72, 0, 1), max-width 0.6s cubic-bezier(0.32, 0.72, 0, 1), background 0.6s cubic-bezier(0.32, 0.72, 0, 1), border-color 0.6s cubic-bezier(0.32, 0.72, 0, 1), box-shadow 0.6s cubic-bezier(0.32, 0.72, 0, 1), height 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
+          height: `${totalHeight}px`,
           position: 'relative',
           pointerEvents: 'auto',
           overflow: 'hidden',
@@ -120,7 +134,7 @@ export default function Navigation() {
             alignItems: 'center',
             justifyContent: 'space-between',
             width: '100%',
-            height: isScrolled ? '46px' : '54px',
+            height: `${collapsedHeight}px`,
             padding: isScrolled ? '0 14px' : '0 22px',
             position: 'relative',
             zIndex: 1,
@@ -136,7 +150,7 @@ export default function Navigation() {
               color: 'var(--fg)',
               textDecoration: 'none',
               letterSpacing: '0.02em',
-              transition: 'all 0.4s ease',
+              transition: 'all 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
               flexShrink: 0,
               textTransform: 'uppercase',
             }}
@@ -162,7 +176,7 @@ export default function Navigation() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: isScrolled ? '2px' : '6px',
-                transition: 'all 0.4s ease',
+                transition: 'all 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
               }}
             >
               {navLinks.map((link) => (
@@ -178,7 +192,7 @@ export default function Navigation() {
                     textDecoration: 'none',
                     textTransform: 'uppercase',
                     letterSpacing: '0.08em',
-                    transition: 'all 0.3s ease',
+                    transition: 'all 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
                     padding: isScrolled ? '4px 8px' : '6px 12px',
                     borderRadius: '9999px',
                     background: activeSection === link.href.replace('#', '')
@@ -207,7 +221,7 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Hamburger */}
+            {/* Hamburger — morphing icon */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -222,7 +236,7 @@ export default function Navigation() {
                 justifyContent: 'center',
                 cursor: 'pointer',
                 color: 'var(--fg)',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
                 padding: 0,
                 backdropFilter: 'var(--glass-blur)',
                 WebkitBackdropFilter: 'var(--glass-blur)',
@@ -237,18 +251,37 @@ export default function Navigation() {
                 stroke="currentColor"
                 strokeWidth="1.5"
                 strokeLinecap="round"
-                style={{
-                  transition: 'transform 0.3s ease',
-                  transform: mobileOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                }}
               >
-                {mobileOpen ? (
-                  <path d="M4 4l8 8M12 4l-8 8" />
-                ) : (
-                  <>
-                    <path d="M2 4h12M2 8h12M2 12h12" />
-                  </>
-                )}
+                {/* Animated hamburger lines with individual transforms */}
+                <line
+                  x1="2" y1="4" x2="14" y2="4"
+                  style={{
+                    transition: 'all 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
+                    transformOrigin: 'center',
+                    transform: mobileOpen
+                      ? 'translateY(4px) rotate(45deg)'
+                      : 'translateY(0) rotate(0deg)',
+                  }}
+                />
+                <line
+                  x1="2" y1="8" x2="14" y2="8"
+                  style={{
+                    transition: 'all 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
+                    transformOrigin: 'center',
+                    opacity: mobileOpen ? 0 : 1,
+                    transform: mobileOpen ? 'scaleX(0)' : 'scaleX(1)',
+                  }}
+                />
+                <line
+                  x1="2" y1="12" x2="14" y2="12"
+                  style={{
+                    transition: 'all 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
+                    transformOrigin: 'center',
+                    transform: mobileOpen
+                      ? 'translateY(-4px) rotate(-45deg)'
+                      : 'translateY(0) rotate(0deg)',
+                  }}
+                />
               </svg>
             </button>
           </div>
@@ -266,7 +299,7 @@ export default function Navigation() {
             background: 'var(--glass-border)',
             overflow: 'hidden',
             opacity: isScrolled ? 0.6 : 1,
-            transition: 'opacity 0.4s ease',
+            transition: 'opacity 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
             zIndex: 1,
           }}
         >
@@ -282,19 +315,19 @@ export default function Navigation() {
           />
         </div>
 
-        {/* Mobile menu — INSIDE the nav pill */}
+        {/* Mobile menu — fluid expansion inside the pill */}
         <div
+          ref={menuRef}
           className="nav-mobile-menu"
           style={{
             display: 'flex',
             flexDirection: 'column',
             gap: '2px',
-            maxHeight: mobileOpen ? '400px' : '0px',
-            opacity: mobileOpen ? 1 : 0,
             overflow: 'hidden',
-            transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
             padding: mobileOpen ? '4px 8px 8px' : '0 8px',
+            opacity: mobileOpen ? 1 : 0,
             pointerEvents: mobileOpen ? 'auto' : 'none',
+            transition: 'opacity 0.5s cubic-bezier(0.32, 0.72, 0, 1), padding 0.6s cubic-bezier(0.32, 0.72, 0, 1)',
           }}
         >
           {navLinks.map((link, i) => (
@@ -302,6 +335,7 @@ export default function Navigation() {
               key={link.href}
               href={isHome ? link.href : `/${link.href}`}
               onClick={() => setMobileOpen(false)}
+              className="nav-mobile-link"
               style={{
                 fontFamily: 'var(--font-heading)',
                 fontSize: '0.8rem',
@@ -318,11 +352,11 @@ export default function Navigation() {
                   : 'transparent',
                 fontWeight: 600,
                 opacity: mobileOpen ? 1 : 0,
-                transform: mobileOpen ? 'translateY(0)' : 'translateY(-8px)',
-                transitionDelay: mobileOpen ? `${i * 0.04}s` : '0s',
+                transform: mobileOpen ? 'translateY(0) scale(1)' : 'translateY(-6px) scale(0.97)',
                 transitionProperty: 'opacity, transform, background, color',
-                transitionDuration: '0.3s',
-                transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                transitionDuration: mobileOpen ? '0.5s' : '0.3s',
+                transitionTimingFunction: 'cubic-bezier(0.32, 0.72, 0, 1)',
+                transitionDelay: mobileOpen ? `${0.06 + i * 0.04}s` : '0s',
               }}
             >
               {link.label}
@@ -331,6 +365,7 @@ export default function Navigation() {
           <a
             href={isHome ? '#contact' : '/#contact'}
             onClick={() => setMobileOpen(false)}
+            className="nav-mobile-link"
             style={{
               fontFamily: 'var(--font-heading)',
               fontSize: '0.8rem',
@@ -345,9 +380,9 @@ export default function Navigation() {
               textAlign: 'center',
               marginTop: '4px',
               opacity: mobileOpen ? 1 : 0,
-              transform: mobileOpen ? 'translateY(0)' : 'translateY(-8px)',
-              transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-              transitionDelay: mobileOpen ? `${navLinks.length * 0.04}s` : '0s',
+              transform: mobileOpen ? 'translateY(0) scale(1)' : 'translateY(-6px) scale(0.97)',
+              transition: 'all 0.5s cubic-bezier(0.32, 0.72, 0, 1)',
+              transitionDelay: mobileOpen ? `${0.06 + navLinks.length * 0.04}s` : '0s',
             }}
           >
             Contact
