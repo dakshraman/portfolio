@@ -55,8 +55,8 @@ const ICONS = {
 
 const springTransition = {
   type: "spring",
-  stiffness: 400,
-  damping: 30,
+  stiffness: 450,
+  damping: 35,
   mass: 1
 };
 
@@ -70,6 +70,15 @@ export default function Navigation() {
   const [hubOpen, setHubOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState(null);
   const [isIslandHovered, setIsIslandHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Responsive check
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 900);
+    handleResize(); // initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Close hub on escape
   useEffect(() => {
@@ -123,11 +132,16 @@ export default function Navigation() {
   }, []);
 
   const isScrolled = scrollY > 60;
-  // Compact mode is active when scrolled down and user is not hovering over the island and hub is closed
-  const isCompact = isScrolled && !isIslandHovered && !hubOpen;
+  
+  // Compact mode is always true on mobile so it fits the screen. 
+  // On desktop, it expands if not scrolled OR if hovered.
+  const isCompact = isMobile ? true : (isScrolled && !isIslandHovered && !hubOpen);
 
   // Active section formatted label
   const activeLabel = navLinks.find((l) => l.href.replace('#', '') === activeSection)?.label || 'Featured';
+
+  // Explicit widths for bulletproof framer-motion animation (no layout projection bugs)
+  const capsuleWidth = hubOpen ? (isMobile ? 360 : 480) : (isCompact ? 370 : 700);
 
   return (
     <header
@@ -147,8 +161,9 @@ export default function Navigation() {
     >
       {/* Floating Dynamic Island Capsule */}
       <motion.div
-        layout
+        initial={false}
         animate={{
+          width: capsuleWidth,
           borderRadius: hubOpen ? 28 : 9999,
         }}
         transition={springTransition}
@@ -170,12 +185,13 @@ export default function Navigation() {
             : isScrolled
               ? '0 18px 44px -10px rgba(0, 0, 0, 0.82), 0 0 0 1px rgba(255, 255, 255, 0.07), 0 4px 16px rgba(0, 0, 0, 0.5)'
               : '0 14px 36px -8px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.06)',
-          width: 'fit-content',
-          maxWidth: '96vw',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
           margin: '0 auto',
+          minHeight: '48px', // Prevents vertical collapse during mode="wait" swaps
+          height: 'auto',
+          maxWidth: '94vw' // Failsafe responsive cap
         }}
       >
         {/* Specular Rim Light */}
@@ -198,21 +214,20 @@ export default function Navigation() {
             /* HUB HEADER ROW (WHEN HUB IS OPEN)                             */
             /* ------------------------------------------------------------- */
             <motion.div
-              layout="position"
               key="hub-header"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                minHeight: '48px',
+                height: '48px',
                 padding: '0 16px',
                 borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
                 zIndex: 4,
-                width: 'min(480px, 94vw)'
+                width: '100%'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
@@ -281,25 +296,24 @@ export default function Navigation() {
             /* REGULAR BAR (COMPACT & EXPANDED)                              */
             /* ------------------------------------------------------------- */
             <motion.div
-              layout="position"
               key="regular-bar"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.15 }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: isCompact ? '12px' : '24px',
-                minHeight: isCompact ? '44px' : '48px',
+                width: '100%',
+                height: '48px',
                 padding: isCompact ? '0 12px 0 14px' : '0 14px 0 16px',
+                position: 'relative',
                 zIndex: 2,
               }}
             >
               {/* Left Monogram / Brand */}
-              <motion.a
-                layout="position"
+              <a
                 href="/"
                 aria-label="Raman Daksh Home"
                 style={{
@@ -359,29 +373,34 @@ export default function Navigation() {
                     </span>
                   )}
                 </span>
-              </motion.a>
+              </a>
 
               {/* Center: Dynamic Switcher between Compact Tracker & Expanded Nav Links */}
-              <motion.div
-                layout="position"
+              <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: '34px',
+                  flex: 1, // Stretches to fill available space dynamically
+                  position: 'relative',
+                  height: '100%',
+                  overflow: 'hidden', // CRITICAL: Prevents absolute children from spilling over the logo and buttons!
+                  maskImage: 'linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%)'
                 }}
               >
-                <AnimatePresence mode="wait">
+                <AnimatePresence initial={false}>
                   {isCompact ? (
                     /* Compact Tracker Pill */
                     <motion.div
                       key="compact-pill"
-                      initial={{ opacity: 0, scale: 0.9, filter: 'blur(4px)' }}
+                      initial={{ opacity: 0, scale: 0.85, filter: 'blur(4px)' }}
                       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                      exit={{ opacity: 0, scale: 0.9, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.15 }}
+                      exit={{ opacity: 0, scale: 0.85, filter: 'blur(4px)' }}
+                      transition={{ duration: 0.2 }}
                       onClick={() => setHubOpen(true)}
                       style={{
+                        position: 'absolute', // Absolute inside the centered flex container
                         display: 'flex',
                         alignItems: 'center',
                         gap: '7px',
@@ -424,9 +443,10 @@ export default function Navigation() {
                       initial={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
                       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                       exit={{ opacity: 0, scale: 0.95, filter: 'blur(4px)' }}
-                      transition={{ duration: 0.15 }}
+                      transition={{ duration: 0.2 }}
                       className="island-desktop-nav"
                       style={{
+                        position: 'absolute', // Absolute inside the centered flex container
                         display: 'flex',
                         alignItems: 'center',
                         gap: '2px',
@@ -475,10 +495,10 @@ export default function Navigation() {
                     </motion.nav>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
  
               {/* Right Action Elements */}
-              <motion.div layout="position" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
                 {/* Hire Me CTA Button */}
                 <a
                   href={isHome ? '#contact' : '/#contact'}
@@ -551,7 +571,7 @@ export default function Navigation() {
                     <circle cx="5" cy="12" r="1.5" />
                   </svg>
                 </button>
-              </motion.div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -562,199 +582,203 @@ export default function Navigation() {
         <AnimatePresence>
           {hubOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-                padding: '14px 16px 18px',
-                background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0.5) 100%)',
-                zIndex: 3,
+                width: '100%',
                 overflow: 'hidden',
-                width: 'min(480px, 94vw)'
               }}
             >
-              {/* Profile Info Card */}
               <div
                 style={{
                   display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '9px 12px',
-                  borderRadius: '14px',
-                  background: 'rgba(255, 255, 255, 0.04)',
-                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  padding: '14px 16px 18px',
+                  background: 'linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0.5) 100%)',
                 }}
               >
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-heading)' }}>
-                    {siteConfig.name}
-                  </span>
-                  <span style={{ fontSize: '0.62rem', color: 'var(--fg-dim)' }}>
-                    {siteConfig.role} • {siteConfig.location}
-                  </span>
-                </div>
- 
-                <a
-                  href={isHome ? '#contact' : '/#contact'}
-                  onClick={() => setHubOpen(false)}
+                {/* Profile Info Card */}
+                <div
                   style={{
-                    background: 'rgba(254, 127, 45, 0.15)',
-                    border: '1px solid rgba(254, 127, 45, 0.3)',
-                    color: 'var(--accent)',
-                    borderRadius: '9999px',
-                    padding: '4px 11px',
-                    fontSize: '0.64rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    fontFamily: 'var(--font-heading)',
-                    textTransform: 'uppercase',
-                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '9px 12px',
+                    borderRadius: '14px',
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    border: '1px solid rgba(255, 255, 255, 0.06)',
                   }}
                 >
-                  Contact
-                </a>
-              </div>
- 
-              {/* Grid Tiles */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(4, 1fr)',
-                  gap: '6px',
-                }}
-              >
-                {navLinks.map((link) => {
-                  const sectionKey = link.href.replace('#', '');
-                  const isActive = activeSection === sectionKey;
-                  return (
-                    <a
-                      key={link.href}
-                      href={isHome ? link.href : `/${link.href}`}
-                      onClick={() => setHubOpen(false)}
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '5px',
-                        padding: '10px 4px',
-                        borderRadius: '12px',
-                        background: isActive ? 'rgba(254, 127, 45, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                        border: isActive ? '1px solid rgba(254, 127, 45, 0.4)' : '1px solid rgba(255, 255, 255, 0.06)',
-                        textDecoration: 'none',
-                        color: isActive ? 'var(--accent)' : 'var(--fg)',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                          e.currentTarget.style.transform = 'translateY(-2px)';
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-                          e.currentTarget.style.transform = 'translateY(0)';
-                        }
-                      }}
-                    >
-                      <div style={{ color: isActive ? 'var(--accent)' : 'var(--fg-muted)' }}>
-                        {ICONS[sectionKey] || ICONS.highlights}
-                      </div>
-                      <span
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-heading)' }}>
+                      {siteConfig.name}
+                    </span>
+                    <span style={{ fontSize: '0.62rem', color: 'var(--fg-dim)' }}>
+                      {siteConfig.role} • {siteConfig.location}
+                    </span>
+                  </div>
+  
+                  <a
+                    href={isHome ? '#contact' : '/#contact'}
+                    onClick={() => setHubOpen(false)}
+                    style={{
+                      background: 'rgba(254, 127, 45, 0.15)',
+                      border: '1px solid rgba(254, 127, 45, 0.3)',
+                      color: 'var(--accent)',
+                      borderRadius: '9999px',
+                      padding: '4px 11px',
+                      fontSize: '0.64rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      fontFamily: 'var(--font-heading)',
+                      textTransform: 'uppercase',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Contact
+                  </a>
+                </div>
+  
+                {/* Grid Tiles */}
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gap: '6px',
+                  }}
+                >
+                  {navLinks.map((link) => {
+                    const sectionKey = link.href.replace('#', '');
+                    const isActive = activeSection === sectionKey;
+                    return (
+                      <a
+                        key={link.href}
+                        href={isHome ? link.href : `/${link.href}`}
+                        onClick={() => setHubOpen(false)}
                         style={{
-                          fontFamily: 'var(--font-heading)',
-                          fontSize: '0.62rem',
-                          fontWeight: 600,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.04em',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '5px',
+                          padding: '10px 4px',
+                          borderRadius: '12px',
+                          background: isActive ? 'rgba(254, 127, 45, 0.15)' : 'rgba(255, 255, 255, 0.03)',
+                          border: isActive ? '1px solid rgba(254, 127, 45, 0.4)' : '1px solid rgba(255, 255, 255, 0.06)',
+                          textDecoration: 'none',
+                          color: isActive ? 'var(--accent)' : 'var(--fg)',
+                          transition: 'all 0.2s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!isActive) {
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                            e.currentTarget.style.transform = 'translateY(-2px)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isActive) {
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+                            e.currentTarget.style.transform = 'translateY(0)';
+                          }
                         }}
                       >
-                        {link.label}
-                      </span>
-                    </a>
-                  );
-                })}
-              </div>
- 
-              {/* Quick Action Buttons */}
-              <div style={{ display: 'flex', gap: '6px' }}>
-                <a
-                  href="/Raman-Daksh.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    flex: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '5px',
-                    padding: '9px',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: 'var(--fg)',
-                    textDecoration: 'none',
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: '0.66rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  <span>Download CV</span>
-                </a>
- 
-                <a
-                  href={siteConfig.telegram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '9px 12px',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: 'var(--fg)',
-                    textDecoration: 'none',
-                    fontSize: '0.66rem',
-                    fontWeight: 600,
-                  }}
-                >
-                  Telegram
-                </a>
- 
-                <a
-                  href={siteConfig.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '9px 12px',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.06)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    color: 'var(--fg)',
-                    textDecoration: 'none',
-                    fontSize: '0.66rem',
-                    fontWeight: 600,
-                  }}
-                >
-                  LinkedIn
-                </a>
+                        <div style={{ color: isActive ? 'var(--accent)' : 'var(--fg-muted)' }}>
+                          {ICONS[sectionKey] || ICONS.highlights}
+                        </div>
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-heading)',
+                            fontSize: '0.62rem',
+                            fontWeight: 600,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.04em',
+                          }}
+                        >
+                          {link.label}
+                        </span>
+                      </a>
+                    );
+                  })}
+                </div>
+  
+                {/* Quick Action Buttons */}
+                <div style={{ display: 'flex', gap: '6px' }}>
+                  <a
+                    href="/Raman-Daksh.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '5px',
+                      padding: '9px',
+                      borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      color: 'var(--fg)',
+                      textDecoration: 'none',
+                      fontFamily: 'var(--font-heading)',
+                      fontSize: '0.66rem',
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    <span>Download CV</span>
+                  </a>
+  
+                  <a
+                    href={siteConfig.telegram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '9px 12px',
+                      borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      color: 'var(--fg)',
+                      textDecoration: 'none',
+                      fontSize: '0.66rem',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Telegram
+                  </a>
+  
+                  <a
+                    href={siteConfig.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '9px 12px',
+                      borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      color: 'var(--fg)',
+                      textDecoration: 'none',
+                      fontSize: '0.66rem',
+                      fontWeight: 600,
+                    }}
+                  >
+                    LinkedIn
+                  </a>
+                </div>
               </div>
             </motion.div>
           )}
