@@ -56,6 +56,7 @@ export default function Navigation() {
 
   return (
     <div
+      className="nav-container"
       style={{
         position: 'fixed',
         top: 0,
@@ -72,15 +73,17 @@ export default function Navigation() {
     >
       <nav
         ref={navRef}
+        className="nav-pill"
         style={{
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          flexDirection: 'column',
           width: '100%',
-          maxWidth: isScrolled ? '680px' : '1100px',
-          height: isScrolled ? '46px' : '54px',
-          padding: isScrolled ? '0 14px' : '0 22px',
-          borderRadius: '9999px',
+          maxWidth: mobileOpen
+            ? 'min(380px, 92vw)'
+            : isScrolled
+              ? 'min(680px, 92vw)'
+              : 'min(1100px, 96vw)',
+          borderRadius: mobileOpen ? '24px' : '9999px',
           background: isScrolled ? 'var(--nav-bg-scrolled)' : 'var(--nav-bg)',
           backdropFilter: 'var(--glass-blur-heavy) saturate(1.8)',
           WebkitBackdropFilter: 'var(--glass-blur-heavy) saturate(1.8)',
@@ -97,6 +100,7 @@ export default function Navigation() {
           overflow: 'hidden',
         }}
       >
+        {/* Gradient overlay */}
         <div
           style={{
             position: 'absolute',
@@ -109,40 +113,18 @@ export default function Navigation() {
           }}
         />
 
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '4px',
-            left: '12px',
-            right: '12px',
-            height: '2px',
-            borderRadius: '1px',
-            background: 'var(--glass-border)',
-            overflow: 'hidden',
-            opacity: isScrolled ? 0.6 : 1,
-            transition: 'opacity 0.4s ease',
-          }}
-        >
-          <div
-            style={{
-              height: '100%',
-              width: `${scrollProgress * 100}%`,
-              background: 'linear-gradient(90deg, rgba(254, 127, 45, 0.6), rgba(254, 127, 45, 0.2))',
-              boxShadow: '0 0 6px rgba(254, 127, 45, 0.2)',
-              transition: 'width 0.15s linear',
-              borderRadius: '1px',
-            }}
-          />
-        </div>
-
+        {/* Header row: logo + hamburger */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             width: '100%',
+            height: isScrolled ? '46px' : '54px',
+            padding: isScrolled ? '0 14px' : '0 22px',
             position: 'relative',
             zIndex: 1,
+            flexShrink: 0,
           }}
         >
           <a
@@ -173,13 +155,8 @@ export default function Navigation() {
             )}
           </a>
 
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: isScrolled ? '4px' : '8px',
-            }}
-          >
+          <div style={{ display: 'flex', alignItems: 'center', gap: isScrolled ? '4px' : '8px' }}>
+            {/* Desktop links */}
             <div
               style={{
                 display: 'flex',
@@ -230,6 +207,7 @@ export default function Navigation() {
               ))}
             </div>
 
+            {/* Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -248,6 +226,7 @@ export default function Navigation() {
                 padding: 0,
                 backdropFilter: 'var(--glass-blur)',
                 WebkitBackdropFilter: 'var(--glass-blur)',
+                flexShrink: 0,
               }}
             >
               <svg
@@ -274,94 +253,112 @@ export default function Navigation() {
             </button>
           </div>
         </div>
-      </nav>
 
-      <div
-        style={{
-          width: '100%',
-          maxWidth: '400px',
-          overflow: 'hidden',
-          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          maxHeight: mobileOpen ? '400px' : '0px',
-          opacity: mobileOpen ? 1 : 0,
-          transform: mobileOpen ? 'translateY(8px) scale(1)' : 'translateY(-4px) scale(0.97)',
-          pointerEvents: mobileOpen ? 'auto' : 'none',
-          marginTop: mobileOpen ? '8px' : '0',
-          borderRadius: '20px',
-          background: 'var(--nav-bg-scrolled)',
-          backdropFilter: 'var(--glass-blur-heavy) saturate(1.8)',
-          WebkitBackdropFilter: 'var(--glass-blur-heavy) saturate(1.8)',
-          border: '1px solid var(--glass-border)',
-          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-          padding: mobileOpen ? '8px' : '0',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '2px',
-        }}
-      >
-        {navLinks.map((link, i) => (
+        {/* Scroll progress bar */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '4px',
+            left: '12px',
+            right: '12px',
+            height: '2px',
+            borderRadius: '1px',
+            background: 'var(--glass-border)',
+            overflow: 'hidden',
+            opacity: isScrolled ? 0.6 : 1,
+            transition: 'opacity 0.4s ease',
+            zIndex: 1,
+          }}
+        >
+          <div
+            style={{
+              height: '100%',
+              width: `${scrollProgress * 100}%`,
+              background: 'linear-gradient(90deg, rgba(254, 127, 45, 0.6), rgba(254, 127, 45, 0.2))',
+              boxShadow: '0 0 6px rgba(254, 127, 45, 0.2)',
+              transition: 'width 0.15s linear',
+              borderRadius: '1px',
+            }}
+          />
+        </div>
+
+        {/* Mobile menu — INSIDE the nav pill */}
+        <div
+          className="nav-mobile-menu"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2px',
+            maxHeight: mobileOpen ? '400px' : '0px',
+            opacity: mobileOpen ? 1 : 0,
+            overflow: 'hidden',
+            transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+            padding: mobileOpen ? '4px 8px 8px' : '0 8px',
+            pointerEvents: mobileOpen ? 'auto' : 'none',
+          }}
+        >
+          {navLinks.map((link, i) => (
+            <a
+              key={link.href}
+              href={isHome ? link.href : `/${link.href}`}
+              onClick={() => setMobileOpen(false)}
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: '0.8rem',
+                color: activeSection === link.href.replace('#', '')
+                  ? 'var(--accent)'
+                  : 'var(--fg-muted)',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                padding: '12px 16px',
+                borderRadius: '14px',
+                background: activeSection === link.href.replace('#', '')
+                  ? 'rgba(254, 127, 45, 0.08)'
+                  : 'transparent',
+                fontWeight: 600,
+                opacity: mobileOpen ? 1 : 0,
+                transform: mobileOpen ? 'translateY(0)' : 'translateY(-8px)',
+                transitionDelay: mobileOpen ? `${i * 0.04}s` : '0s',
+                transitionProperty: 'opacity, transform, background, color',
+                transitionDuration: '0.3s',
+                transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
           <a
-            key={link.href}
-            href={isHome ? link.href : `/${link.href}`}
+            href={isHome ? '#contact' : '/#contact'}
             onClick={() => setMobileOpen(false)}
             style={{
               fontFamily: 'var(--font-heading)',
               fontSize: '0.8rem',
-              color: activeSection === link.href.replace('#', '')
-                ? 'var(--accent)'
-                : 'var(--fg-muted)',
+              color: 'var(--bg)',
               textDecoration: 'none',
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
               padding: '12px 16px',
               borderRadius: '14px',
-              background: activeSection === link.href.replace('#', '')
-                ? 'rgba(254, 127, 45, 0.08)'
-                : 'transparent',
-              fontWeight: 600,
-              transition: 'all 0.2s ease',
+              background: 'var(--accent)',
+              fontWeight: 700,
+              textAlign: 'center',
+              marginTop: '4px',
               opacity: mobileOpen ? 1 : 0,
               transform: mobileOpen ? 'translateY(0)' : 'translateY(-8px)',
-              transitionDelay: mobileOpen ? `${i * 0.04}s` : '0s',
-              transitionProperty: 'opacity, transform, background, color',
-              transitionDuration: '0.3s',
-              transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+              transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+              transitionDelay: mobileOpen ? `${navLinks.length * 0.04}s` : '0s',
             }}
           >
-            {link.label}
+            Contact
           </a>
-        ))}
-        <a
-          href={isHome ? '#contact' : '/#contact'}
-          onClick={() => setMobileOpen(false)}
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: '0.8rem',
-            color: 'var(--bg)',
-            textDecoration: 'none',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            padding: '12px 16px',
-            borderRadius: '14px',
-            background: 'var(--accent)',
-            fontWeight: 700,
-            textAlign: 'center',
-            marginTop: '4px',
-            opacity: mobileOpen ? 1 : 0,
-            transform: mobileOpen ? 'translateY(0)' : 'translateY(-8px)',
-            transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-            transitionDelay: mobileOpen ? `${navLinks.length * 0.04}s` : '0s',
-          }}
-        >
-          Contact
-        </a>
-      </div>
+        </div>
+      </nav>
 
       <style>{`
         @media (min-width: 768px) {
           .nav-desktop-link { display: inline-block !important; }
-          nav + div { display: none !important; }
-          nav button { display: none !important; }
+          .nav-mobile-menu { display: none !important; }
         }
       `}</style>
     </div>
