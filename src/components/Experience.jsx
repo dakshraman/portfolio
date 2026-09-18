@@ -31,7 +31,7 @@ export default function Experience() {
         <h2 className="text-heading">Where I&apos;ve worked</h2>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {experiences.map((exp, i) => (
           <article
             key={i}
@@ -40,7 +40,6 @@ export default function Experience() {
             aria-label={`${exp.role} at ${exp.company}`}
             style={{
               padding: '2rem 1.5rem',
-              borderTop: '1px solid var(--border)',
               borderRadius: 'var(--radius-md)',
               transition: 'all 0.3s ease',
               background: 'var(--glass-bg)',

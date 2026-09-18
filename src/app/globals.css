@@ -2,8 +2,8 @@
   --bg: #000000;
   --bg-elevated: #000000;
   --bg-muted: #233D4D;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --bg-card: rgba(18, 18, 25, 0.65);
+  --bg-card-hover: rgba(25, 25, 35, 0.75);
   --fg: #EAECF0;
   --fg-muted: rgba(234, 236, 240, 0.6);
   --fg-dim: rgba(234, 236, 240, 0.4);
@@ -18,10 +18,10 @@
   --border-thick: rgba(255, 255, 255, 0.12);
   --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --shadow-card-hover: 0 8px 32px 0 rgba(254, 127, 45, 0.15);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-bg-hover: rgba(255, 255, 255, 0.06);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-bg: rgba(18, 18, 25, 0.65);
+  --glass-bg-hover: rgba(25, 25, 35, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-hover: rgba(255, 255, 255, 0.18);
   --glass-blur: blur(40px);
   --glass-blur-heavy: blur(60px);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);

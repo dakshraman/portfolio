@@ -106,7 +106,7 @@ export default function Contact() {
           onMouseEnter={(e) => { e.currentTarget.style.textShadow = '0 0 40px var(--accent-glow-strong)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.textShadow = 'none'; }}
         >
-          <MagneticText text="Let's work together" />
+          <MagneticText text="Have a project in mind?" />
         </a>
       </div>
 

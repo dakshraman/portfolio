@@ -267,7 +267,7 @@ export default function Highlights() {
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: 'clamp(2rem, 4vw, 3rem)' }}>
         <div style={{ width: '10px', height: '10px', border: '2px solid var(--accent)', background: 'var(--accent)', borderRadius: '2px' }} />
         <h2 className="text-display" style={{ margin: 0, fontSize: 'clamp(1.8rem, 4vw, 2.8rem)' }}>
-          Highlights
+          Featured Work
         </h2>
       </div>
 

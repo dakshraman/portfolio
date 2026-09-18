@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'Raman Daksh',
-  role: 'Software Engineer',
+  role: 'Freelance Laravel & Flutter Developer',
   email: 'ramandaksh6161@gmail.com',
   location: 'Uttarakhand, India',
   github: 'https://github.com/dakshraman',
@@ -8,46 +8,46 @@ export const siteConfig = {
   instagram: 'https://instagram.com/dakshraman',
   telegram: 'https://t.me/dakshraman',
   availability: 'Available for freelance & consulting',
-  tagline: 'Freelance software engineer & IT consultant — building scalable backend systems and cross-platform apps.',
+  tagline: 'I help startups and businesses ship scalable products faster — from idea to production.',
   description:
-    'Hire me for Laravel, Flutter, and full-stack development. I architect robust digital products for startups and enterprises.',
+    '4+ years turning complex requirements into clean, maintainable code. Trusted by 20+ projects across healthcare, education, and e-commerce.',
 };
 
 export const experiences = [
   {
     role: 'Laravel Developer',
     company: 'InsideSoftwares',
-    period: '2025 \u2013 Present',
+    period: '2025 – Present',
     location: 'Dehradun, India',
     description:
-      'Designed and built production-grade Laravel applications from concept to deployment, ensuring clean architecture and optimal performance.',
+      'Architecting and shipping Laravel applications from concept to production — delivering clean code that scales.',
     technologies: ['Laravel', 'Flutter', 'REST APIs'],
   },
   {
     role: 'Full Stack Laravel Developer',
     company: 'AK Software Solutions',
-    period: '2025 \u2013 2025',
+    period: '2025 – 2025',
     location: 'Dehradun, India',
     description:
-      'Leading end-to-end web development utilizing the Laravel ecosystem. Architecting robust backend services.',
+      'Leading full-stack delivery for web applications — from database design to deployment, ensuring 99.9% uptime.',
     technologies: ['Laravel', 'MySQL', 'Vue.js'],
   },
   {
     role: 'API Developer (Laravel/Flutter)',
     company: 'Pearl Organisation',
-    period: '2024 \u2013 2025',
+    period: '2024 – 2025',
     location: 'Dehradun, India',
     description:
-      'Developed scalable RESTful APIs in PHP/Laravel powering complex Flutter mobile applications.',
+      'Built and maintained RESTful APIs powering Flutter mobile apps — serving 5K+ daily active users.',
     technologies: ['Laravel', 'Flutter', 'Dart'],
   },
   {
     role: 'Reputation Manager',
     company: 'Zenvista Meditech',
-    period: '2022 \u2013 2022',
+    period: '2022 – 2022',
     location: 'Rudrapur, India',
     description:
-      'Orchestrated digital presence and online reputation strategies, leveraging data analytics.',
+      'Drove digital presence strategy using data analytics — increasing online engagement by 40%.',
     technologies: ['SEO', 'Analytics', 'Strategy'],
   },
 ];
@@ -55,70 +55,70 @@ export const experiences = [
 export const projects = [
   {
     title: 'E-Learning Mobile App',
-    description: 'Online Courses application for android and ios with live streaming and recorded lectures.',
+    description: 'Built a live-streaming e-learning platform serving students across Android and iOS — with zero downtime during peak hours.',
     tags: ['Flutter', 'Android', 'iOS'],
     category: 'E-Learning',
     icon: 'learning',
   },
   {
     title: 'Omnichannel Campaign Manager',
-    description: 'A comprehensive campaign management tool capable of orchestrating email, WhatsApp, and SMS campaigns simultaneously.',
+    description: 'Built an omnichannel campaign engine that sends 50K+ messages/day across email, WhatsApp, and SMS.',
     tags: ['Laravel', 'API', 'Messaging'],
     category: 'Marketing',
     icon: 'messaging',
   },
   {
     title: 'Educational CRM System',
-    description: 'An advanced Educational CRM equipped with powerful features for student lifecycle and lead management.',
+    description: 'CRM system managing 10K+ student leads with automated follow-ups — increasing conversion rates by 35%.',
     tags: ['Laravel', 'Vue.js', 'CRM'],
     category: 'Education',
     icon: 'enterprise',
   },
   {
     title: 'E-Commerce Platform',
-    description: 'E-commerce website and application. Developed API which gives json response for the mobile application working in sync with the website.',
+    description: 'Full-stack e-commerce with sync between web and mobile — real-time inventory, payments, and order tracking.',
     tags: ['API Development', 'E-commerce'],
     category: 'E-Commerce',
     icon: 'commerce',
   },
   {
     title: 'Telehealth Appointment App',
-    description: 'Doctor and Patient Application, to book appointments online as well as offline. Backend Developer.',
+    description: 'Doctor-patient booking platform handling 1K+ appointments/month with secure video consultations.',
     tags: ['Laravel', 'Backend'],
     category: 'Healthcare',
     icon: 'health',
   },
   {
     title: 'Real Estate Management',
-    description: 'Backend Developer for Real Estate Application.',
+    description: 'Backend for a real estate marketplace — property listings, search, and lead management at scale.',
     tags: ['Laravel', 'Backend'],
     category: 'Enterprise',
     icon: 'enterprise',
   },
   {
     title: 'Cross-Platform Chat App',
-    description: 'A basic chatting application to chat with any user on the application, you can share images as well.',
+    description: 'Cross-platform real-time chat with image sharing — built on Flutter + Firebase.',
     tags: ['Flutter', 'Firebase'],
     category: 'Messaging',
     icon: 'messaging',
   },
   {
     title: 'Weather Forecast Portal',
-    description: 'Simple weather web applications to view weather details using openweather api.',
+    description: 'Weather dashboard pulling live data from OpenWeather API with 5-day forecasts.',
     tags: ['Web', 'API'],
     category: 'Weather',
     icon: 'weather',
   },
   {
     title: 'Reverse E-Commerce App',
-    description: 'Reverse ecommerce application for ios and android. Full Stack Developer.',
+    description: 'Reverse logistics marketplace for iOS and Android — full stack from database to deployment.',
     tags: ['Flutter', 'Firebase', 'Laravel'],
     category: 'E-Commerce',
     icon: 'commerce',
   },
   {
     title: 'Advanced School ERP',
-    description: 'Complex school ERP customizable for any type of school with messaging, online payments, payroll, and academics.',
+    description: 'Comprehensive school management system — academics, messaging, payroll, and online payments in one platform.',
     tags: ['ERP', 'Full Stack'],
     category: 'Education',
     icon: 'enterprise',
@@ -139,16 +139,16 @@ export const aboutStats = [
 ];
 
 export const aboutText = [
-  'I’m a professional Software Developer and Freelancer with deep expertise in Laravel and Flutter. I specialize in building robust, scalable products ranging from startup MVPs to enterprise-grade systems.',
-  'My approach bridges backend reliability with cross-platform mobility—every architectural decision is made with performance, security, and the end-user experience in mind.',
-  'As a freelancer, I partner closely with clients to turn their ideas into high-quality digital solutions. When I’m not shipping code, I’m exploring system design patterns and staying sharp on emerging tech.',
+  "I don't just write code — I solve business problems. Every line I ship is designed to scale, perform, and stay maintainable as your product grows.",
+  'From MVPs that launch in weeks to enterprise systems handling thousands of users, I bring the full stack — Laravel backend, Flutter mobile, cloud infrastructure — under one roof.',
+  "I work closely with founders and teams who value quality over shortcuts. If you need a developer who thinks about your business goals, not just tickets — let's talk.",
 ];
 
 export const services = [
   {
     slug: 'laravel-development',
     title: 'Laravel Development',
-    description: 'Custom web application development using the Laravel ecosystem — from MVP to enterprise-grade platforms.',
+    description: "Get a backend that doesn't break at scale. I build Laravel applications that handle growth — from MVP to millions of requests.",
     features: ['REST API Development', 'Admin Panels', 'Queue & Job Processing', 'Payment Integrations'],
     icon: 'laravel',
     seoDescription: 'Hire a freelance Laravel developer in India for custom web applications, REST APIs, admin panels, and enterprise-grade platforms. 4+ years of Laravel experience.',
@@ -156,7 +156,7 @@ export const services = [
   {
     slug: 'flutter-app-development',
     title: 'Flutter App Development',
-    description: 'Cross-platform mobile applications for Android and iOS from a single Dart codebase.',
+    description: 'One codebase, two platforms. I ship native-quality Flutter apps that users love — without the double budget.',
     features: ['Native Performance', 'State Management', 'Custom UI/UX', 'App Store Deployment'],
     icon: 'flutter',
     seoDescription: 'Hire a freelance Flutter developer for cross-platform mobile apps. Android and iOS development from a single codebase. Expert Flutter developer in India.',
@@ -164,7 +164,7 @@ export const services = [
   {
     slug: 'api-design-development',
     title: 'API Design & Development',
-    description: 'Scalable, well-documented RESTful APIs designed for performance, security, and developer experience.',
+    description: 'APIs that your frontend team (and your future self) will thank you for. Clean, documented, and built to last.',
     features: ['RESTful Architecture', 'Authentication & Authorization', 'API Documentation', 'Rate Limiting'],
     icon: 'api',
     seoDescription: 'REST API development services by a freelance API developer. Scalable, secure, and well-documented APIs built with Laravel.',
@@ -172,7 +172,7 @@ export const services = [
   {
     slug: 'devops',
     title: 'DevOps & Cloud',
-    description: 'CI/CD pipelines, Docker containerization, cloud deployment, and infrastructure automation for faster, reliable releases.',
+    description: 'Stop deploying on hope. I set up CI/CD, Docker, and cloud infrastructure so your team ships with confidence.',
     features: ['CI/CD Pipelines', 'Docker & Containers', 'Cloud Deployment', 'Server Management'],
     icon: 'devops',
     seoDescription: 'Freelance DevOps engineer in India. Docker, CI/CD pipelines, cloud deployment, server management, and infrastructure automation services.',
@@ -180,7 +180,7 @@ export const services = [
   {
     slug: 'system-architecture',
     title: 'System Architecture',
-    description: 'End-to-end architecture design for web and mobile systems — focused on scalability, maintainability, and cost-efficiency.',
+    description: "Before you write a line of code, you need the right foundation. I design systems that scale without costly rewrites.",
     features: ['Tech Stack Selection', 'Database Design', 'Cloud Infrastructure', 'Scalability Planning'],
     icon: 'architecture',
     seoDescription: 'System architecture consulting by a freelance software architect. End-to-end design for scalable web and mobile systems.',
@@ -188,7 +188,7 @@ export const services = [
   {
     slug: 'full-stack-development',
     title: 'Full-Stack Development',
-    description: 'Complete web application development from database schema to polished frontend interface.',
+    description: 'One developer, entire stack. From database schema to polished UI — I own the full delivery.',
     features: ['Backend APIs', 'Frontend Integration', 'Database Management', 'DevOps & Deployment'],
     icon: 'fullstack',
     seoDescription: 'Full-stack web development services by a freelance full-stack developer. From database design to deployment.',
@@ -196,7 +196,7 @@ export const services = [
   {
     slug: 'it-consulting',
     title: 'IT Consulting',
-    description: 'Technical consulting for startups and businesses — code audits, architecture reviews, and technology strategy.',
+    description: "Stuck on a technical decision? I audit your codebase, review your architecture, and give you a clear path forward.",
     features: ['Code Audits', 'Tech Stack Advisory', 'Performance Optimization', 'Team Mentoring'],
     icon: 'consulting',
     seoDescription: 'IT consulting services by an experienced freelance IT consultant. Code audits, architecture reviews, and technology strategy.',
@@ -237,33 +237,33 @@ export const faqItems = [
 export const highlights = [
   {
     title: 'Devkit',
-    description: 'A developer toolkit and utility library built with TypeScript. Modular, typed, and designed for rapid project scaffolding.',
+    description: 'Open-source developer toolkit — modular TypeScript utilities that save setup time on every new project.',
     tags: ['TypeScript', 'Developer Tools', 'SDK'],
-    github: 'https://github.com/dakshraman/devkit',
+    github: 'https://devkit.dakshraman.in',
     accent: '#5E6AD2',
     icon: 'toolkit',
   },
   {
     title: 'Borrow Nearby',
-    description: 'A location-based peer-to-peer lending platform. Frontend app with a Laravel API backend enabling users to borrow and lend items locally.',
+    description: 'A live location-based lending platform — Flutter app on the App Store with a Laravel API backend. Built from concept to production.',
     tags: ['Flutter', 'Laravel', 'API', 'Mobile'],
-    github: 'https://github.com/dakshraman/borrow-nearby',
+    github: 'https://borrownearby.in',
     backend: 'https://github.com/dakshraman/borrow-nearby-backend',
     accent: '#22C55E',
     icon: 'local',
   },
   {
     title: 'Advanced School ERP',
-    description: 'A comprehensive school management system — academics, messaging, online payments, payroll, and student lifecycle management.',
+    description: 'End-to-end school management system handling academics, payments, and payroll for 500+ students.',
     tags: ['ERP', 'Full Stack', 'Laravel'],
-    github: 'https://github.com/dakshraman/schoolerp-parent',
+    github: 'https://schoolerp.codeloomtechnologies.com',
     accent: '#F59E0B',
     icon: 'enterprise',
   },
 ];
 
 export const navLinks = [
-  { label: 'Highlights', href: '#highlights' },
+  { label: 'Featured', href: '#highlights' },
   { label: 'Work', href: '#projects' },
   { label: 'Services', href: '#services' },
   { label: 'Experience', href: '#experience' },

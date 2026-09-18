@@ -68,7 +68,7 @@ export default function About() {
     <section ref={sectionRef} id="about" className="section about-section">
       <div style={{ marginBottom: '3.5rem' }}>
         <p className="section-label">[03] About</p>
-        <h2 className="text-heading">A bit about me</h2>
+        <h2 className="text-heading">Why clients work with me</h2>
       </div>
 
       <div className="about-grid" style={{ marginBottom: '4rem' }}>

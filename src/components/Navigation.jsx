@@ -82,12 +82,12 @@ export default function Navigation() {
           padding: isScrolled ? '0 14px' : '0 22px',
           borderRadius: '9999px',
           background: isScrolled ? 'var(--nav-bg-scrolled)' : 'var(--nav-bg)',
-          backdropFilter: 'blur(40px) saturate(1.8)',
-          WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
+          backdropFilter: 'var(--glass-blur-heavy) saturate(1.8)',
+          WebkitBackdropFilter: 'var(--glass-blur-heavy) saturate(1.8)',
           border: '1px solid',
           borderColor: isScrolled
-            ? 'rgba(255, 255, 255, 0.08)'
-            : 'rgba(255, 255, 255, 0.06)',
+            ? 'var(--glass-border-hover)'
+            : 'var(--glass-border)',
           boxShadow: isScrolled
             ? '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06)'
             : '0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
@@ -117,7 +117,7 @@ export default function Navigation() {
             right: '12px',
             height: '2px',
             borderRadius: '1px',
-            background: 'rgba(255, 255, 255, 0.06)',
+            background: 'var(--glass-border)',
             overflow: 'hidden',
             opacity: isScrolled ? 0.6 : 1,
             transition: 'opacity 0.4s ease',
@@ -289,9 +289,9 @@ export default function Navigation() {
           marginTop: mobileOpen ? '8px' : '0',
           borderRadius: '20px',
           background: 'var(--nav-bg-scrolled)',
-          backdropFilter: 'blur(40px) saturate(1.8)',
-          WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
-          border: '1px solid rgba(255, 255, 255, 0.06)',
+          backdropFilter: 'var(--glass-blur-heavy) saturate(1.8)',
+          WebkitBackdropFilter: 'var(--glass-blur-heavy) saturate(1.8)',
+          border: '1px solid var(--glass-border)',
           boxShadow: '0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
           padding: mobileOpen ? '8px' : '0',
           display: 'flex',
