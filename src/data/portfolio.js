@@ -2,7 +2,7 @@ export const siteConfig = {
   name: 'Raman Daksh',
   role: 'Freelance Laravel & Flutter Developer',
   email: 'ramandaksh6161@gmail.com',
-  location: 'Uttarakhand, India',
+  location: 'Remote (Worldwide)',
   github: 'https://github.com/dakshraman',
   linkedin: 'https://linkedin.com/in/dakshraman',
   instagram: 'https://instagram.com/dakshraman',
@@ -18,36 +18,36 @@ export const experiences = [
     role: 'Laravel Developer',
     company: 'InsideSoftwares',
     period: '2025 – Present',
-    location: 'Dehradun, India',
+    location: 'Remote',
     description:
-      'Architecting and shipping Laravel applications from concept to production — delivering clean code that scales.',
+      'Architecting and shipping Laravel applications from concept to production — delivering clean code that scales globally.',
     technologies: ['Laravel', 'Flutter', 'REST APIs'],
   },
   {
     role: 'Full Stack Laravel Developer',
     company: 'AK Software Solutions',
     period: '2025 – 2025',
-    location: 'Dehradun, India',
+    location: 'Remote',
     description:
-      'Leading full-stack delivery for web applications — from database design to deployment, ensuring 99.9% uptime.',
+      'Leading full-stack delivery for web applications — from database design to deployment, ensuring 99.9% uptime across regions.',
     technologies: ['Laravel', 'MySQL', 'Vue.js'],
   },
   {
     role: 'API Developer (Laravel/Flutter)',
     company: 'Pearl Organisation',
     period: '2024 – 2025',
-    location: 'Dehradun, India',
+    location: 'Remote',
     description:
-      'Built and maintained RESTful APIs powering Flutter mobile apps — serving 5K+ daily active users.',
+      'Built and maintained RESTful APIs powering Flutter mobile apps — serving 5K+ daily active users internationally.',
     technologies: ['Laravel', 'Flutter', 'Dart'],
   },
   {
     role: 'Reputation Manager',
     company: 'Zenvista Meditech',
     period: '2022 – 2022',
-    location: 'Rudrapur, India',
+    location: 'Remote',
     description:
-      'Drove digital presence strategy using data analytics — increasing online engagement by 40%.',
+      'Drove digital presence strategy using data analytics — increasing online engagement by 40% for global campaigns.',
     technologies: ['SEO', 'Analytics', 'Strategy'],
   },
 ];
@@ -151,7 +151,7 @@ export const services = [
     description: "Get a backend that doesn't break at scale. I build Laravel applications that handle growth — from MVP to millions of requests.",
     features: ['REST API Development', 'Admin Panels', 'Queue & Job Processing', 'Payment Integrations'],
     icon: 'laravel',
-    seoDescription: 'Hire a freelance Laravel developer in India for custom web applications, REST APIs, admin panels, and enterprise-grade platforms. 4+ years of Laravel experience.',
+    seoDescription: 'Hire a Senior Freelance Laravel Developer for custom web applications, REST APIs, admin panels, and enterprise-grade platforms. 4+ years of Laravel experience.',
   },
   {
     slug: 'flutter-app-development',
@@ -159,7 +159,7 @@ export const services = [
     description: 'One codebase, two platforms. I ship native-quality Flutter apps that users love — without the double budget.',
     features: ['Native Performance', 'State Management', 'Custom UI/UX', 'App Store Deployment'],
     icon: 'flutter',
-    seoDescription: 'Hire a freelance Flutter developer for cross-platform mobile apps. Android and iOS development from a single codebase. Expert Flutter developer in India.',
+    seoDescription: 'Hire an Expert Freelance Flutter Developer for cross-platform mobile apps. Android and iOS development from a single codebase.',
   },
   {
     slug: 'api-design-development',
@@ -167,7 +167,7 @@ export const services = [
     description: 'APIs that your frontend team (and your future self) will thank you for. Clean, documented, and built to last.',
     features: ['RESTful Architecture', 'Authentication & Authorization', 'API Documentation', 'Rate Limiting'],
     icon: 'api',
-    seoDescription: 'REST API development services by a freelance API developer. Scalable, secure, and well-documented APIs built with Laravel.',
+    seoDescription: 'REST API development services by a Senior API developer. Scalable, secure, and well-documented APIs built with Laravel.',
   },
   {
     slug: 'devops',
@@ -175,7 +175,7 @@ export const services = [
     description: 'Stop deploying on hope. I set up CI/CD, Docker, and cloud infrastructure so your team ships with confidence.',
     features: ['CI/CD Pipelines', 'Docker & Containers', 'Cloud Deployment', 'Server Management'],
     icon: 'devops',
-    seoDescription: 'Freelance DevOps engineer in India. Docker, CI/CD pipelines, cloud deployment, server management, and infrastructure automation services.',
+    seoDescription: 'Freelance DevOps engineer. Docker, CI/CD pipelines, cloud deployment, server management, and infrastructure automation services.',
   },
   {
     slug: 'system-architecture',
@@ -191,7 +191,7 @@ export const services = [
     description: 'One developer, entire stack. From database schema to polished UI — I own the full delivery.',
     features: ['Backend APIs', 'Frontend Integration', 'Database Management', 'DevOps & Deployment'],
     icon: 'fullstack',
-    seoDescription: 'Full-stack web development services by a freelance full-stack developer. From database design to deployment.',
+    seoDescription: 'Full-stack web development services by a Senior Full-Stack Developer. From database design to deployment.',
   },
   {
     slug: 'it-consulting',
@@ -199,18 +199,18 @@ export const services = [
     description: "Stuck on a technical decision? I audit your codebase, review your architecture, and give you a clear path forward.",
     features: ['Code Audits', 'Tech Stack Advisory', 'Performance Optimization', 'Team Mentoring'],
     icon: 'consulting',
-    seoDescription: 'IT consulting services by an experienced freelance IT consultant. Code audits, architecture reviews, and technology strategy.',
+    seoDescription: 'IT consulting services by an experienced software consultant. Code audits, architecture reviews, and technology strategy.',
   },
 ];
 
 export const faqItems = [
   {
-    question: 'How much does it cost to hire a freelance Laravel developer?',
-    answer: 'Rates vary by project complexity. For most Laravel projects, I charge between $40-80/hr or offer fixed-price quotes. Contact me with your project details for an accurate estimate.',
+    question: 'How much does it cost to hire you?',
+    answer: 'Rates vary by project complexity. I offer Silicon Valley quality at competitive global rates, typically between $40-80/hr or fixed-price quotes. Contact me with your project details for an accurate estimate.',
   },
   {
     question: 'Can you work in my timezone?',
-    answer: 'Yes. Based in Dehradun, India (IST, UTC+5:30), I\'m flexible with overlapping hours for US, UK, EU, and APAC clients. Most projects use async communication with 2-3 weekly sync calls.',
+    answer: 'Yes. I work asynchronously and guarantee 4 hours of daily overlap with US (EST/PST), UK, and EU timezones for standups and syncs. I provide daily Loom video updates and use Slack/Teams for fast communication.',
   },
   {
     question: 'How long does a typical project take?',
