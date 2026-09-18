@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import { blogs, siteConfig } from '@/data/portfolio';
 import blogContent from '@/data/blog-content';
+import ProgressBar from '@/components/ProgressBar';
 
 export function generateStaticParams() {
   return blogs.map((b) => ({ slug: b.slug }));
@@ -14,8 +15,8 @@ export async function generateMetadata({ params }) {
   if (!post) return {};
   return {
     title: post.title,
-    description: `${post.excerpt} Written by Raman Daksh, freelance Laravel & Flutter developer in India.`,
-    keywords: [...post.tags, 'Freelance Developer', 'Raman Daksh', 'Laravel Developer', 'Flutter Developer', 'Freelancer India'],
+    description: `${post.excerpt} Written by Raman Daksh.`,
+    keywords: [...post.tags, 'Freelance Developer', 'Raman Daksh'],
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -41,13 +42,60 @@ function formatDate(dateStr) {
   });
 }
 
+function parseInlineMarkup(text) {
+  // Bold
+  let parsed = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  // Italic
+  parsed = parsed.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  // Inline code
+  parsed = parsed.replace(/`(.*?)`/g, '<code style="background:rgba(255,255,255,0.1);padding:0.15rem 0.3rem;border-radius:4px;font-family:var(--font-mono);font-size:0.85em;color:var(--accent)">$1</code>');
+  // Links
+  parsed = parsed.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;text-underline-offset:4px;">$1</a>');
+  return <span dangerouslySetInnerHTML={{ __html: parsed }} />;
+}
+
 function renderContent(content, slug) {
   const lines = content.split('\n');
   const elements = [];
   let inCodeBlock = false;
   let codeLines = [];
+  let inTable = false;
+  let tableRows = [];
+
+  const flushTable = () => {
+    if (!inTable) return;
+    elements.push(
+      <div key={`table-${elements.length}`} style={{ overflowX: 'auto', margin: '2rem 0' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
+          <thead>
+            <tr style={{ borderBottom: '2px solid rgba(255,255,255,0.1)' }}>
+              {tableRows[0].split('|').filter(c => c.trim()).map((h, i) => (
+                <th key={i} style={{ padding: '0.75rem 1rem', color: 'var(--fg)', fontWeight: 600 }}>{h.trim()}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {tableRows.slice(2).map((row, i) => (
+              <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
+                {row.split('|').filter(c => c.trim()).map((c, j) => (
+                  <td key={j} style={{ padding: '0.75rem 1rem', color: 'var(--fg-muted)' }}>{parseInlineMarkup(c.trim())}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+    inTable = false;
+    tableRows = [];
+  };
 
   lines.forEach((line, i) => {
+    // Check table exit
+    if (inTable && !line.startsWith('|')) {
+      flushTable();
+    }
+
     if (line.startsWith('```') && !inCodeBlock) {
       inCodeBlock = true;
       codeLines = [];
@@ -56,20 +104,25 @@ function renderContent(content, slug) {
     if (line.startsWith('```') && inCodeBlock) {
       inCodeBlock = false;
       elements.push(
-        <pre key={`code-${i}`} style={{
-          background: 'rgba(15, 23, 42, 0.8)',
-          border: '1px solid rgba(51, 65, 85, 0.3)',
-          borderRadius: '12px',
-          padding: '1.25rem',
-          overflowX: 'auto',
-          fontSize: '0.82rem',
-          lineHeight: 1.7,
-          fontFamily: 'var(--font-mono)',
-          color: '#e2e8f0',
-          margin: '1.5rem 0',
-        }}>
-          <code>{codeLines.join('\n')}</code>
-        </pre>
+        <div key={`code-${i}`} style={{ margin: '2rem 0', borderRadius: '12px', overflow: 'hidden', background: '#0f172a', border: '1px solid rgba(51, 65, 85, 0.4)', boxShadow: '0 10px 30px -10px rgba(0,0,0,0.5)' }}>
+          {/* Mac Header */}
+          <div style={{ display: 'flex', gap: '6px', padding: '12px 16px', background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f56' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffbd2e' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#27c93f' }} />
+          </div>
+          <pre style={{
+            padding: '1.25rem',
+            overflowX: 'auto',
+            fontSize: '0.85rem',
+            lineHeight: 1.7,
+            fontFamily: 'var(--font-mono)',
+            color: '#e2e8f0',
+            margin: 0,
+          }}>
+            <code>{codeLines.join('\n')}</code>
+          </pre>
+        </div>
       );
       return;
     }
@@ -78,86 +131,98 @@ function renderContent(content, slug) {
       return;
     }
 
+    // Table parsing
+    if (line.startsWith('|')) {
+      inTable = true;
+      tableRows.push(line);
+      return;
+    }
+
     if (line.startsWith('## ')) {
       elements.push(
         <h2 key={i} style={{
-          fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
+          fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
           fontWeight: 700,
           fontFamily: 'var(--font-heading)',
           color: 'var(--fg)',
-          marginTop: '2.5rem',
-          marginBottom: '1rem',
+          marginTop: '3rem',
+          marginBottom: '1.25rem',
           letterSpacing: '-0.02em',
         }}>
-          {line.slice(3)}
+          {parseInlineMarkup(line.slice(3))}
         </h2>
       );
     } else if (line.startsWith('### ')) {
       elements.push(
         <h3 key={i} style={{
-          fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-          fontWeight: 700,
+          fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
+          fontWeight: 600,
           fontFamily: 'var(--font-heading)',
           color: 'var(--fg)',
-          marginTop: '2rem',
-          marginBottom: '0.75rem',
+          marginTop: '2.5rem',
+          marginBottom: '1rem',
         }}>
-          {line.slice(4)}
+          {parseInlineMarkup(line.slice(4))}
         </h3>
       );
     } else if (line.startsWith('- ')) {
       elements.push(
         <li key={i} style={{
-          fontSize: '0.95rem',
+          fontSize: '1.05rem',
           color: 'var(--fg-muted)',
           lineHeight: 1.8,
-          marginLeft: '1rem',
-          marginBottom: '0.3rem',
+          marginLeft: '1.5rem',
+          marginBottom: '0.5rem',
         }}>
-          {line.slice(2)}
+          {parseInlineMarkup(line.slice(2))}
         </li>
       );
     } else if (line.match(/^\d+\. /)) {
       elements.push(
         <li key={i} style={{
-          fontSize: '0.95rem',
+          fontSize: '1.05rem',
           color: 'var(--fg-muted)',
           lineHeight: 1.8,
-          marginLeft: '1rem',
-          marginBottom: '0.3rem',
+          marginLeft: '1.5rem',
+          marginBottom: '0.5rem',
           listStyleType: 'decimal',
         }}>
-          {line.replace(/^\d+\. /, '')}
+          {parseInlineMarkup(line.replace(/^\d+\. /, ''))}
         </li>
       );
-    } else if (line.startsWith('|')) {
-      if (!line.includes('---')) {
-        elements.push(
-          <p key={i} style={{
-            fontSize: '0.85rem',
-            fontFamily: 'var(--font-mono)',
-            color: 'var(--fg-dim)',
-            lineHeight: 1.6,
-          }}>
-            {line}
-          </p>
-        );
-      }
+    } else if (line.startsWith('> ')) {
+      elements.push(
+        <blockquote key={i} style={{
+          borderLeft: '4px solid var(--accent)',
+          padding: '1rem 1.5rem',
+          margin: '2rem 0',
+          background: 'rgba(255,255,255,0.03)',
+          borderRadius: '0 8px 8px 0',
+          fontStyle: 'italic',
+          color: 'var(--fg)',
+          fontSize: '1.1rem',
+          lineHeight: 1.7,
+        }}>
+          {parseInlineMarkup(line.slice(2))}
+        </blockquote>
+      );
     } else if (line.trim() === '') {
-      elements.push(<div key={i} style={{ height: '0.75rem' }} />);
+      elements.push(<div key={i} style={{ height: '1rem' }} />);
     } else {
       elements.push(
         <p key={i} style={{
-          fontSize: '0.95rem',
+          fontSize: '1.05rem',
           color: 'var(--fg-muted)',
           lineHeight: 1.85,
-          marginBottom: '0.75rem',
+          marginBottom: '1rem',
         }}>
-          {line}
+          {parseInlineMarkup(line)}
         </p>
       );
     }
   });
+
+  flushTable(); // In case file ends with table
 
   return elements;
 }
@@ -261,130 +326,140 @@ export default async function BlogPost({ params }) {
   const cta = relatedCta[slug];
 
   return (
-    <main style={{
-      maxWidth: '760px',
-      margin: '0 auto',
-      padding: '8rem 1.5rem 4rem',
-      backdropFilter: 'blur(50px)',
-    }}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <Link
-        href="/#blog"
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: '6px',
-          fontFamily: 'var(--font-heading)', fontSize: '0.7rem',
-          fontWeight: 600,
-          color: 'var(--fg-dim)', textDecoration: 'none',
-          textTransform: 'uppercase', letterSpacing: '0.05em',
-          marginBottom: '2rem', transition: 'color 0.2s',
-        }}
-      >
-        <Icon icon="mdi:arrow-left" width={16} height={16} />
-        Back to Blog
-      </Link>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '1rem' }}>
-        {post.tags.map((tag) => (
-          <span key={tag} className="tag" style={{ fontSize: '0.65rem' }}>{tag}</span>
-        ))}
-      </div>
-
-      <h1 style={{
-        fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
-        fontWeight: 700,
-        fontFamily: 'var(--font-heading)',
-        lineHeight: 1.15,
-        letterSpacing: '-0.02em',
-        marginBottom: '1rem',
+    <>
+      <ProgressBar />
+      <main style={{
+        maxWidth: '850px',
+        margin: '0 auto',
+        padding: '8rem 1.5rem 6rem',
       }}>
-        {post.title}
-      </h1>
-
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: '12px',
-        marginBottom: '2.5rem', paddingBottom: '2rem',
-        borderBottom: '1px solid var(--border)',
-      }}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+        
+        {/* Main Content Container - Glassmorphism */}
         <div style={{
-          width: '36px', height: '36px', borderRadius: '50%',
-          background: 'linear-gradient(135deg, var(--accent-glow-strong), var(--accent-glow))',
-          border: '1px solid rgba(34, 197, 94, 0.3)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'var(--font-mono)', fontSize: '0.7rem', fontWeight: 600,
-          color: 'var(--accent)',
+          background: 'var(--glass-bg)',
+          backdropFilter: 'var(--glass-blur-heavy)',
+          WebkitBackdropFilter: 'var(--glass-blur-heavy)',
+          border: '1px solid var(--glass-border)',
+          borderRadius: '24px',
+          padding: 'clamp(2rem, 5vw, 4rem)',
+          boxShadow: 'var(--glass-shadow)'
         }}>
-          RD
-        </div>
-        <div>
-          <p style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--fg)', fontFamily: 'var(--font-heading)' }}>Raman Daksh</p>
-          <p className="font-mono" style={{ fontSize: '0.65rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
-            {formatDate(post.date)} · {post.readTime}
-          </p>
-        </div>
-      </div>
-
-      <article>
-        {renderContent(blogContent[post.slug] || '', post.slug)}
-      </article>
-
-      {cta && (
-        <div className="card" style={{
-          marginTop: '2.5rem', padding: '1.5rem',
-          border: '2px solid var(--accent-glow-strong)',
-        }}>
-          <p style={{ fontSize: '0.9rem', color: 'var(--fg-muted)', marginBottom: '0.75rem' }}>
-            {cta.text}
-          </p>
+          
           <Link
-            href={cta.link}
+            href="/#blog"
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              fontFamily: 'var(--font-heading)', fontSize: '0.8rem',
-              fontWeight: 700, color: 'var(--accent)', textDecoration: 'none',
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              fontFamily: 'var(--font-heading)', fontSize: '0.75rem',
+              fontWeight: 700,
+              color: 'var(--fg-dim)', textDecoration: 'none',
+              textTransform: 'uppercase', letterSpacing: '0.05em',
+              marginBottom: '2.5rem', transition: 'color 0.2s',
             }}
           >
-            {cta.label}
+            <Icon icon="mdi:arrow-left" width={18} height={18} />
+            Back to Articles
           </Link>
-        </div>
-      )}
 
-      <div style={{
-        marginTop: '2rem',
-        paddingTop: '2rem',
-        borderTop: '1px solid var(--border)',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-      }}>
-        <Link
-          href="/#blog"
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: '6px',
-            fontFamily: 'var(--font-heading)', fontSize: '0.75rem',
-            fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
-            color: 'var(--accent)', textDecoration: 'none',
-            transition: 'opacity 0.2s',
-          }}
-        >
-          <Icon icon="mdi:arrow-left" width={16} height={16} />
-          All Posts
-        </Link>
-        <a
-          href={`mailto:${siteConfig.email}?subject=Question about: ${post.title}`}
-          style={{
-            fontFamily: 'var(--font-heading)', fontSize: '0.75rem',
-            fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em',
-            color: 'var(--fg-dim)', textDecoration: 'none',
-          }}
-        >
-          Have a question?
-        </a>
-      </div>
-    </main>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+            {post.tags.map((tag) => (
+              <span key={tag} style={{ 
+                fontSize: '0.7rem', 
+                background: 'rgba(255,255,255,0.05)', 
+                padding: '4px 12px', 
+                borderRadius: '100px',
+                color: 'var(--accent)',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 600,
+                letterSpacing: '0.03em',
+                textTransform: 'uppercase',
+                border: '1px solid rgba(255,255,255,0.1)'
+              }}>{tag}</span>
+            ))}
+          </div>
+
+          <h1 style={{
+            fontSize: 'clamp(2rem, 4vw, 3.2rem)',
+            fontWeight: 800,
+            fontFamily: 'var(--font-heading)',
+            lineHeight: 1.15,
+            letterSpacing: '-0.02em',
+            marginBottom: '1.5rem',
+            background: 'linear-gradient(to right, #fff, #a1a1aa)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}>
+            {post.title}
+          </h1>
+
+          <p style={{
+            fontSize: '1.15rem',
+            lineHeight: 1.6,
+            color: 'var(--fg-dim)',
+            marginBottom: '2.5rem',
+          }}>
+            {post.excerpt}
+          </p>
+
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '16px',
+            marginBottom: '3rem', paddingBottom: '2.5rem',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
+          }}>
+            <div style={{
+              width: '48px', height: '48px', borderRadius: '50%',
+              background: 'linear-gradient(135deg, var(--accent-glow-strong), var(--accent-glow))',
+              border: '1px solid rgba(254, 127, 45, 0.4)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800,
+              color: '#fff',
+            }}>
+              RD
+            </div>
+            <div>
+              <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--fg)', fontFamily: 'var(--font-heading)' }}>Raman Daksh</p>
+              <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
+                {formatDate(post.date)} · {post.readTime}
+              </p>
+            </div>
+          </div>
+
+          <article style={{ color: 'var(--fg-muted)', fontSize: '1.05rem', lineHeight: 1.8 }}>
+            {renderContent(blogContent[post.slug] || '', post.slug)}
+          </article>
+
+          {cta && (
+            <div style={{
+              marginTop: '4rem', padding: '2rem',
+              background: 'linear-gradient(to right, rgba(254, 127, 45, 0.05), transparent)',
+              borderLeft: '4px solid var(--accent)',
+              borderRadius: '0 12px 12px 0',
+            }}>
+              <p style={{ fontSize: '1.1rem', color: 'var(--fg)', fontWeight: 600, marginBottom: '1rem' }}>
+                {cta.text}
+              </p>
+              <Link
+                href={cta.link}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  fontFamily: 'var(--font-heading)', fontSize: '0.85rem',
+                  fontWeight: 700, color: 'var(--accent)', textDecoration: 'none',
+                  textTransform: 'uppercase', letterSpacing: '0.05em',
+                }}
+              >
+                {cta.label}
+              </Link>
+            </div>
+          )}
+        </div>
+      </main>
+    </>
   );
 }
