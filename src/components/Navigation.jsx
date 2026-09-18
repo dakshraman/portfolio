@@ -251,10 +251,7 @@ export default function Navigation() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ fontSize: '0.76rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-heading)' }}>
-                    Dynamic Island Hub
-                  </span>
-                  <span style={{ fontSize: '0.58rem', color: 'var(--fg-dim)' }}>
-                    Raman Daksh Portfolio
+                    RAMAN<span style={{ color: 'var(--accent)' }}>.</span> DAKSH
                   </span>
                 </div>
               </div>
