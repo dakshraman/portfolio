@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { aboutText, aboutStats } from '@/data/portfolio';
 import ScrollReveal from '@/components/ScrollReveal';
+import SpotlightCard from '@/components/SpotlightCard';
 
 function AnimatedCounter({ value }) {
   const [count, setCount] = useState(0);
@@ -42,8 +43,6 @@ function AnimatedCounter({ value }) {
   return <span ref={ref} style={{ fontVariantNumeric: 'tabular-nums' }}>{display}</span>;
 }
 
-
-
 export default function About() {
   return (
     <section id="about" className="section about-section">
@@ -55,39 +54,67 @@ export default function About() {
       </ScrollReveal>
 
       <div className="about-grid" style={{ marginBottom: '4rem' }}>
-        <div>
-          {aboutText.map((text, i) => (
-            <ScrollReveal key={i} delay={i * 0.1} yOffset={30}>
-              <p style={{ fontSize: '1.05rem', lineHeight: 1.85, color: 'var(--fg-muted)', marginBottom: '1.5rem' }}>
-                {text}
-              </p>
-            </ScrollReveal>
-          ))}
+        {/* Left Column: Feature Cards */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {aboutText.map((text, i) => {
+            const colors = ['#FE7F2D', '#5E6AD2', '#A855F7'];
+            const color = colors[i % colors.length];
+            return (
+              <ScrollReveal key={i} delay={i * 0.1} yOffset={30}>
+                <div
+                  className="card"
+                  style={{
+                    padding: '1.75rem',
+                    borderLeft: `4px solid ${color}`,
+                    background: 'var(--glass-bg)',
+                    backdropFilter: 'var(--glass-blur)',
+                    height: '100%'
+                  }}
+                >
+                  <p style={{ fontSize: '1.05rem', lineHeight: 1.85, color: 'var(--fg)' }}>
+                    {text}
+                  </p>
+                </div>
+              </ScrollReveal>
+            );
+          })}
         </div>
 
-        <div>
+        {/* Right Column: 2x2 Bento Metrics Grid */}
+        <div 
+          style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(2, 1fr)', 
+            gap: '1rem',
+            alignContent: 'start'
+          }}
+        >
           {aboutStats.map((stat, i) => {
             const colors = ['#5E6AD2', '#A855F7', '#F59E0B', '#EF4444'];
             const color = colors[i % colors.length];
             return (
-              <ScrollReveal key={i} delay={i * 0.1} yOffset={20}>
-                <div
+              <ScrollReveal key={i} delay={i * 0.1} yOffset={20} className="h-full">
+                <SpotlightCard
                   className="card"
                   style={{
-                    padding: '1.25rem 1.5rem',
-                    marginBottom: '12px',
+                    padding: '2rem 1.5rem',
                     display: 'flex',
-                    alignItems: 'baseline',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
                     gap: '1rem',
+                    height: '100%',
+                    aspectRatio: '1 / 1'
                   }}
                 >
-                  <span style={{ fontSize: '2.75rem', fontWeight: 700, color, lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
+                  <span style={{ fontSize: '3.5rem', fontWeight: 800, color, lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
                     <AnimatedCounter value={stat.value} />
                   </span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
                     {stat.label}
                   </span>
-                </div>
+                </SpotlightCard>
               </ScrollReveal>
             );
           })}
