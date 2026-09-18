@@ -173,6 +173,8 @@ const breadcrumbJsonLd = {
   ],
 };
 
+import CustomCursor from '@/components/CustomCursor';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -198,6 +200,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <CustomCursor />
         <AmbientBackground />
         <LoaderWrapper>
           <Navigation />

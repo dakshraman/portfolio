@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { aboutText, aboutStats } from '@/data/portfolio';
+import ScrollReveal from '@/components/ScrollReveal';
 
 function AnimatedCounter({ value }) {
   const [count, setCount] = useState(0);
@@ -44,41 +45,23 @@ function AnimatedCounter({ value }) {
 
 
 export default function About() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          section.classList.add('visible');
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={sectionRef} id="about" className="section about-section">
-      <div style={{ marginBottom: '3.5rem' }}>
-        <p className="section-label">[03] About</p>
-        <h2 className="text-heading">Why clients work with me</h2>
-      </div>
+    <section id="about" className="section about-section">
+      <ScrollReveal delay={0} className="mb-14">
+        <div style={{ marginBottom: '3.5rem' }}>
+          <p className="section-label">[03] About</p>
+          <h2 className="text-heading">Why clients work with me</h2>
+        </div>
+      </ScrollReveal>
 
       <div className="about-grid" style={{ marginBottom: '4rem' }}>
         <div>
           {aboutText.map((text, i) => (
-            <div key={i} style={{ animationDelay: `${i * 0.1}s` }} className="about-text-line">
+            <ScrollReveal key={i} delay={i * 0.1} yOffset={30}>
               <p style={{ fontSize: '1.05rem', lineHeight: 1.85, color: 'var(--fg-muted)', marginBottom: '1.5rem' }}>
                 {text}
               </p>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
 
@@ -87,24 +70,25 @@ export default function About() {
             const colors = ['#5E6AD2', '#A855F7', '#F59E0B', '#EF4444'];
             const color = colors[i % colors.length];
             return (
-              <div
-                key={i}
-                className="card"
-                style={{
-                  padding: '1.25rem 1.5rem',
-                  marginBottom: '12px',
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  gap: '1rem',
-                }}
-              >
-                <span style={{ fontSize: '2.75rem', fontWeight: 700, color, lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
-                  <AnimatedCounter value={stat.value} />
-                </span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
-                  {stat.label}
-                </span>
-              </div>
+              <ScrollReveal key={i} delay={i * 0.1} yOffset={20}>
+                <div
+                  className="card"
+                  style={{
+                    padding: '1.25rem 1.5rem',
+                    marginBottom: '12px',
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    gap: '1rem',
+                  }}
+                >
+                  <span style={{ fontSize: '2.75rem', fontWeight: 700, color, lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
+                    <AnimatedCounter value={stat.value} />
+                  </span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
+                    {stat.label}
+                  </span>
+                </div>
+              </ScrollReveal>
             );
           })}
         </div>
@@ -122,21 +106,6 @@ export default function About() {
             gap: 2rem;
           }
         }
-      `}</style>
-      <style jsx>{`
-        .about-section > * {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .about-section.visible > * {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .about-section > *:nth-child(1) { transition-delay: 0s; }
-        .about-section > *:nth-child(2) { transition-delay: 0.1s; }
-        .about-section > *:nth-child(3) { transition-delay: 0.2s; }
-        .about-section > *:nth-child(4) { transition-delay: 0.3s; }
       `}</style>
     </section>
   );

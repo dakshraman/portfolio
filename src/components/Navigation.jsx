@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks, siteConfig } from '@/data/portfolio';
+import Magnetic from '@/components/Magnetic';
 
 // Section icons for the Dynamic Island
 const ICONS = {
@@ -256,37 +257,39 @@ export default function Navigation() {
                 </div>
               </div>
 
-              <button
-                onClick={() => setHubOpen(false)}
-                aria-label="Close Dynamic Island Hub"
-                style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
-                  color: 'var(--fg)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  padding: 0,
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.16)';
-                  e.currentTarget.style.color = '#fff';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                  e.currentTarget.style.color = 'var(--fg)';
-                }}
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
+              <Magnetic>
+                <button
+                  onClick={() => setHubOpen(false)}
+                  aria-label="Close Dynamic Island Hub"
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    border: '1px solid rgba(255, 255, 255, 0.12)',
+                    color: 'var(--fg)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    padding: 0,
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.16)';
+                    e.currentTarget.style.color = '#fff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                    e.currentTarget.style.color = 'var(--fg)';
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </Magnetic>
             </motion.div>
           ) : (
             /* ------------------------------------------------------------- */
@@ -495,39 +498,41 @@ export default function Navigation() {
               {/* Right Action Elements */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
                 {/* Hub Expander Toggle (3 Dots) */}
-                <button
-                  onClick={() => setHubOpen(true)}
-                  aria-label="Open Dynamic Island Hub"
-                  style={{
-                    width: isCompact ? '26px' : '28px',
-                    height: isCompact ? '26px' : '28px',
-                    borderRadius: '50%',
-                    background: 'rgba(255, 255, 255, 0.08)',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    color: 'var(--fg)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    padding: 0,
-                    transition: 'all 0.3s ease',
-                    flexShrink: 0,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-                    e.currentTarget.style.color = '#fff';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
-                    e.currentTarget.style.color = 'var(--fg)';
-                  }}
-                >
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="1.5" />
-                    <circle cx="19" cy="12" r="1.5" />
-                    <circle cx="5" cy="12" r="1.5" />
-                  </svg>
-                </button>
+                <Magnetic>
+                  <button
+                    onClick={() => setHubOpen(true)}
+                    aria-label="Open Dynamic Island Hub"
+                    style={{
+                      width: isCompact ? '26px' : '28px',
+                      height: isCompact ? '26px' : '28px',
+                      borderRadius: '50%',
+                      background: 'rgba(255, 255, 255, 0.08)',
+                      border: '1px solid rgba(255, 255, 255, 0.12)',
+                      color: 'var(--fg)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      padding: 0,
+                      transition: 'all 0.3s ease',
+                      flexShrink: 0,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                      e.currentTarget.style.color = '#fff';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                      e.currentTarget.style.color = 'var(--fg)';
+                    }}
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="1.5" />
+                      <circle cx="19" cy="12" r="1.5" />
+                      <circle cx="5" cy="12" r="1.5" />
+                    </svg>
+                  </button>
+                </Magnetic>
               </div>
             </motion.div>
           )}
@@ -694,47 +699,51 @@ export default function Navigation() {
                     <span>Download CV</span>
                   </a>
   
-                  <a
-                    href={siteConfig.telegram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '9px 12px',
-                      borderRadius: '10px',
-                      background: 'rgba(255, 255, 255, 0.06)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      color: 'var(--fg)',
-                      textDecoration: 'none',
-                      fontSize: '0.66rem',
-                      fontWeight: 600,
-                    }}
-                  >
-                    Telegram
-                  </a>
+                  <Magnetic>
+                    <a
+                      href={siteConfig.telegram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '9px 12px',
+                        borderRadius: '10px',
+                        background: 'rgba(255, 255, 255, 0.06)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        color: 'var(--fg)',
+                        textDecoration: 'none',
+                        fontSize: '0.66rem',
+                        fontWeight: 600,
+                      }}
+                    >
+                      Telegram
+                    </a>
+                  </Magnetic>
   
-                  <a
-                    href={siteConfig.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '9px 12px',
-                      borderRadius: '10px',
-                      background: 'rgba(255, 255, 255, 0.06)',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      color: 'var(--fg)',
-                      textDecoration: 'none',
-                      fontSize: '0.66rem',
-                      fontWeight: 600,
-                    }}
-                  >
-                    LinkedIn
-                  </a>
+                  <Magnetic>
+                    <a
+                      href={siteConfig.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '9px 12px',
+                        borderRadius: '10px',
+                        background: 'rgba(255, 255, 255, 0.06)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        color: 'var(--fg)',
+                        textDecoration: 'none',
+                        fontSize: '0.66rem',
+                        fontWeight: 600,
+                      }}
+                    >
+                      LinkedIn
+                    </a>
+                  </Magnetic>
                 </div>
               </div>
             </motion.div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { services } from '@/data/portfolio';
+import SpotlightCard from '@/components/SpotlightCard';
 
 const sectionColor = '#14B8A6';
 
@@ -120,88 +121,81 @@ export default function Services() {
         }}
       >
         {services.map((service, i) => (
-          <article
-            key={i}
-            className="card"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = `0 8px 32px ${sectionColor}22`;
-              e.currentTarget.style.borderColor = `${sectionColor}33`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = 'var(--glass-shadow)';
-              e.currentTarget.style.borderColor = 'var(--glass-border)';
-            }}
-          >
-            <div
+          <SpotlightCard key={i} className="card" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <article
               style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: '12px',
-                background: `${sectionColor}10`,
-                border: `1px solid ${sectionColor}20`,
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: sectionColor,
-                marginBottom: '1.25rem',
-                flexShrink: 0,
+                flexDirection: 'column',
+                height: '100%',
               }}
             >
-              <ServiceIcon icon={service.icon} />
-            </div>
+              <div
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '12px',
+                  background: `${sectionColor}10`,
+                  border: `1px solid ${sectionColor}20`,
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: sectionColor,
+                  marginBottom: '1.25rem',
+                  flexShrink: 0,
+                }}
+              >
+                <ServiceIcon icon={service.icon} />
+              </div>
 
-            <h3
-              style={{
-                fontSize: '1.15rem',
-                fontFamily: 'var(--font-heading)',
-                fontWeight: 700,
-                color: 'var(--fg)',
-                marginBottom: '0.75rem',
-              }}
-            >
-              {service.title}
-            </h3>
+              <h3
+                style={{
+                  fontSize: '1.15rem',
+                  fontFamily: 'var(--font-heading)',
+                  fontWeight: 700,
+                  color: 'var(--fg)',
+                  marginBottom: '0.75rem',
+                }}
+              >
+                {service.title}
+              </h3>
 
-            <p
-              style={{
-                color: 'var(--fg-muted)',
-                fontSize: '0.9rem',
-                lineHeight: 1.7,
-                marginBottom: '1.5rem',
-                flexGrow: 1,
-              }}
-            >
-              {service.description}
-            </p>
+              <p
+                style={{
+                  color: 'var(--fg-muted)',
+                  fontSize: '0.9rem',
+                  lineHeight: 1.7,
+                  marginBottom: '1.5rem',
+                  flexGrow: 1,
+                }}
+              >
+                {service.description}
+              </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: 'auto' }}>
-              {service.features.map((feature, j) => (
-                <div
-                  key={j}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    fontSize: '0.75rem',
-                    color: 'var(--fg-dim)',
-                    fontFamily: 'var(--font-heading)',
-                    fontWeight: 600,
-                  }}
-                >
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ flexShrink: 0 }}>
-                    <path d="M2.5 6L5 8.5L9.5 3.5" stroke={sectionColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <span>{feature}</span>
-                </div>
-              ))}
-            </div>
-          </article>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: 'auto' }}>
+                {service.features.map((feature, j) => (
+                  <div
+                    key={j}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      fontSize: '0.75rem',
+                      color: 'var(--fg-dim)',
+                      fontFamily: 'var(--font-heading)',
+                      fontWeight: 600,
+                    }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ flexShrink: 0 }}>
+                      <path d="M2.5 6L5 8.5L9.5 3.5" stroke={sectionColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </article>
+          </SpotlightCard>
         ))}
       </div>
 

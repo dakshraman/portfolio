@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { projects } from '@/data/portfolio';
+import SpotlightCard from '@/components/SpotlightCard';
 
 const categoryColors = {
   'learning platform': '#5E6AD2',
@@ -159,39 +160,24 @@ function ProjectCard({ project, index }) {
   }, []);
 
   return (
-    <article
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setIsHovered(false); }}
-     
-      className="card"
-      aria-label={`${project.category} project: ${project.description.slice(0, 60)}...`}
-      style={{
-        transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1.25rem',
-        overflow: 'hidden',
-        position: 'relative',
-        cursor: 'pointer',
-      }}
-    >
-      <div
+    <SpotlightCard className="card h-full">
+      <article
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setIsHovered(false); }}
+        aria-label={`${project.category} project: ${project.description.slice(0, 60)}...`}
         style={{
-          position: 'absolute',
-          top: mousePos.y - 120,
-          left: mousePos.x - 120,
-          width: '240px',
-          height: '240px',
-          borderRadius: '50%',
-          background: `radial-gradient(circle, ${color}18 0%, transparent 70%)`,
-          pointerEvents: 'none',
-          opacity: isHovered ? 1 : 0,
-          transition: 'opacity 0.4s ease',
+          transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.25rem',
+          height: '100%',
+          position: 'relative',
+          cursor: 'pointer',
         }}
-      />
+      >
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 1, marginBottom: '1.5rem' }}>
         <span style={{ fontSize: '0.7rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
@@ -243,7 +229,8 @@ function ProjectCard({ project, index }) {
           to { opacity: 1; transform: translateX(0); }
         }
       `}</style>
-    </article>
+      </article>
+    </SpotlightCard>
   );
 }
 
