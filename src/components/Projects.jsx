@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { projects } from '@/data/portfolio';
 import SpotlightCard from '@/components/SpotlightCard';
+import PerspectiveScroll from '@/components/PerspectiveScroll';
 
 const categoryColors = {
   'learning platform': '#5E6AD2',
@@ -144,32 +145,16 @@ const ProjectIcon = ({ icon }) => {
 };
 
 function ProjectCard({ project, index }) {
-  const cardRef = useRef(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const color = getCategoryColor(project.category);
-
-  const handleMouseMove = useCallback((e) => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    setTilt({ x: (y - 0.5) * -8, y: (x - 0.5) * 8 });
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  }, []);
 
   return (
     <SpotlightCard className="card h-full">
       <article
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => { setTilt({ x: 0, y: 0 }); setIsHovered(false); }}
+        onMouseLeave={() => setIsHovered(false)}
         aria-label={`${project.category} project: ${project.description.slice(0, 60)}...`}
         style={{
-          transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-          transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease',
           display: 'flex',
           flexDirection: 'column',
           gap: '1.25rem',
@@ -262,11 +247,13 @@ export default function Projects() {
         <h2 className="text-heading">Selected work</h2>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '16px' }}>
-        {projects.map((project, i) => (
-          <ProjectCard key={i} project={project} index={i} />
-        ))}
-      </div>
+      <PerspectiveScroll>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '16px' }}>
+          {projects.map((project, i) => (
+            <ProjectCard key={i} project={project} index={i} />
+          ))}
+        </div>
+      </PerspectiveScroll>
       <style jsx>{`
         .projects-section > * {
           opacity: 0;
