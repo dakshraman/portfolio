@@ -494,44 +494,6 @@ export default function Navigation() {
  
               {/* Right Action Elements */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-                {/* Hire Me CTA Button */}
-                <a
-                  href={isHome ? '#contact' : '/#contact'}
-                  style={{
-                    background: 'linear-gradient(135deg, #FE7F2D 0%, #E86A17 100%)',
-                    color: '#000',
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: isCompact ? '0.62rem' : '0.65rem',
-                    fontWeight: 800,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.06em',
-                    padding: isCompact ? '5px 9px' : '5px 12px',
-                    borderRadius: '9999px',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    boxShadow: '0 2px 10px rgba(254, 127, 45, 0.35)',
-                    transition: 'all 0.3s ease',
-                    whiteSpace: 'nowrap',
-                    flexShrink: 0,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.04)';
-                    e.currentTarget.style.boxShadow = '0 4px 14px rgba(254, 127, 45, 0.5)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 2px 10px rgba(254, 127, 45, 0.35)';
-                  }}
-                >
-                  <span>Hire Me</span>
-                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </a>
- 
                 {/* Hub Expander Toggle (3 Dots) */}
                 <button
                   onClick={() => setHubOpen(true)}
