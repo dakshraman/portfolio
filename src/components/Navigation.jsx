@@ -141,7 +141,7 @@ export default function Navigation() {
   const activeLabel = navLinks.find((l) => l.href.replace('#', '') === activeSection)?.label || 'Featured';
 
   // Explicit widths for bulletproof framer-motion animation (no layout projection bugs)
-  const capsuleWidth = hubOpen ? (isMobile ? 360 : 480) : (isCompact ? 370 : 700);
+  const capsuleWidth = hubOpen ? (isMobile ? 360 : 480) : (isCompact ? 370 : '90%');
 
   return (
     <header
@@ -385,8 +385,6 @@ export default function Navigation() {
                   position: 'relative',
                   height: '100%',
                   overflow: 'hidden', // CRITICAL: Prevents absolute children from spilling over the logo and buttons!
-                  maskImage: 'linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%)',
-                  WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 15%, black 85%, transparent 100%)'
                 }}
               >
                 <AnimatePresence initial={false}>
