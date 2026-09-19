@@ -142,7 +142,7 @@ export default function Navigation() {
   const activeLabel = navLinks.find((l) => l.href.replace('#', '') === activeSection)?.label || 'Featured';
 
   // Explicit widths for bulletproof framer-motion animation
-  const capsuleWidth = hubOpen ? 'min(94vw, 480px)' : (isCompact ? 'min(94vw, 370px)' : 'min(94vw, 680px)');
+  const capsuleWidth = hubOpen ? 'min(94vw, 480px)' : (isCompact ? 'min(94vw, 370px)' : 'min(94vw, 880px)');
 
   return (
     <header
