@@ -141,8 +141,8 @@ export default function Navigation() {
   // Active section formatted label
   const activeLabel = navLinks.find((l) => l.href.replace('#', '') === activeSection)?.label || 'Featured';
 
-  // Explicit widths for bulletproof framer-motion animation (no layout projection bugs)
-  const capsuleWidth = hubOpen ? (isMobile ? 360 : 480) : (isCompact ? 370 : '90%');
+  // Explicit widths for bulletproof framer-motion animation
+  const capsuleWidth = hubOpen ? 'min(94vw, 480px)' : (isCompact ? 'min(94vw, 370px)' : 'min(94vw, 680px)');
 
   return (
     <header

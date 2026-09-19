@@ -123,7 +123,7 @@ export default function Hero() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem', justifyContent: 'space-between', alignItems: 'center' }}>
           
           {/* Left Column: Name and Role */}
-          <div style={{ position: 'relative', zIndex: 2, flex: '1 1 400px' }}>
+          <div style={{ position: 'relative', zIndex: 2, flex: '1 1 min(100%, 400px)' }}>
             <h1 
               className="text-display" 
               style={{ fontWeight: 700, marginBottom: '1.5rem', cursor: 'default' }}
@@ -145,7 +145,7 @@ export default function Hero() {
           </div>
 
           {/* Right Column: Tagline and Buttons */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'flex-start', position: 'relative', zIndex: 2, flex: '1 1 400px', ...fadeUp4 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'flex-start', position: 'relative', zIndex: 2, flex: '1 1 min(100%, 400px)', ...fadeUp4 }}>
             <p style={{ maxWidth: '520px', fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', lineHeight: 1.7, color: 'var(--fg-muted)' }}>
               {siteConfig.tagline}{' '}
               <span style={{ color: 'var(--fg)' }}>{siteConfig.description}</span>

@@ -248,7 +248,7 @@ export default function Projects() {
       </div>
 
       <PerspectiveScroll>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '16px' }}>
           {projects.map((project, i) => (
             <ProjectCard key={i} project={project} index={i} />
           ))}

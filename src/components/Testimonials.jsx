@@ -34,7 +34,7 @@ export default function Testimonials() {
         <h2 className="text-heading">What people say</h2>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '16px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 250px), 1fr))', gap: '16px' }}>
         {testimonials.map((t, i) => {
           const color = colors[i % colors.length];
           return (

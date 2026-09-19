@@ -81,14 +81,7 @@ export default function About() {
         </div>
 
         {/* Right Column: 2x2 Bento Metrics Grid */}
-        <div 
-          style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(2, 1fr)', 
-            gap: '1rem',
-            alignContent: 'start'
-          }}
-        >
+        <div className="bento-metrics-grid">
           {aboutStats.map((stat, i) => {
             const colors = ['#5E6AD2', '#A855F7', '#F59E0B', '#EF4444'];
             const color = colors[i % colors.length];
@@ -127,10 +120,19 @@ export default function About() {
           grid-template-columns: 1fr 1fr;
           gap: 3rem;
         }
+        .bento-metrics-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+          align-content: start;
+        }
         @media (max-width: 768px) {
           .about-grid {
             grid-template-columns: 1fr;
             gap: 2rem;
+          }
+          .bento-metrics-grid {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>

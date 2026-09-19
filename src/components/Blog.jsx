@@ -80,7 +80,7 @@ export default function Blog() {
           </article>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 250px), 1fr))', gap: '16px' }}>
           {rest.map((post) => (
             <article key={post.slug} className="card" aria-label={`Blog post: ${post.title}`}>
             <Link
