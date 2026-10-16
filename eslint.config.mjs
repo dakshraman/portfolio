@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Build artifacts & tooling output (custom distDir, Netlify cache, agent skills):
+    ".out/**",
+    ".netlify/**",
+    ".opencode/**",
   ]),
 ]);
 

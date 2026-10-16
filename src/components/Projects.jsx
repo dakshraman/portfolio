@@ -223,10 +223,18 @@ export default function Projects() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const section = sectionRef.current;
     if (!section) return;
 
+    // Reduced motion: skip the observer and reveal statically.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      section.classList.add('visible');
+      return;
+    }
+
+    // Trigger as the section enters the viewport. A ratio threshold on a tall
+    // mobile section required ~530px of it to be visible before revealing,
+    // leaving the first cards blank while they scrolled into view.
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -234,7 +242,7 @@ export default function Projects() {
           observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0, rootMargin: '0px 0px -20% 0px' }
     );
     observer.observe(section);
     return () => observer.disconnect();

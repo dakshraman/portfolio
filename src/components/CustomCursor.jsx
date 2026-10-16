@@ -1,28 +1,37 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
+const getFalse = () => false;
+const getTrue = () => true;
+const subscribeMounted = () => () => {};
+
+const TOUCH_QUERY = '(hover: none) and (pointer: coarse)';
+const subscribeTouch = (onChange) => {
+  const mql = window.matchMedia(TOUCH_QUERY);
+  mql.addEventListener('change', onChange);
+  return () => mql.removeEventListener('change', onChange);
+};
+const getTouch = () => window.matchMedia(TOUCH_QUERY).matches;
+
 export default function CustomCursor() {
-  const [isMounted, setIsMounted] = useState(false);
+  // False during SSR and the hydration render, true afterwards — avoids
+  // setState-in-effect while keeping hydration deterministic.
+  const isMounted = useSyncExternalStore(subscribeMounted, getTrue, getFalse);
+  const isMobile = useSyncExternalStore(subscribeTouch, getTouch, getFalse);
   const [isHovering, setIsHovering] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   // Motion values for smooth spring physics
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
+
   const springConfig = { damping: 25, stiffness: 400, mass: 0.5 };
   const smoothX = useSpring(cursorX, springConfig);
   const smoothY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    setIsMounted(true);
-    // Check if it's a touch device
-    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
-      setIsMobile(true);
-      return;
-    }
+    if (isMobile) return;
 
     const moveCursor = (e) => {
       cursorX.set(e.clientX);
@@ -35,7 +44,7 @@ export default function CustomCursor() {
     };
 
     window.addEventListener('mousemove', moveCursor, { passive: true });
-    
+
     // Fallback if cursor leaves window
     const handleMouseLeave = () => setIsHovering(false);
     window.addEventListener('mouseout', handleMouseLeave);
@@ -44,7 +53,7 @@ export default function CustomCursor() {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseout', handleMouseLeave);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isMobile]);
 
   if (!isMounted || isMobile) return null;
 
@@ -58,7 +67,7 @@ export default function CustomCursor() {
           }
         }
       `}</style>
-      
+
       {/* Outer trailing ring */}
       <motion.div
         style={{
@@ -84,7 +93,7 @@ export default function CustomCursor() {
         }}
         transition={{ duration: 0.2, ease: 'easeOut' }}
       />
-      
+
       {/* Inner tiny dot (no spring, instant follow) */}
       <motion.div
         style={{

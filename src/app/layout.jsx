@@ -3,6 +3,11 @@ import Navigation from '@/components/Navigation';
 import AmbientBackground from '@/components/AmbientBackground';
 import BackToTop from '@/components/BackToTop';
 import LoaderWrapper from '@/components/LoaderWrapper';
+import Script from 'next/script';
+import { Archivo, Space_Grotesk } from 'next/font/google';
+
+const archivo = Archivo({ subsets: ['latin'], variable: '--font-archivo', display: 'swap' });
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk', display: 'swap' });
 
 export const metadata = {
   title: {
@@ -177,14 +182,8 @@ import CustomCursor from '@/components/CustomCursor';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${archivo.variable} ${spaceGrotesk.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-        />
         <meta name="theme-color" content="#FE7F2D" />
         <script
           type="application/ld+json"
@@ -207,6 +206,14 @@ export default function RootLayout({ children }) {
           <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
           <BackToTop />
         </LoaderWrapper>
+        {/* Visit analytics — cookieless, restricted to the production domain so local/preview visits don't count */}
+        <Script
+          id="umami-analytics"
+          src="https://cloud.umami.is/script.js"
+          strategy="afterInteractive"
+          data-website-id="15bbbb9e-fc01-4707-bd2c-71560c02318e"
+          data-domains="dakshraman.in,www.dakshraman.in"
+        />
       </body>
     </html>
   );

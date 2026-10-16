@@ -15,9 +15,14 @@ export default function Blog() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const section = sectionRef.current;
     if (!section) return;
+
+    // Reduced motion: reveal statically instead of waiting for the observer.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      section.classList.add('visible');
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {

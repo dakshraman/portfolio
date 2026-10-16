@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks, siteConfig } from '@/data/portfolio';
@@ -313,7 +314,7 @@ export default function Navigation() {
               }}
             >
               {/* Left Monogram / Brand */}
-              <a
+              <Link
                 href="/"
                 aria-label="Raman Daksh Home"
                 style={{
@@ -373,7 +374,7 @@ export default function Navigation() {
                     </span>
                   )}
                 </span>
-              </a>
+              </Link>
 
               {/* Center: Dynamic Switcher between Compact Tracker & Expanded Nav Links */}
               <div

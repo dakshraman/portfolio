@@ -20,7 +20,6 @@ function AnimatedCounter({ value }) {
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated.current) {
           hasAnimated.current = true;
-          const obj = { val: 0 };
           const duration = 1500;
           const start = performance.now();
           const animate = (now) => {

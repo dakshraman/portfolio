@@ -80,17 +80,14 @@ function MagneticButton({ children, href, className, style, download }) {
 
 export default function Hero() {
   const loading = useLoader();
-  const [scrambleTrigger, setScrambleTrigger] = useState(0);
+  const [hoverScrambles, setHoverScrambles] = useState(0);
 
-  // When loading finishes, we trigger the initial scramble
-  useEffect(() => {
-    if (!loading) {
-      setScrambleTrigger(1);
-    }
-  }, [loading]);
+  // Trigger 0 while the loader is up; the initial scramble plays once loading
+  // finishes (trigger 1), and every name hover bumps the trigger further.
+  const scrambleTrigger = loading ? 0 : 1 + hoverScrambles;
 
   const handleNameHover = () => {
-    setScrambleTrigger(prev => prev + 1);
+    setHoverScrambles(prev => prev + 1);
   };
 
   // Only apply animation styles if loading is finished so they don't play behind the loader

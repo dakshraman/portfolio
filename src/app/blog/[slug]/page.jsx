@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
-import { blogs, siteConfig } from '@/data/portfolio';
+import { blogs } from '@/data/portfolio';
 import blogContent from '@/data/blog-content';
 import ProgressBar from '@/components/ProgressBar';
 
@@ -54,7 +54,7 @@ function parseInlineMarkup(text) {
   return <span dangerouslySetInnerHTML={{ __html: parsed }} />;
 }
 
-function renderContent(content, slug) {
+function renderContent(content) {
   const lines = content.split('\n');
   const elements = [];
   let inCodeBlock = false;
@@ -432,7 +432,7 @@ export default async function BlogPost({ params }) {
           </div>
 
           <article style={{ color: 'var(--fg-muted)', fontSize: '1.05rem', lineHeight: 1.8 }}>
-            {renderContent(blogContent[post.slug] || '', post.slug)}
+            {renderContent(blogContent[post.slug] || '')}
           </article>
 
           {cta && (
