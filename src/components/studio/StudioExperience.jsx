@@ -42,6 +42,82 @@ function SparkIcon() {
   );
 }
 
+/*
+ * Original 24×24 pixel glyphs for the station hotbar. They are built from
+ * rectangles (not strokes) so they stay crisp at every slot size and inherit
+ * the station accent through currentColor.
+ */
+function StationGlyph({ id }) {
+  const glyphs = {
+    about: (
+      <>
+        <rect x="3" y="4" width="18" height="2" />
+        <rect x="3" y="4" width="2" height="9" />
+        <rect x="19" y="4" width="2" height="9" />
+        <rect x="3" y="11" width="18" height="2" />
+        <rect x="6" y="6" width="12" height="3" opacity="0.48" />
+        <rect x="10" y="13" width="4" height="2" />
+        <rect x="8" y="15" width="8" height="2" />
+        <rect x="3" y="19" width="18" height="2" />
+      </>
+    ),
+    projects: (
+      <>
+        <rect x="3" y="3" width="18" height="2" />
+        <rect x="3" y="3" width="2" height="18" />
+        <rect x="19" y="3" width="2" height="18" />
+        <rect x="3" y="19" width="18" height="2" />
+        <rect x="7" y="7" width="10" height="6" opacity="0.48" />
+        <rect x="7" y="15" width="6" height="2" opacity="0.75" />
+        <rect x="15" y="15" width="2" height="2" />
+      </>
+    ),
+    skills: (
+      <>
+        <rect x="4" y="3" width="16" height="2" />
+        <rect x="4" y="3" width="2" height="18" />
+        <rect x="18" y="3" width="2" height="18" />
+        <rect x="4" y="19" width="16" height="2" />
+        <rect x="4" y="8" width="16" height="2" opacity="0.65" />
+        <rect x="4" y="13" width="16" height="2" opacity="0.65" />
+        <rect x="7" y="5" width="2" height="2" />
+        <rect x="7" y="10" width="2" height="2" />
+        <rect x="7" y="15" width="2" height="2" />
+        <rect x="13" y="5" width="5" height="2" opacity="0.4" />
+        <rect x="13" y="10" width="5" height="2" opacity="0.4" />
+        <rect x="13" y="15" width="5" height="2" opacity="0.4" />
+      </>
+    ),
+    contact: (
+      <>
+        <rect x="3" y="6" width="14" height="2" />
+        <rect x="3" y="6" width="2" height="7" />
+        <rect x="15" y="6" width="2" height="7" />
+        <rect x="3" y="13" width="14" height="2" />
+        <rect x="6" y="9" width="8" height="2" opacity="0.5" />
+        <rect x="11" y="15" width="2" height="7" />
+        <rect x="8" y="20" width="8" height="2" />
+        <rect x="18" y="3" width="2" height="7" />
+        <rect x="20" y="3" width="2" height="2" />
+      </>
+    ),
+  };
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="28"
+      height="28"
+      fill="currentColor"
+      shapeRendering="crispEdges"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {glyphs[id]}
+    </svg>
+  );
+}
+
 export default function StudioExperience() {
   const shellRef = useRef(null);
   const engineRef = useRef(null);
@@ -182,12 +258,12 @@ export default function StudioExperience() {
 
   const progressValue = isReady ? 100 : progress;
   const loadingLabel = progressValue >= 100
-    ? 'Studio ready'
+    ? 'World ready'
     : progressValue > 70
-      ? 'Lighting the set'
+      ? 'Lighting the torches'
       : progressValue > 38
-        ? 'Composing the room'
-        : 'Booting the robot';
+        ? 'Placing the blocks'
+        : 'Spawning the robot';
 
   const liveMessage = activeId
     ? `${STATION_MAP[activeId].label} panel open.`
@@ -258,7 +334,7 @@ export default function StudioExperience() {
           <div className="studio-dock__head">
             <span className="studio-dock__eyebrow">
               <SparkIcon />
-              Station directory
+              Quick bar / Stations
             </span>
             <button
               type="button"
@@ -284,7 +360,12 @@ export default function StudioExperience() {
                   style={{ '--station-accent': station.accent }}
                   onClick={() => handleStationSelect(station.id)}
                 >
-                  <span className="studio-dock__number">{String(station.order).padStart(2, '0')}</span>
+                  <span className="studio-dock__top">
+                    <span className="studio-dock__glyph" aria-hidden="true">
+                      <StationGlyph id={station.id} />
+                    </span>
+                    <span className="studio-dock__number">{String(station.order).padStart(2, '0')}</span>
+                  </span>
                   <span className="studio-dock__label">
                     <strong>{station.label}</strong>
                     <small>{station.tagline}</small>
@@ -311,7 +392,7 @@ export default function StudioExperience() {
             <kbd>E</kbd>
             <span>Interact</span>
           </span>
-          <span className="studio-legend__divider" />
+          <span className="studio-legend__divider studio-legend__divider--wide" />
           <span className="studio-legend__group studio-legend__group--wide">
             <span>Click floor to walk</span>
           </span>
@@ -438,8 +519,11 @@ export default function StudioExperience() {
                 Building the room
                 <span aria-hidden="true">.</span>
               </h1>
+              <span className="studio-loading__splash" aria-hidden="true">
+                Now with 100% more blocks!
+              </span>
               <p className="studio-loading__copy">
-                Warming the lights, compiling the geometry, waking the robot.
+                Carving the room block by block, lighting the torches, spawning the robot.
               </p>
               <div
                 className="studio-loading__progress"

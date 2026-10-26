@@ -1,6 +1,25 @@
 import Link from 'next/link';
+import { Press_Start_2P, VT323 } from 'next/font/google';
 import StudioExperience from '@/components/studio/StudioExperience';
 import './studio.css';
+import './minecraft-theme.css';
+import './minecraft-hud.css';
+import './minecraft-modals.css';
+import './minecraft-touch.css';
+
+const pixel = Press_Start_2P({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-pixel',
+  display: 'swap',
+});
+
+const pixelDisplay = VT323({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-pixel-display',
+  display: 'swap',
+});
 
 export const metadata = {
   title: 'Virtual Studio — Interactive 3D Portfolio',
@@ -45,7 +64,9 @@ export const metadata = {
 export default function StudioPage() {
   return (
     <>
-      <StudioExperience />
+      <div className={`${pixel.variable} ${pixelDisplay.variable}`}>
+        <StudioExperience />
+      </div>
       <noscript>
         <div className="studio-noscript">
           <div className="studio-noscript__card">

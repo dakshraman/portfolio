@@ -1,0 +1,443 @@
+/* ==========================================================================
+   Virtual Studio — Minecraft-inspired touch controls
+   Owned by the touch pass. Loads after minecraft-theme.css.
+
+   studio.css remains authoritative for layout and display breakpoints. This
+   layer only reskins the D-pad, USE button, and status plaque; the joystick's
+   pointer math, pointer capture, and onChange contract are untouched.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Movement block
+   -------------------------------------------------------------------------- */
+
+.studio-joystick-wrap {
+  gap: 2px;
+  pointer-events: none;
+}
+
+.studio-joystick {
+  --dpad-clip: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    calc(100% - 8px) 4px,
+    calc(100% - 4px) 4px,
+    calc(100% - 4px) 8px,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 4px) calc(100% - 8px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 8px) calc(100% - 4px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    8px calc(100% - 4px),
+    4px calc(100% - 4px),
+    4px calc(100% - 8px),
+    0 calc(100% - 8px),
+    0 8px,
+    4px 8px,
+    4px 4px,
+    8px 4px
+  );
+
+  position: relative;
+  width: 112px;
+  height: 112px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  isolation: isolate;
+  touch-action: none;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Static hard shadow, kept out of the interactive base so dragging the knob
+   does not repaint a filtered subtree on every pointer move. */
+.studio-joystick__shadow {
+  position: absolute;
+  inset: 4px -4px -4px 4px;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.58);
+  clip-path: var(--dpad-clip);
+  pointer-events: none;
+}
+
+.studio-joystick__shadow,
+.studio-joystick::before,
+.studio-joystick::after {
+  clip-path: var(--dpad-clip);
+}
+
+/* Near-black frame silhouette. The stepped corners live on the decorative
+   layers rather than on the interactive base, so the knob can travel to the
+   edge without being cropped. */
+.studio-joystick::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: var(--mc-frame);
+  transform: none;
+  pointer-events: none;
+}
+
+/* Stone face, recessed crosshair, and a faint 8px pixel dither. */
+.studio-joystick::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  z-index: 1;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background-color: var(--mc-stone-800);
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent calc(50% - 1px),
+      var(--mc-stone-950) calc(50% - 1px),
+      var(--mc-stone-950) calc(50% + 1px),
+      rgba(255, 255, 255, 0.055) calc(50% + 1px),
+      rgba(255, 255, 255, 0.055) calc(50% + 2px),
+      transparent calc(50% + 2px)
+    ),
+    linear-gradient(
+      180deg,
+      transparent calc(50% - 1px),
+      var(--mc-stone-950) calc(50% - 1px),
+      var(--mc-stone-950) calc(50% + 1px),
+      rgba(255, 255, 255, 0.055) calc(50% + 1px),
+      rgba(255, 255, 255, 0.055) calc(50% + 2px),
+      transparent calc(50% + 2px)
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 50%, transparent 50%),
+    linear-gradient(rgba(0, 0, 0, 0.1) 50%, transparent 50%);
+  background-size: 100% 100%, 100% 100%, 8px 8px, 8px 8px;
+  background-position: 0 0, 0 0, 0 0, 4px 4px;
+  transform: none;
+  box-shadow:
+    inset 2px 2px 0 var(--mc-edge-light),
+    inset -2px -2px 0 var(--mc-edge-dark);
+  pointer-events: none;
+}
+
+/* The original triangle glyphs are re-used as small brass cardinal ticks. */
+.studio-joystick__hint {
+  z-index: 2;
+  display: block;
+  width: 12px;
+  height: 4px;
+  overflow: hidden;
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+  background: color-mix(
+    in srgb,
+    var(--joystick-accent, var(--mc-gold)) 44%,
+    var(--mc-muted)
+  );
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.32),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.studio-joystick__hint--up {
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.studio-joystick__hint--right {
+  top: 50%;
+  right: 9px;
+  width: 4px;
+  height: 12px;
+  transform: translateY(-50%);
+}
+
+.studio-joystick__hint--down {
+  bottom: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.studio-joystick__hint--left {
+  top: 50%;
+  left: 9px;
+  width: 4px;
+  height: 12px;
+  transform: translateY(-50%);
+}
+
+/* 46px stone button with an accent-keyline inset and a hard 2px shadow. */
+.studio-joystick__knob {
+  z-index: 3;
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--mc-frame);
+  border-radius: 1px;
+  background-color: var(--mc-stone-600);
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 50%, transparent 50%),
+    linear-gradient(rgba(0, 0, 0, 0.13) 50%, transparent 50%);
+  background-size: 6px 6px;
+  background-position: 0 0, 3px 3px;
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--joystick-accent, var(--mc-gold)) 62%, var(--mc-frame)),
+    inset 2px 2px 0 var(--mc-edge-light),
+    inset -2px -2px 0 var(--mc-edge-dark),
+    2px 2px 0 rgba(0, 0, 0, 0.62);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.studio-joystick__core {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--mc-frame);
+  border-radius: 0;
+  background: var(--joystick-accent, var(--mc-gold));
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.studio-joystick__label {
+  padding: 2px 6px;
+  border: 2px solid var(--mc-frame);
+  border-radius: 1px;
+  background: var(--mc-stone-950);
+  color: var(--mc-ink-soft);
+  font-family: var(--mc-font-pixel);
+  font-size: 0.46rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.07),
+    0 2px 0 rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   USE button + status plaque
+   -------------------------------------------------------------------------- */
+
+.studio-touch__actions {
+  min-width: 0;
+  gap: 6px;
+  padding-bottom: 6px;
+  pointer-events: none;
+}
+
+.studio-touch__action {
+  --touch-accent: var(--station-accent, var(--mc-grass));
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: clamp(148px, 42vw, 160px);
+  min-width: 0;
+  height: 58px;
+  min-height: 58px;
+  padding: 0 12px;
+  border: 2px solid var(--mc-frame);
+  border-radius: 0;
+  background-color: var(--mc-stone-700);
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 50%, transparent 50%),
+    linear-gradient(rgba(0, 0, 0, 0.12) 50%, transparent 50%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  color: var(--mc-ink);
+  font-family: var(--mc-font-pixel);
+  font-size: 0.54rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.72);
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  box-shadow:
+    var(--mc-bevel-out),
+    0 4px 0 var(--mc-frame);
+  transition:
+    transform var(--mc-dur) var(--mc-ease),
+    background-color var(--mc-dur) var(--mc-ease),
+    color var(--mc-dur) var(--mc-ease),
+    box-shadow var(--mc-dur) var(--mc-ease);
+}
+
+@media (hover: hover) {
+  .studio-touch__action:hover:not(.is-active) {
+    background-color: var(--mc-stone-600);
+  }
+}
+
+.studio-touch__action-dot {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--mc-frame);
+  border-radius: 0;
+  background: var(--mc-stone-400);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.studio-touch__action.is-active {
+  border-color: var(--mc-frame);
+  background-color: color-mix(in srgb, var(--touch-accent) 30%, var(--mc-stone-800));
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 50%, transparent 50%),
+    linear-gradient(rgba(0, 0, 0, 0.12) 50%, transparent 50%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  color: var(--mc-ink);
+  box-shadow:
+    inset 0 0 0 2px var(--touch-accent),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+    inset -2px -2px 0 var(--mc-edge-dark),
+    0 4px 0 var(--mc-frame);
+}
+
+.studio-touch__action.is-active .studio-touch__action-dot {
+  background: var(--touch-accent);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.45),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.32);
+}
+
+.studio-touch__action:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 2px 2px 0 var(--mc-edge-dark),
+    inset -2px -2px 0 var(--mc-edge-light),
+    0 2px 0 var(--mc-frame);
+}
+
+.studio-touch__action.is-active:active {
+  box-shadow:
+    inset 0 0 0 2px var(--touch-accent),
+    inset 2px 2px 0 var(--mc-edge-dark),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.26),
+    0 2px 0 var(--mc-frame);
+}
+
+.studio-touch__hint {
+  max-width: 100%;
+  padding: 3px 6px 3px 8px;
+  border: 2px solid var(--mc-frame);
+  border-radius: 1px;
+  background: var(--mc-stone-950);
+  color: var(--mc-ink-soft);
+  font-family: var(--mc-font-pixel);
+  font-size: 0.48rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-align: right;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-shadow:
+    inset 3px 0 0 var(--mc-gold-deep),
+    0 2px 0 rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Narrow phones — still uses the base display rules from studio.css.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 360px) {
+  .studio-joystick {
+    width: 104px;
+    height: 104px;
+  }
+
+  .studio-joystick__knob {
+    width: 44px;
+    height: 44px;
+  }
+
+  .studio-joystick__hint {
+    width: 10px;
+    height: 3px;
+  }
+
+  .studio-joystick__hint--right,
+  .studio-joystick__hint--left {
+    width: 3px;
+    height: 10px;
+  }
+
+  .studio-joystick__label {
+    padding: 2px 5px;
+    font-size: 0.44rem;
+  }
+
+  .studio-touch {
+    gap: 10px;
+  }
+
+  .studio-touch__action {
+    width: 148px;
+    height: 56px;
+    min-height: 56px;
+    gap: 6px;
+    padding: 0 8px;
+    font-size: 0.5rem;
+  }
+
+  .studio-touch__action-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .studio-touch__hint {
+    max-width: 158px;
+    padding: 3px 5px 3px 7px;
+    font-size: 0.44rem;
+  }
+}
+
+/* Wide coarse-pointer screens: the base only positions the touch layer below
+   1100px, so pin it to the bottom corners here as well. The desktop dock is a
+   separate HUD-owned surface and can collide with these controls above 1100px
+   (reported to the integration pass, not patched from this file). */
+@media (pointer: coarse) and (min-width: 1101px) {
+  .studio-touch {
+    position: absolute;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    left: max(16px, env(safe-area-inset-left));
+    z-index: 45;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    pointer-events: none;
+  }
+}

@@ -18,19 +18,233 @@ function makeCanvas(width, height) {
   return { canvas, ctx };
 }
 
-function roundedRect(ctx, x, y, width, height, radius) {
-  const r = Math.min(radius, width / 2, height / 2);
+/* ------------------------------------------------------------------ */
+/* Pixel type + nameplate helpers                                      */
+/* ------------------------------------------------------------------ */
+
+const GLYPH_WIDTH = 5;
+const GLYPH_HEIGHT = 7;
+const GLYPH_ADVANCE = 6;
+
+/**
+ * Compact 5x7 pixel font. Each glyph is seven comma-separated rows of five
+ * bits so labels never depend on webfont timing. Lowercase input is
+ * uppercased before rendering; unknown characters fall back to "?".
+ */
+const GLYPH_SOURCE = {
+  A: '01110,10001,10001,11111,10001,10001,10001',
+  B: '11110,10001,10001,11110,10001,10001,11110',
+  C: '01110,10001,10000,10000,10000,10001,01110',
+  D: '11100,10010,10001,10001,10001,10010,11100',
+  E: '11111,10000,10000,11110,10000,10000,11111',
+  F: '11111,10000,10000,11110,10000,10000,10000',
+  G: '01110,10001,10000,10111,10001,10001,01111',
+  H: '10001,10001,10001,11111,10001,10001,10001',
+  I: '11111,00100,00100,00100,00100,00100,11111',
+  J: '00111,00010,00010,00010,10010,10010,01100',
+  K: '10001,10010,10100,11000,10100,10010,10001',
+  L: '10000,10000,10000,10000,10000,10000,11111',
+  M: '10001,11011,10101,10101,10001,10001,10001',
+  N: '10001,11001,10101,10011,10001,10001,10001',
+  O: '01110,10001,10001,10001,10001,10001,01110',
+  P: '11110,10001,10001,11110,10000,10000,10000',
+  Q: '01110,10001,10001,10001,10101,10010,01101',
+  R: '11110,10001,10001,11110,10100,10010,10001',
+  S: '01111,10000,10000,01110,00001,00001,11110',
+  T: '11111,00100,00100,00100,00100,00100,00100',
+  U: '10001,10001,10001,10001,10001,10001,01110',
+  V: '10001,10001,10001,10001,10001,01010,00100',
+  W: '10001,10001,10001,10101,10101,11011,10001',
+  X: '10001,10001,01010,00100,01010,10001,10001',
+  Y: '10001,10001,01010,00100,00100,00100,00100',
+  Z: '11111,00001,00010,00100,01000,10000,11111',
+  0: '01110,10001,10011,10101,11001,10001,01110',
+  1: '00100,01100,00100,00100,00100,00100,01110',
+  2: '01110,10001,00001,00010,00100,01000,11111',
+  3: '11111,00010,00100,00010,00001,10001,01110',
+  4: '00010,00110,01010,10010,11111,00010,00010',
+  5: '11111,10000,11110,00001,00001,10001,01110',
+  6: '00110,01000,10000,11110,10001,10001,01110',
+  7: '11111,00001,00010,00100,01000,01000,01000',
+  8: '01110,10001,10001,01110,10001,10001,01110',
+  9: '01110,10001,10001,01111,00001,00010,01100',
+  ' ': '00000,00000,00000,00000,00000,00000,00000',
+  '·': '00000,00000,00000,00110,00110,00000,00000',
+  '/': '00001,00010,00010,00100,01000,01000,10000',
+  '-': '00000,00000,00000,11111,00000,00000,00000',
+  '.': '00000,00000,00000,00000,00000,01100,01100',
+  '&': '01100,10010,10100,01000,10101,10010,01101',
+  ':': '00000,00110,00110,00000,00110,00110,00000',
+  "'": '00100,00100,00000,00000,00000,00000,00000',
+  '?': '01110,10001,00001,00010,00100,00000,00100',
+};
+
+const GLYPHS = Object.fromEntries(
+  Object.entries(GLYPH_SOURCE).map(([character, rows]) => [character, rows.split(',')])
+);
+
+function bitmapTextWidth(text, scale) {
+  const value = String(text ?? '').toUpperCase();
+  return value.length ? (value.length * GLYPH_ADVANCE - 1) * scale : 0;
+}
+
+function fitBitmapScale(text, maxWidth, preferredScale) {
+  const columns = Math.max(
+    1,
+    String(text ?? '').toUpperCase().length * GLYPH_ADVANCE - 1
+  );
+  return Math.max(1, Math.min(preferredScale, Math.floor(maxWidth / columns)));
+}
+
+function drawBitmapText(ctx, text, x, y, scale, color) {
+  const value = String(text ?? '').toUpperCase();
+  const top = Math.round(y);
+  let cursor = Math.round(x);
+
+  ctx.fillStyle = color;
+
+  for (const character of value) {
+    const glyph = GLYPHS[character] || GLYPHS['?'];
+
+    glyph.forEach((row, rowIndex) => {
+      for (let column = 0; column < GLYPH_WIDTH; column += 1) {
+        if (row[column] === '1') {
+          ctx.fillRect(
+            cursor + column * scale,
+            top + rowIndex * scale,
+            scale,
+            scale
+          );
+        }
+      }
+    });
+
+    cursor += GLYPH_ADVANCE * scale;
+  }
+}
+
+function shadeAccent(color, amount) {
+  const hex = typeof color === 'string' ? color.replace('#', '') : '';
+
+  if (!/^[0-9a-f]{6}$/i.test(hex)) return color;
+
+  const value = Number.parseInt(hex, 16);
+  const target = amount < 0 ? 0 : 255;
+  const mix = Math.min(1, Math.abs(amount));
+  const channel = (shift) => {
+    const source = (value >> shift) & 0xff;
+    return Math.round(source + (target - source) * mix);
+  };
+
+  return `rgb(${channel(16)}, ${channel(8)}, ${channel(0)})`;
+}
+
+function steppedRectPath(ctx, x, y, width, height, step) {
+  const cut = Math.max(2, Math.min(step, Math.floor(Math.min(width, height) / 4)));
+  const half = Math.floor(cut / 2);
+
   ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + width - r, y);
-  ctx.quadraticCurveTo(x + width, y, x + width, y + r);
-  ctx.lineTo(x + width, y + height - r);
-  ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
-  ctx.lineTo(x + r, y + height);
-  ctx.quadraticCurveTo(x, y + height, x, y + height - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.moveTo(x + cut, y);
+  ctx.lineTo(x + width - cut, y);
+  ctx.lineTo(x + width - cut, y + half);
+  ctx.lineTo(x + width - half, y + half);
+  ctx.lineTo(x + width - half, y + cut);
+  ctx.lineTo(x + width, y + cut);
+  ctx.lineTo(x + width, y + height - cut);
+  ctx.lineTo(x + width - half, y + height - cut);
+  ctx.lineTo(x + width - half, y + height - half);
+  ctx.lineTo(x + width - cut, y + height - half);
+  ctx.lineTo(x + width - cut, y + height);
+  ctx.lineTo(x + cut, y + height);
+  ctx.lineTo(x + cut, y + height - half);
+  ctx.lineTo(x + half, y + height - half);
+  ctx.lineTo(x + half, y + height - cut);
+  ctx.lineTo(x, y + height - cut);
+  ctx.lineTo(x, y + cut);
+  ctx.lineTo(x + half, y + cut);
+  ctx.lineTo(x + half, y + half);
+  ctx.lineTo(x + cut, y + half);
   ctx.closePath();
+}
+
+function gemPath(ctx, x, y, size, inset) {
+  const inner = size - inset * 2;
+  const chamfer = Math.max(2, Math.round(inner * 0.28));
+  const left = x + inset;
+  const top = y + inset;
+  const right = left + inner;
+  const bottom = top + inner;
+
+  ctx.beginPath();
+  ctx.moveTo(left + chamfer, top);
+  ctx.lineTo(right - chamfer, top);
+  ctx.lineTo(right, top + chamfer);
+  ctx.lineTo(right, bottom - chamfer);
+  ctx.lineTo(right - chamfer, bottom);
+  ctx.lineTo(left + chamfer, bottom);
+  ctx.lineTo(left, bottom - chamfer);
+  ctx.lineTo(left, top + chamfer);
+  ctx.closePath();
+}
+
+function drawAccentGem(ctx, x, y, size, accent) {
+  ctx.fillStyle = '#05060a';
+  gemPath(ctx, x, y, size, 0);
+  ctx.fill();
+
+  ctx.fillStyle = accent;
+  gemPath(ctx, x, y, size, 3);
+  ctx.fill();
+
+  ctx.fillStyle = shadeAccent(accent, 0.45);
+  ctx.fillRect(x + 12, y + 10, 8, 8);
+
+  ctx.fillStyle = '#f8f3e7';
+  ctx.fillRect(x + 14, y + 12, 4, 4);
+
+  ctx.fillStyle = shadeAccent(accent, -0.35);
+  ctx.fillRect(x + 22, y + 24, 8, 8);
+}
+
+function drawNumberChip(ctx, x, y, width, height, number, accent) {
+  ctx.fillStyle = '#05060a';
+  ctx.fillRect(x, y, width, height);
+
+  ctx.fillStyle = accent;
+  ctx.fillRect(x + 2, y + 2, width - 4, height - 4);
+
+  ctx.fillStyle = '#10121a';
+  ctx.fillRect(x + 4, y + 4, width - 8, height - 8);
+
+  if (number) {
+    const scale = 4;
+    const textWidth = bitmapTextWidth(number, scale);
+    const textHeight = GLYPH_HEIGHT * scale;
+
+    drawBitmapText(
+      ctx,
+      number,
+      x + Math.round((width - textWidth) / 2),
+      y + Math.round((height - textHeight) / 2),
+      scale,
+      '#f4f1e8'
+    );
+    return;
+  }
+
+  const markerSize = 12;
+  ctx.fillStyle = accent;
+  ctx.fillRect(
+    x + Math.round((width - markerSize) / 2),
+    y + Math.round((height - markerSize) / 2),
+    markerSize,
+    markerSize
+  );
+}
+
+function getStationNumber(subtitle) {
+  const match = String(subtitle ?? '').match(/\d{1,2}/);
+  return match ? match[0].padStart(2, '0') : '';
 }
 
 function wrapLines(ctx, text, maxWidth) {
@@ -60,45 +274,94 @@ function makeTexture(canvas) {
   return texture;
 }
 
-/** Floating neon station label used above each interactive object. */
+/** Floating station nameplate used above each interactive object. */
 export function makeLabelSprite(title, subtitle, accent) {
   const { canvas, ctx } = makeCanvas(640, 180);
+  const stationAccent = accent || '#FE7F2D';
+  const titleText = String(title ?? '').toUpperCase();
+  const subtitleText = String(subtitle ?? '').toUpperCase();
+  const stationNumber = getStationNumber(subtitle);
 
   ctx.clearRect(0, 0, 640, 180);
 
-  const gradient = ctx.createLinearGradient(0, 0, 640, 0);
-  gradient.addColorStop(0, 'rgba(8, 10, 16, 0.94)');
-  gradient.addColorStop(1, 'rgba(8, 10, 16, 0.72)');
+  const panelX = 16;
+  const panelY = 12;
+  const panelWidth = 608;
+  const panelHeight = 152;
+  const cornerStep = 12;
+  const inset = 8;
+
+  // Hard offset shadow: one flat fill, no blur or glow.
+  steppedRectPath(ctx, panelX + 8, panelY + 8, panelWidth, panelHeight, cornerStep);
+  ctx.fillStyle = 'rgba(3, 4, 7, 0.6)';
+  ctx.fill();
+
+  // 6px accent border.
+  steppedRectPath(ctx, panelX, panelY, panelWidth, panelHeight, cornerStep);
+  ctx.fillStyle = stationAccent;
+  ctx.fill();
+
+  // 2px near-black keyline between border and body.
+  steppedRectPath(
+    ctx,
+    panelX + 6,
+    panelY + 6,
+    panelWidth - 12,
+    panelHeight - 12,
+    cornerStep
+  );
+  ctx.fillStyle = '#05060a';
+  ctx.fill();
+
+  // Flat dark panel body.
+  steppedRectPath(
+    ctx,
+    panelX + inset,
+    panelY + inset,
+    panelWidth - inset * 2,
+    panelHeight - inset * 2,
+    cornerStep
+  );
+  ctx.fillStyle = '#11131a';
+  ctx.fill();
+
+  // 2px hard bevel strips, top-left light / bottom-right dark.
+  ctx.fillStyle = '#1b1e27';
+  ctx.fillRect(panelX + 20, panelY + inset, panelWidth - 40, 2);
+  ctx.fillRect(panelX + inset, panelY + 20, 2, panelHeight - 40);
+
+  ctx.fillStyle = '#0a0c11';
+  ctx.fillRect(panelX + 20, panelY + panelHeight - 10, panelWidth - 40, 2);
+  ctx.fillRect(panelX + panelWidth - 10, panelY + 20, 2, panelHeight - 40);
+
+  // Left rail: accent gem, station-number chip, pixel divider.
+  drawAccentGem(ctx, 52, 38, 40, stationAccent);
+  drawNumberChip(ctx, 44, 94, 56, 44, stationNumber, stationAccent);
 
   ctx.save();
-  ctx.shadowColor = accent;
-  ctx.shadowBlur = 24;
-  roundedRect(ctx, 8, 8, 624, 164, 26);
-  ctx.fillStyle = gradient;
-  ctx.fill();
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = accent;
-  ctx.stroke();
+  ctx.globalAlpha = 0.45;
+  ctx.fillStyle = stationAccent;
+  ctx.fillRect(114, 38, 2, 100);
   ctx.restore();
 
-  // Accent beacon
-  ctx.save();
-  ctx.shadowColor = accent;
-  ctx.shadowBlur = 20;
-  ctx.fillStyle = accent;
-  ctx.beginPath();
-  ctx.arc(49, 62, 10, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
+  // Bitmap-set text, centered in the remaining body height.
+  const textX = panelX + 116;
+  const textRight = panelX + panelWidth - 20;
+  const maxTextWidth = textRight - textX;
+  const titleScale = fitBitmapScale(titleText, maxTextWidth, 8);
+  const subtitleScale = fitBitmapScale(subtitleText, maxTextWidth, 3);
+  const titleHeight = GLYPH_HEIGHT * titleScale;
+  const subtitleHeight = GLYPH_HEIGHT * subtitleScale;
+  const textGap = 12;
+  const bodyTop = panelY + inset;
+  const bodyHeight = panelHeight - inset * 2;
+  const titleY =
+    bodyTop +
+    Math.round((bodyHeight - titleHeight - subtitleHeight - textGap) / 2);
+  const subtitleY = titleY + titleHeight + textGap;
 
-  ctx.fillStyle = '#f5f5f7';
-  ctx.font = `700 44px ${HEAD_FONT}`;
-  ctx.textBaseline = 'middle';
-  ctx.fillText(title.toUpperCase(), 76, 63);
-
-  ctx.fillStyle = 'rgba(245, 245, 247, 0.7)';
-  ctx.font = `500 24px ${BODY_FONT}`;
-  ctx.fillText(subtitle.toUpperCase(), 78, 113);
+  drawBitmapText(ctx, titleText, textX, titleY, titleScale, '#f5f1e6');
+  drawBitmapText(ctx, subtitleText, textX, subtitleY, subtitleScale, '#c9c3b5');
 
   return makeTexture(canvas);
 }

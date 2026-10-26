@@ -79,12 +79,14 @@ export default function StudioJoystick({ onChange, accent = '#FE7F2D' }) {
         onPointerCancel={handlePointerUp}
         style={{ '--joystick-accent': accent }}
       >
+        <span className="studio-joystick__shadow" aria-hidden="true" />
         <span className="studio-joystick__hint studio-joystick__hint--up" aria-hidden="true">▲</span>
         <span className="studio-joystick__hint studio-joystick__hint--right" aria-hidden="true">▶</span>
         <span className="studio-joystick__hint studio-joystick__hint--down" aria-hidden="true">▼</span>
         <span className="studio-joystick__hint studio-joystick__hint--left" aria-hidden="true">◀</span>
         <span
           className="studio-joystick__knob"
+          aria-hidden="true"
           style={{ transform: `translate(calc(-50% + ${knob.x * 32}px), calc(-50% + ${knob.y * 32}px))` }}
         >
           <span className="studio-joystick__core" />

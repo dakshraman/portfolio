@@ -500,7 +500,6 @@ export default function StudioModals({ stationId, onClose }) {
             transition={{ duration: reduceMotion ? 0.01 : 0.32, ease: [0.16, 1, 0.3, 1] }}
             style={{ '--station-accent': station.accent }}
           >
-            <div className="studio-modal__glow" aria-hidden="true" />
             <button
               type="button"
               className="studio-modal__close"
@@ -510,10 +509,21 @@ export default function StudioModals({ stationId, onClose }) {
             >
               <CloseIcon />
             </button>
+            <div className="studio-modal__glow" aria-hidden="true" />
+
+            <div className="studio-modal__titlebar" aria-hidden="true">
+              <span className="studio-modal__titlebar-label">
+                <span className="studio-modal__titlebar-gem" />
+                {station.label}
+              </span>
+              <span className="studio-modal__titlebar-meta">
+                Station {String(station.order).padStart(2, '0')} / 04
+              </span>
+            </div>
 
             <div className="studio-modal__scroll">
               <header className="studio-modal__header">
-                <p className="studio-modal__eyebrow" style={{ color: station.accent }}>
+                <p className="studio-modal__eyebrow">
                   <span className="studio-modal__eyebrow-dot" />
                   Station {String(station.order).padStart(2, '0')} · {station.tagline}
                 </p>

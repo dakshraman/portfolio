@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Virtual Studio — Minecraft-inspired interface skin
+   Shared design tokens and structural primitives.
+
+   Load order:
+     studio.css -> minecraft-theme.css -> minecraft-hud.css
+                -> minecraft-modals.css -> minecraft-touch.css
+
+   The 3D room, engine, and layout rules in studio.css remain authoritative.
+   This layer only re-skins the interface chrome and overlays.
+   ========================================================================== */
+
+.studio-shell {
+  /* Type ---------------------------------------------------------------- */
+  --mc-font-pixel: var(--font-pixel, 'Press Start 2P'), 'Courier New', monospace;
+  --mc-font-display: var(--font-pixel-display, 'VT323'), 'Courier New', monospace;
+  --mc-font-prose: var(--font-body, 'Space Grotesk'), system-ui, sans-serif;
+  --mc-font-mono: var(--font-mono, ui-monospace), monospace;
+
+  /* Palette ------------------------------------------------------------- */
+  --mc-black: #0a0a0c;
+  --mc-ink: #f6f0e2;
+  --mc-ink-soft: #d9d0c1;
+  --mc-muted: #b8ad9b;
+  --mc-dim: #a19787;
+
+  --mc-stone-950: #121215;
+  --mc-stone-900: #18181c;
+  --mc-stone-850: #1e1e23;
+  --mc-stone-800: #25252b;
+  --mc-stone-700: #323239;
+  --mc-stone-600: #414149;
+  --mc-stone-500: #55555f;
+  --mc-stone-400: #6d6d77;
+
+  --mc-slot: #19191e;
+  --mc-frame: #08080a;
+  --mc-edge-light: rgba(255, 255, 255, 0.19);
+  --mc-edge-dark: rgba(0, 0, 0, 0.62);
+
+  --mc-gold: #f2c14e;
+  --mc-gold-bright: #ffe18a;
+  --mc-gold-deep: #a5761d;
+  --mc-grass: #74c455;
+  --mc-grass-deep: #3f7b2e;
+  --mc-diamond: #5ad7d7;
+  --mc-redstone: #e06055;
+  --mc-wood: #b98a54;
+  --mc-wood-deep: #6d4a26;
+
+  --mc-line: rgba(246, 240, 226, 0.12);
+  --mc-line-strong: rgba(246, 240, 226, 0.22);
+  --mc-bevel-out:
+    inset 2px 2px 0 var(--mc-edge-light),
+    inset -2px -2px 0 var(--mc-edge-dark);
+  --mc-bevel-in:
+    inset 2px 2px 0 var(--mc-edge-dark),
+    inset -2px -2px 0 rgba(255, 255, 255, 0.08);
+  --mc-hard-shadow: 0 4px 0 rgba(0, 0, 0, 0.58);
+  --mc-panel-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+  --mc-radius: 2px;
+  --mc-dur: 140ms;
+  --mc-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Re-map legacy studio tokens so any untouched rule inherits the skin. */
+  --studio-bg: #0f0f12;
+  --studio-panel: rgba(24, 24, 29, 0.96);
+  --studio-panel-strong: #141418;
+  --studio-fg: var(--mc-ink);
+  --studio-muted: var(--mc-ink-soft);
+  --studio-dim: var(--mc-muted);
+  --studio-line: var(--mc-line);
+  --studio-line-strong: var(--mc-line-strong);
+  --studio-orange: var(--mc-gold);
+  --studio-cyan: var(--mc-diamond);
+  --studio-green: var(--mc-grass);
+  --studio-violet: #b9a7ff;
+  --studio-radius: 2px;
+}
+
+.studio-body {
+  background: #0f0f12;
+}
+
+.studio-shell ::selection {
+  background: var(--mc-gold);
+  color: var(--mc-black);
+}
+
+.studio-shell :focus-visible {
+  outline: 3px solid var(--mc-gold-bright);
+  outline-offset: 3px;
+}
+
+/* A faint block checker replaces the soft photographic grain. */
+.studio-shell .studio-grain {
+  opacity: 0.14;
+  mix-blend-mode: soft-light;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 50%, transparent 50%),
+    linear-gradient(rgba(0, 0, 0, 0.08) 50%, transparent 50%);
+  background-size: 6px 6px;
+  background-position: 0 0, 3px 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Shared primitives
+   Agents may apply these classes or reproduce the recipes locally.
+   -------------------------------------------------------------------------- */
+
+.mc-panel {
+  position: relative;
+  border: 2px solid var(--mc-frame);
+  border-radius: var(--mc-radius);
+  background-color: var(--mc-stone-850);
+  background-image:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%),
+    linear-gradient(135deg, transparent 25%, rgba(0, 0, 0, 0.08) 25%, rgba(0, 0, 0, 0.08) 75%, transparent 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  box-shadow:
+    var(--mc-bevel-out),
+    var(--mc-hard-shadow),
+    var(--mc-panel-shadow);
+}
+
+.mc-slot {
+  border: 2px solid var(--mc-frame);
+  border-radius: 1px;
+  background-color: var(--mc-slot);
+  box-shadow: var(--mc-bevel-in);
+}
+
+.mc-key {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border: 2px solid var(--mc-frame);
+  border-radius: 1px;
+  background-color: var(--mc-stone-600);
+  color: var(--mc-ink);
+  font-family: var(--mc-font-pixel);
+  font-size: 0.46rem;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow:
+    inset 1px 1px 0 var(--mc-edge-light),
+    inset -1px -1px 0 var(--mc-edge-dark),
+    0 2px 0 var(--mc-frame);
+}
+
+.mc-pixel {
+  font-family: var(--mc-font-pixel);
+  font-size: 0.56rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.mc-display {
+  font-family: var(--mc-font-display);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+}
+
+/* Text placed directly on stone or dirt surfaces reads better with a
+   crisp one-pixel shadow than with a blur. */
+.mc-text-shadow {
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.72);
+}
