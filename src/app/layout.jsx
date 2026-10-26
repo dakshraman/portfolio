@@ -1,8 +1,4 @@
 import './globals.css';
-import Navigation from '@/components/Navigation';
-import AmbientBackground from '@/components/AmbientBackground';
-import BackToTop from '@/components/BackToTop';
-import LoaderWrapper from '@/components/LoaderWrapper';
 import Script from 'next/script';
 import { Archivo, Space_Grotesk } from 'next/font/google';
 
@@ -178,8 +174,6 @@ const breadcrumbJsonLd = {
   ],
 };
 
-import CustomCursor from '@/components/CustomCursor';
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${archivo.variable} ${spaceGrotesk.variable}`}>
@@ -199,13 +193,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <CustomCursor />
-        <AmbientBackground />
-        <LoaderWrapper>
-          <Navigation />
-          <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
-          <BackToTop />
-        </LoaderWrapper>
+        {children}
         {/* Visit analytics — cookieless, restricted to the production domain so local/preview visits don't count */}
         <Script
           id="umami-analytics"

@@ -155,6 +155,13 @@ export default function Hero() {
                   <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </MagneticButton>
+              <MagneticButton href="/studio" className="btn-ghost btn-studio">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 1.5l5.5 3.1v6.8L8 14.5l-5.5-3.1V4.6L8 1.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+                  <path d="M2.7 4.7L8 7.8l5.3-3.1M8 7.8v6.5" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
+                </svg>
+                Enter 3D Studio
+              </MagneticButton>
               <MagneticButton href="/Raman-Daksh.pdf" className="btn-ghost" download>
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                   <path d="M8 2v8m0 0L5 7m3 3l3-3M3 12h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -173,6 +180,16 @@ export default function Hero() {
         @keyframes heroFadeUp {
           from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
           to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+        :global(.btn-studio) {
+          border-color: rgba(167, 139, 250, 0.38) !important;
+          background: linear-gradient(135deg, rgba(167, 139, 250, 0.14), rgba(254, 127, 45, 0.06)) !important;
+          color: #ede9fe !important;
+          box-shadow: 0 0 24px rgba(167, 139, 250, 0.08);
+        }
+        :global(.btn-studio:hover) {
+          border-color: rgba(167, 139, 250, 0.62) !important;
+          background: linear-gradient(135deg, rgba(167, 139, 250, 0.22), rgba(254, 127, 45, 0.1)) !important;
         }
       `}</style>
     </header>

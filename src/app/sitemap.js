@@ -21,6 +21,8 @@ export default function sitemap() {
 
   return [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'monthly', priority: 1 },
+    { url: `${baseUrl}/studio`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/freelance`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     ...serviceEntries,
     ...blogEntries,
   ];

@@ -43,6 +43,8 @@ Laravel, Flutter, React.js, Python, Dart, PHP, Firebase, Java, C++, SQL, Linux, 
 - [LinkedIn](https://linkedin.com/in/dakshraman) - Professional network
 - [Telegram](https://t.me/dakshraman) - Direct message
 - [Portfolio](https://dakshraman.in) - Full portfolio and case studies
+- [Virtual Studio](https://dakshraman.in/studio) - Interactive isometric 3D portfolio (Three.js)
+- [Hire a Freelance Developer](https://dakshraman.in/freelance) - Availability, services, and engagement details
 
 ## Hiring
 
