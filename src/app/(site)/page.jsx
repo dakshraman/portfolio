@@ -1,45 +1,31 @@
-import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero';
 import Highlights from '@/components/Highlights';
 import Projects from '@/components/Projects';
 import Services from '@/components/Services';
+import Process from '@/components/Process';
+import PricingEngagements from '@/components/PricingEngagements';
 import Experience from '@/components/Experience';
 import About from '@/components/About';
 import Testimonials from '@/components/Testimonials';
-
-const Blog = dynamic(() => import('@/components/Blog'), { loading: () => <div style={{ minHeight: '50vh' }} /> });
-const Skills = dynamic(() => import('@/components/Skills'), { loading: () => <div style={{ minHeight: '30vh' }} /> });
-const GitHub = dynamic(() => import('@/components/GitHub'), { loading: () => <div style={{ minHeight: '50vh' }} /> });
-const Contact = dynamic(() => import('@/components/Contact'), { loading: () => <div style={{ minHeight: '30vh' }} /> });
-const Faq = dynamic(() => import('@/components/Faq'), { loading: () => <div style={{ minHeight: '30vh' }} /> });
+import Blog from '@/components/Blog';
+import Faq from '@/components/Faq';
+import Contact from '@/components/Contact';
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Hero />
-      <div className="section-alt">
-        <Highlights />
-      </div>
-      <div className="section-alt">
-        <Projects />
-      </div>
-      <div className="section-alt-purple">
-        <Services />
-      </div>
+      <Highlights />
+      <Projects />
+      <Services />
+      <Process />
+      <PricingEngagements />
       <Experience />
-      <div className="section-alt">
-        <About />
-      </div>
+      <About />
       <Testimonials />
-      <div className="section-alt">
-        <Blog />
-      </div>
-      <Skills />
-      <div className="section-alt-purple">
-        <GitHub />
-      </div>
+      <Blog />
       <Faq />
       <Contact />
-    </main>
+    </>
   );
 }

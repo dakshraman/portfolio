@@ -1,107 +1,76 @@
 'use client';
 
+import { Calendar, MapPin } from 'lucide-react';
 import { experiences } from '@/data/portfolio';
-import ScrollReveal from '@/components/ScrollReveal';
 
 export default function Experience() {
   return (
-    <section id="experience" className="section experience-section">
-      <ScrollReveal delay={0} className="mb-14">
-        <div style={{ marginBottom: '3.5rem' }}>
-          <p className="section-label">[03] Experience</p>
-          <h2 className="text-heading">Where I&apos;ve worked</h2>
+    <section id="experience" className="py-20 md:py-28 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
+          <div>
+            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+              Career Journey
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
+              Experience & track record.
+            </h2>
+          </div>
+          <p className="text-sm text-[var(--muted-fg)] max-w-md">
+            4+ years partnering with remote engineering teams and scaling distributed software products across healthcare, edtech, and SaaS.
+          </p>
         </div>
-      </ScrollReveal>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        {experiences.map((exp, i) => (
-          <ScrollReveal key={i} delay={i * 0.1}>
-            <article
-              className="exp-row"
-              aria-label={`${exp.role} at ${exp.company}`}
-              style={{
-                padding: '2rem 1.5rem',
-                borderRadius: 'var(--radius-md)',
-                transition: 'all 0.3s ease',
-                background: 'var(--glass-bg)',
-                backdropFilter: 'var(--glass-blur)',
-                WebkitBackdropFilter: 'var(--glass-blur)',
-                position: 'relative',
-                border: '1px solid var(--glass-border)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'var(--glass-bg-hover)';
-                e.currentTarget.style.backdropFilter = 'var(--glass-blur-heavy)';
-                e.currentTarget.style.WebkitBackdropFilter = 'var(--glass-blur-heavy)';
-                e.currentTarget.style.border = '1px solid var(--glass-border-hover)';
-                e.currentTarget.style.borderColor = 'rgba(254, 127, 45, 0.2)';
-                e.currentTarget.style.boxShadow = 'var(--glass-shadow-hover)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'var(--glass-bg)';
-                e.currentTarget.style.backdropFilter = 'var(--glass-blur)';
-                e.currentTarget.style.WebkitBackdropFilter = 'var(--glass-blur)';
-                e.currentTarget.style.border = '1px solid var(--glass-border)';
-                e.currentTarget.style.boxShadow = 'var(--glass-shadow)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              <div className="exp-grid">
-                <div className="exp-company">
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.3rem', fontFamily: 'var(--font-heading)', letterSpacing: '-0.01em' }}>
-                    {exp.company}
-                  </h3>
-                  <p style={{ fontSize: '0.7rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {exp.location}
-                  </p>
-                  <span className="exp-period-mobile" style={{ fontSize: '0.65rem', color: 'var(--fg-dim)', marginTop: '0.25rem', display: 'none' }}>
-                    {exp.period}
-                  </span>
-                </div>
+        {/* Timeline List */}
+        <div className="relative border-l border-[var(--subtle-border)] ml-3 md:ml-6 space-y-10">
+          {experiences.map((exp) => (
+            <div key={`${exp.company}-${exp.period}`} className="relative pl-7 md:pl-10 group">
+              {/* Timeline marker */}
+              <span className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[var(--card-border)] group-hover:bg-orange-500 transition-colors ring-4 ring-[var(--bg-page)]" />
 
-                <div className="exp-role">
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>
-                    {exp.role}
-                  </h4>
-                  <p style={{ color: 'var(--fg-muted)', lineHeight: 1.7, fontSize: '0.9rem' }}>
-                    {exp.description}
-                  </p>
-                  <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap', marginTop: '0.75rem' }}>
-                    {exp.technologies?.map((tech) => (
-                      <span key={tech} className="tag">{tech}</span>
-                    ))}
+              <div className="bento-card p-6 md:p-8 hover:-translate-y-0.5 transition-all">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                  <div>
+                    <h3 className="text-xl font-bold text-[var(--fg-page)] group-hover:text-orange-500 transition-colors">
+                      {exp.role}
+                    </h3>
+                    <div className="text-sm font-semibold text-orange-500 mt-0.5">
+                      {exp.company}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-xs font-mono text-[var(--muted-fg)]">
+                    <span className="inline-flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {exp.period}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5" />
+                      {exp.location}
+                    </span>
                   </div>
                 </div>
 
-                <div className="exp-period" style={{ textAlign: 'right' }}>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    {exp.period}
-                  </span>
+                <p className="text-sm text-[var(--muted-fg)] leading-relaxed mb-5">
+                  {exp.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {exp.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-xs font-mono px-2.5 py-1 rounded-md bg-[var(--muted-bg)] text-[var(--fg-page)] border border-[var(--subtle-border)]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </article>
-          </ScrollReveal>
-        ))}
+            </div>
+          ))}
+        </div>
       </div>
-
-      <style jsx>{`
-        .exp-grid {
-          display: grid;
-          grid-template-columns: 1fr 2.5fr 0.8fr;
-          gap: 1.5rem;
-          align-items: start;
-        }
-        .exp-period-mobile { display: none; }
-        @media (max-width: 768px) {
-          .exp-grid {
-            grid-template-columns: 1fr;
-            gap: 0.75rem;
-          }
-          .exp-period { display: none; }
-          .exp-period-mobile { display: block; }
-        }
-      `}</style>
     </section>
   );
 }

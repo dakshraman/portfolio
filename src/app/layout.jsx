@@ -2,24 +2,39 @@ import './globals.css';
 import Script from 'next/script';
 import { Archivo, Space_Grotesk } from 'next/font/google';
 
-const archivo = Archivo({ subsets: ['latin'], variable: '--font-archivo', display: 'swap' });
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk', display: 'swap' });
+const archivo = Archivo({
+  subsets: ['latin'],
+  variable: '--font-archivo',
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+});
 
 export const metadata = {
   title: {
-    default: 'Raman Daksh | Freelance Software Engineer & IT Consultant in India',
+    default: 'Raman Daksh | Senior Laravel & Flutter Developer',
     template: '%s | Raman Daksh',
   },
-  description: 'Hire Raman Daksh — a freelance software engineer and IT consultant in Dehradun, India. Specializing in Laravel, Flutter, and full-stack architecture. 4+ years building scalable apps for startups and enterprises.',
+  description:
+    'Senior Freelance Laravel & Flutter Developer with 4+ years of experience architecting scalable backend APIs, cloud systems, and cross-platform mobile apps for startups and high-growth businesses.',
   keywords: [
-    'Freelance Software Engineer', 'Freelance Laravel Developer', 'Freelance Flutter Developer',
-    'Freelance DevOps Engineer', 'DevOps Consultant India', 'IT Consultant',
-    'Laravel Developer', 'Flutter Developer', 'Full Stack Developer', 'REST API',
-    'Freelancer India', 'Hire Laravel Developer', 'Hire Flutter Developer',
-    'Hire DevOps Engineer', 'Hire Freelancer', 'Cross-Platform Development',
-    'CI/CD Pipeline', 'Docker Consultant', 'Cloud Deployment India',
-    'Raman Daksh', 'Dehradun Freelancer', 'Uttarakhand Developer',
-    'Remote Laravel Developer', 'Remote Flutter Developer', 'Remote DevOps Engineer',
+    'Raman Daksh',
+    'Freelance Laravel Developer',
+    'Freelance Flutter Developer',
+    'Senior Software Engineer',
+    'Full Stack Developer',
+    'REST API Architecture',
+    'Flutter App Developer',
+    'DevOps Consultant',
+    'System Architect',
+    'Cloud Deployment',
+    'Dehradun Developer',
+    'Hire Laravel Developer',
+    'Hire Flutter Engineer',
   ],
   authors: [{ name: 'Raman Daksh' }],
   creator: 'Raman Daksh',
@@ -29,21 +44,23 @@ export const metadata = {
     locale: 'en_US',
     url: 'https://dakshraman.in',
     siteName: 'Raman Daksh',
-    title: 'Raman Daksh | Freelance Software Engineer & IT Consultant in India',
-    description: 'Hire a freelance Laravel & Flutter expert in India. 4+ years building scalable apps, REST APIs, and cross-platform solutions.',
+    title: 'Raman Daksh | Senior Laravel & Flutter Developer',
+    description:
+      'Architecting high-scale Laravel backends & seamless Flutter mobile experiences. 4+ years shipping production systems.',
     images: [
       {
         url: '/og.png',
         width: 1200,
         height: 630,
-        alt: 'Raman Daksh - Freelance Software Engineer & IT Consultant from Dehradun, India',
+        alt: 'Raman Daksh - Senior Laravel & Flutter Developer',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Raman Daksh | Freelance Software Engineer & IT Consultant',
-    description: 'Hire a freelance Laravel & Flutter expert in India. 4+ years building scalable apps, REST APIs, and cross-platform solutions.',
+    title: 'Raman Daksh | Senior Laravel & Flutter Developer',
+    description:
+      'Architecting high-scale Laravel backends & seamless Flutter mobile experiences.',
     images: ['/og.png'],
     creator: '@dakshraman',
   },
@@ -62,8 +79,9 @@ const personJsonLd = {
   name: 'Raman Daksh',
   url: 'https://dakshraman.in',
   image: 'https://dakshraman.in/og.png',
-  jobTitle: 'Freelance Software Engineer & IT Consultant',
-  description: 'Freelance software engineer and IT consultant based in Dehradun, India. Specializing in Laravel, Flutter, and full-stack architecture. Building scalable backend systems and cross-platform mobile apps for startups and enterprises.',
+  jobTitle: 'Senior Freelance Laravel & Flutter Developer',
+  description:
+    'Senior software engineer specializing in Laravel backend architecture, REST API design, and Flutter cross-platform mobile app development.',
   email: 'ramandaksh6161@gmail.com',
   address: {
     '@type': 'PostalAddress',
@@ -77,108 +95,66 @@ const personJsonLd = {
     'https://instagram.com/dakshraman',
     'https://t.me/dakshraman',
   ],
-  hasOccupation: {
-    '@type': 'Occupation',
-    name: 'Freelance Software Engineer & DevOps Consultant',
-    description: 'Providing freelance software development, DevOps, and IT consulting services including Laravel development, Flutter app development, API design, cloud deployment, and system architecture.',
-    skills: 'Laravel, Flutter, PHP, Python, REST API Design, System Architecture, Full Stack Development, DevOps, Docker, CI/CD, Cloud Deployment',
-  },
   knowsAbout: [
-    'Laravel', 'Flutter', 'PHP', 'Python', 'REST API', 'System Architecture',
-    'Full Stack Development', 'API Design', 'Database Design', 'Mobile Development',
-    'Cloud Architecture', 'DevOps', 'Firebase', 'React', 'Dart',
-    'Docker', 'CI/CD', 'Linux', 'Nginx', 'AWS', 'DigitalOcean',
-  ],
-  makesOffer: [
-    {
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: 'Laravel Development',
-        description: 'Custom web application development using the Laravel ecosystem — from MVP to enterprise-grade platforms.',
-      },
-    },
-    {
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: 'Flutter App Development',
-        description: 'Cross-platform mobile applications for Android and iOS from a single Dart codebase.',
-      },
-    },
-    {
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: 'REST API Design & Development',
-        description: 'Scalable, well-documented RESTful APIs designed for performance, security, and developer experience.',
-      },
-    },
-    {
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: 'DevOps & Cloud Infrastructure',
-        description: 'CI/CD pipelines, Docker containerization, cloud deployment, and server management for startups and enterprises.',
-      },
-    },
-    {
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: 'Full-Stack Development',
-        description: 'Complete web application development from database schema to polished frontend interface.',
-      },
-    },
-    {
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: 'IT Consulting',
-        description: 'Technical consulting for startups and businesses — code audits, architecture reviews, and technology strategy.',
-      },
-    },
+    'Laravel',
+    'Flutter',
+    'Dart',
+    'PHP',
+    'Python',
+    'REST APIs',
+    'System Architecture',
+    'MySQL',
+    'PostgreSQL',
+    'Docker',
+    'CI/CD',
+    'Firebase',
+    'Next.js',
+    'Tailwind CSS',
   ],
 };
 
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'Raman Daksh',
+  name: 'Raman Daksh - Portfolio',
   url: 'https://dakshraman.in',
-  description: 'Portfolio of Raman Daksh — Freelance Software Engineer & IT Consultant based in Dehradun, India. Specializing in Laravel, Flutter, and full-stack development.',
+  description:
+    'Modern editorial portfolio of Raman Daksh, Senior Laravel & Flutter Engineer.',
   author: {
     '@type': 'Person',
     name: 'Raman Daksh',
   },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://dakshraman.in/search?q={search_term_string}',
-    },
-    'query-input': 'required name=search_term_string',
-  },
-};
-
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: 'https://dakshraman.in',
-    },
-  ],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#FE7F2D" />
+        {/* Declare both light and dark scheme support for browser UI & canvas */}
+        <meta name="color-scheme" content="light dark" />
+        {/* Zero-FOUC theme hydration script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var meta = document.querySelector('meta[name="color-scheme"]');
+                  var saved = localStorage.getItem('theme-mode');
+                  if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    if (meta) meta.content = 'dark';
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    if (meta) meta.content = 'light';
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+        <meta name="theme-color" content="#f97316" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -187,14 +163,9 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-        />
       </head>
-      <body>
+      <body className="min-h-screen antialiased bg-[var(--bg-page)] text-[var(--fg-page)]">
         {children}
-        {/* Visit analytics — cookieless, restricted to the production domain so local/preview visits don't count */}
         <Script
           id="umami-analytics"
           src="https://cloud.umami.is/script.js"

@@ -1,197 +1,114 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowUpRight, Copy, Check, Calendar } from 'lucide-react';
 import { siteConfig } from '@/data/portfolio';
-import { useLoader } from '@/components/LoaderWrapper';
-
-function TextScramble({ text, trigger, className, style }) {
-  const ref = useRef(null);
-  const chars = '!<>-_\\/[]{}—=+*^?#________';
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!ref.current) return;
-
-    const el = ref.current;
-    const original = text;
-    let iteration = 0;
-    let rafId;
-
-    const animate = () => {
-      el.textContent = original
-        .split('')
-        .map((char, i) => {
-          if (i < iteration) return original[i];
-          return chars[Math.floor(Math.random() * chars.length)];
-        })
-        .join('');
-
-      if (iteration < original.length) {
-        iteration += 1 / 2;
-        rafId = requestAnimationFrame(animate);
-      }
-    };
-
-    rafId = requestAnimationFrame(animate);
-
-    return () => { cancelAnimationFrame(rafId); };
-  }, [text, trigger]); // Reruns when trigger changes
-
-  return <span ref={ref} className={className} style={style}>{text}</span>;
-}
-
-function MagneticButton({ children, href, className, style, download }) {
-  const btnRef = useRef(null);
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!btnRef.current) return;
-
-    const el = btnRef.current;
-    let currentX = 0, currentY = 0, targetX = 0, targetY = 0, rafId;
-
-    const onMouseMove = (e) => {
-      const rect = el.getBoundingClientRect();
-      targetX = (e.clientX - rect.left - rect.width / 2) * 0.3;
-      targetY = (e.clientY - rect.top - rect.height / 2) * 0.3;
-    };
-    const onMouseLeave = () => { targetX = 0; targetY = 0; };
-
-    const animate = () => {
-      currentX += (targetX - currentX) * 0.15;
-      currentY += (targetY - currentY) * 0.15;
-      el.style.transform = `translate(${currentX}px, ${currentY}px)`;
-      rafId = requestAnimationFrame(animate);
-    };
-
-    el.addEventListener('mousemove', onMouseMove);
-    el.addEventListener('mouseleave', onMouseLeave);
-    rafId = requestAnimationFrame(animate);
-
-    return () => {
-      el.removeEventListener('mousemove', onMouseMove);
-      el.removeEventListener('mouseleave', onMouseLeave);
-      cancelAnimationFrame(rafId);
-    };
-  }, []);
-
-  return <a ref={btnRef} href={href} className={className} style={style} 
- download={download}>{children}</a>;
-}
 
 export default function Hero() {
-  const loading = useLoader();
-  const [hoverScrambles, setHoverScrambles] = useState(0);
+  const [copied, setCopied] = useState(false);
 
-  // Trigger 0 while the loader is up; the initial scramble plays once loading
-  // finishes (trigger 1), and every name hover bumps the trigger further.
-  const scrambleTrigger = loading ? 0 : 1 + hoverScrambles;
-
-  const handleNameHover = () => {
-    setHoverScrambles(prev => prev + 1);
+  const copyEmail = () => {
+    navigator.clipboard.writeText(siteConfig.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  // Only apply animation styles if loading is finished so they don't play behind the loader
-  const fadeUp = !loading ? { animation: 'heroFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) both' } : { opacity: 0 };
-  const fadeUp1 = !loading ? { animation: 'heroFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s both' } : { opacity: 0 };
-  const fadeUp2 = !loading ? { animation: 'heroFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s both' } : { opacity: 0 };
-  const fadeUp3 = !loading ? { animation: 'heroFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s both' } : { opacity: 0 };
-  const fadeUp4 = !loading ? { animation: 'heroFadeUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.4s both' } : { opacity: 0 };
-
   return (
-    <header className="section" style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '80px', paddingBottom: '40px', position: 'relative', overflow: 'hidden' }}>
-      
-      {/* Wrapped content inside a glassmorphic container for ultra-premium look over the video */}
-      <div className="glass" style={{
-        position: 'relative', 
-        zIndex: 2, 
-        padding: 'clamp(2rem, 5vw, 4rem)',
-        borderRadius: 'var(--radius-xl)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'clamp(1.5rem, 2vw, 2rem)'
-      }}>
-        <div style={fadeUp}>
-          <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--fg-muted)', display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)', boxShadow: '0 0 16px var(--accent-glow-strong), 0 0 32px var(--accent-glow)', animation: 'pulse 2s ease-in-out infinite' }} />
-            {siteConfig.availability}
-          </p>
+    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-grid-pattern">
+      {/* Background ambient radial glow */}
+      <div className="editorial-glow top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[380px] pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        {/* Availability & Exclusivity Pill */}
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs mb-6">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span className="text-xs font-mono tracking-wide text-[var(--fg-page)] font-medium">
+            Available for Q1/Q2 Engagements · 1 MVP Slot Open
+          </span>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem', justifyContent: 'space-between', alignItems: 'center' }}>
-          
-          {/* Left Column: Name and Role */}
-          <div style={{ position: 'relative', zIndex: 2, flex: '1 1 min(100%, 400px)' }}>
-            <h1 
-              className="text-display" 
-              style={{ fontWeight: 700, marginBottom: '1.5rem', cursor: 'default' }}
-              onMouseEnter={handleNameHover}
+        {/* Primary Client-Centric Headline */}
+        <div className="max-w-4xl">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[var(--fg-page)] leading-[1.08] mb-6">
+            Senior Laravel & Flutter engineer for{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-orange-400">
+              ambitious startups.
+            </span>
+          </h1>
+
+          <p className="text-lg sm:text-xl text-[var(--muted-fg)] leading-relaxed max-w-2xl font-light mb-8">
+            I help founders and engineering teams ship scalable web and mobile products without the bloat of agencies or the gamble of junior hires. High-throughput backends, native mobile apps, and 99.9% uptime.
+          </p>
+
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-12">
+            <Link
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-bold text-xs uppercase tracking-wider bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
             >
-              <span style={{ display: 'block', ...fadeUp1 }}>
-                <TextScramble text={siteConfig.name.split(' ')[0]} trigger={scrambleTrigger} />
-              </span>
-              <span style={{ display: 'block', color: 'var(--fg-dim)', fontSize: '0.7em', lineHeight: 1.1, ...fadeUp2 }}>
-                <TextScramble text={siteConfig.name.split(' ')[1]} trigger={scrambleTrigger} />
-              </span>
-            </h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap', ...fadeUp3 }}>
-              <div style={{ width: 'clamp(60px, 15vw, 120px)', height: '2px', background: 'var(--accent)' }} />
-              <p style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', color: 'var(--fg-muted)', fontFamily: 'var(--font-heading)', fontWeight: 500, letterSpacing: '-0.01em' }}>
-                {siteConfig.role}
-              </p>
-            </div>
+              <Calendar className="w-4 h-4" />
+              <span>Book Discovery Call</span>
+            </Link>
+
+            <Link
+              href="#projects"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-medium text-sm border border-[var(--card-border)] bg-[var(--card-bg)] hover:bg-[var(--muted-bg)] text-[var(--fg-page)] transition-all cursor-pointer shadow-xs active:scale-95"
+            >
+              <span>View Case Studies</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+
+            <button
+              onClick={copyEmail}
+              className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-full font-mono text-xs text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-[var(--muted-bg)] transition-colors cursor-pointer"
+              aria-label="Copy email address"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-500" />
+                  <span className="text-emerald-500 font-semibold">Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4" />
+                  <span>{siteConfig.email}</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Client Trust & Impact Bento Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-[var(--subtle-border)]">
+          <div className="bento-card p-4 sm:p-5">
+            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-[var(--fg-page)] tracking-tight">4+</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Years Engineering</div>
+            <div className="text-[10px] text-orange-500 font-mono mt-0.5">Senior Specialist</div>
           </div>
 
-          {/* Right Column: Tagline and Buttons */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'flex-start', position: 'relative', zIndex: 2, flex: '1 1 min(100%, 400px)', ...fadeUp4 }}>
-            <p style={{ maxWidth: '520px', fontSize: 'clamp(1rem, 1.3vw, 1.15rem)', lineHeight: 1.7, color: 'var(--fg-muted)' }}>
-              {siteConfig.tagline}{' '}
-              <span style={{ color: 'var(--fg)' }}>{siteConfig.description}</span>
-            </p>
-
-            <div style={{ display: 'flex', gap: '12px', flexShrink: 0, flexWrap: 'wrap' }}>
-              <MagneticButton href="#projects" className="btn-primary">
-                See My Work
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                  <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </MagneticButton>
-              <MagneticButton href="/studio" className="btn-ghost btn-studio">
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                  <path d="M8 1.5l5.5 3.1v6.8L8 14.5l-5.5-3.1V4.6L8 1.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-                  <path d="M2.7 4.7L8 7.8l5.3-3.1M8 7.8v6.5" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-                </svg>
-                Enter 3D Studio
-              </MagneticButton>
-              <MagneticButton href="/Raman-Daksh.pdf" className="btn-ghost" download>
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                  <path d="M8 2v8m0 0L5 7m3 3l3-3M3 12h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                Download CV
-              </MagneticButton>
-              <MagneticButton href="#contact" className="btn-ghost">Contact Me</MagneticButton>
-            </div>
+          <div className="bento-card p-4 sm:p-5">
+            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-orange-500 tracking-tight">20+</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Delivered Projects</div>
+            <div className="text-[10px] text-[var(--muted-fg)] font-mono mt-0.5">100% On-Time Delivery</div>
           </div>
-          
+
+          <div className="bento-card p-4 sm:p-5">
+            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-[var(--fg-page)] tracking-tight">50K+</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Daily API Volume</div>
+            <div className="text-[10px] text-[var(--muted-fg)] font-mono mt-0.5">High-Concurrency Scale</div>
+          </div>
+
+          <div className="bento-card p-4 sm:p-5">
+            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-500 tracking-tight">&lt;12h</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Response Time</div>
+            <div className="text-[10px] text-emerald-500 font-mono mt-0.5">US & EU Live Overlap</div>
+          </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        @keyframes heroFadeUp {
-          from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-          to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-        :global(.btn-studio) {
-          border-color: rgba(167, 139, 250, 0.38) !important;
-          background: linear-gradient(135deg, rgba(167, 139, 250, 0.14), rgba(254, 127, 45, 0.06)) !important;
-          color: #ede9fe !important;
-          box-shadow: 0 0 24px rgba(167, 139, 250, 0.08);
-        }
-        :global(.btn-studio:hover) {
-          border-color: rgba(167, 139, 250, 0.62) !important;
-          background: linear-gradient(135deg, rgba(167, 139, 250, 0.22), rgba(254, 127, 45, 0.1)) !important;
-        }
-      `}</style>
-    </header>
+    </section>
   );
 }

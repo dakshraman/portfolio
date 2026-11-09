@@ -1,140 +1,114 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { aboutText, aboutStats } from '@/data/portfolio';
-import ScrollReveal from '@/components/ScrollReveal';
-import SpotlightCard from '@/components/SpotlightCard';
+import { Terminal, HeartHandshake, CheckCircle2 } from 'lucide-react';
+import { aboutText } from '@/data/portfolio';
 
-function AnimatedCounter({ value }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const numericValue = parseInt(value.replace(/[^0-9]/g, ''), 10);
-    if (isNaN(numericValue)) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
-          const duration = 1500;
-          const start = performance.now();
-          const animate = (now) => {
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 4);
-            setCount(Math.round(eased * numericValue));
-            if (progress < 1) requestAnimationFrame(animate);
-          };
-          requestAnimationFrame(animate);
-        }
-      },
-      { threshold: 0.85 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [value]);
-
-  const suffix = value.replace(/[0-9]/g, '');
-  const display = count ? `${count}${suffix}` : value;
-  return <span ref={ref} style={{ fontVariantNumeric: 'tabular-nums' }}>{display}</span>;
-}
+const categorizedSkills = {
+  'Backend & Architecture': ['Laravel', 'PHP', 'Python', 'REST APIs', 'System Architecture', 'SQL', 'Database Design'],
+  'Mobile & Apps': ['Flutter', 'Dart', 'Android', 'iOS', 'Firebase'],
+  'Frontend & Tooling': ['React.js', 'Next.js', 'Tailwind CSS', 'TypeScript', 'Vue.js'],
+  'Cloud, DevOps & Systems': ['Docker', 'Linux', 'CI/CD Pipelines', 'Cyber Security', 'Nginx', 'Git'],
+};
 
 export default function About() {
   return (
-    <section id="about" className="section about-section">
-      <ScrollReveal delay={0} className="mb-14">
-        <div style={{ marginBottom: '3.5rem' }}>
-          <p className="section-label">[03] About</p>
-          <h2 className="text-heading">Why clients work with me</h2>
+    <section id="about" className="py-20 md:py-28 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
+          <div>
+            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+              Background & Philosophy
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
+              Engineering with purpose.
+            </h2>
+          </div>
+          <p className="text-sm text-[var(--muted-fg)] max-w-md">
+            Bridging high-level product strategy with low-level implementation details. Built to scale, not just to demo.
+          </p>
         </div>
-      </ScrollReveal>
 
-      <div className="about-grid" style={{ marginBottom: '4rem' }}>
-        {/* Left Column: Feature Cards */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {aboutText.map((text, i) => {
-            const colors = ['#FE7F2D', '#5E6AD2', '#A855F7'];
-            const color = colors[i % colors.length];
-            return (
-              <ScrollReveal key={i} delay={i * 0.1} yOffset={30}>
-                <div
-                  className="card"
-                  style={{
-                    padding: '1.75rem',
-                    borderLeft: `4px solid ${color}`,
-                    background: 'var(--glass-bg)',
-                    backdropFilter: 'var(--glass-blur)',
-                    height: '100%'
-                  }}
-                >
-                  <p style={{ fontSize: '1.05rem', lineHeight: 1.85, color: 'var(--fg)' }}>
-                    {text}
-                  </p>
+        {/* Bento Grid: Bio + Skills */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Column: Personal Narrative */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="bento-card p-6 sm:p-8">
+              <h3 className="text-xl font-bold text-[var(--fg-page)] mb-4">
+                Code that scales with your ambition.
+              </h3>
+              <div className="space-y-4 text-sm sm:text-base text-[var(--muted-fg)] leading-relaxed font-light">
+                {aboutText.map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
+
+              {/* Guiding Principles */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 pt-6 border-t border-[var(--subtle-border)]">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[var(--fg-page)] uppercase tracking-wider font-mono">
+                      Pragmatic Architecture
+                    </h4>
+                    <p className="text-xs text-[var(--muted-fg)] mt-1">
+                      No over-engineering. Choosing the right pattern for current reality and future growth.
+                    </p>
+                  </div>
                 </div>
-              </ScrollReveal>
-            );
-          })}
-        </div>
 
-        {/* Right Column: 2x2 Bento Metrics Grid */}
-        <div className="bento-metrics-grid">
-          {aboutStats.map((stat, i) => {
-            const colors = ['#5E6AD2', '#A855F7', '#F59E0B', '#EF4444'];
-            const color = colors[i % colors.length];
-            return (
-              <ScrollReveal key={i} delay={i * 0.1} yOffset={20} className="h-full">
-                <SpotlightCard
-                  className="card"
-                  style={{
-                    padding: '2rem 1.5rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    gap: '1rem',
-                    height: '100%',
-                    aspectRatio: '1 / 1'
-                  }}
-                >
-                  <span style={{ fontSize: '3.5rem', fontWeight: 800, color, lineHeight: 1, fontFamily: 'var(--font-heading)' }}>
-                    <AnimatedCounter value={stat.value} />
-                  </span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
-                    {stat.label}
-                  </span>
-                </SpotlightCard>
-              </ScrollReveal>
-            );
-          })}
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center shrink-0">
+                    <HeartHandshake className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[var(--fg-page)] uppercase tracking-wider font-mono">
+                      Clear Ownership
+                    </h4>
+                    <p className="text-xs text-[var(--muted-fg)] mt-1">
+                      Proactive communication, transparent daily standups, and reliable delivery timelines.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Categorized Tech Arsenal */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="bento-card p-6 sm:p-7">
+              <div className="flex items-center gap-2 mb-5">
+                <Terminal className="w-4 h-4 text-orange-500" />
+                <h3 className="text-sm font-bold uppercase tracking-wider font-mono text-[var(--fg-page)]">
+                  Technical Arsenal
+                </h3>
+              </div>
+
+              <div className="space-y-5">
+                {Object.entries(categorizedSkills).map(([category, items]) => (
+                  <div key={category}>
+                    <div className="text-xs font-mono text-[var(--muted-fg)] mb-2">
+                      {category}
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {items.map((skill) => (
+                        <span
+                          key={skill}
+                          className="text-xs font-medium px-2.5 py-1 rounded-md bg-[var(--muted-bg)] text-[var(--fg-page)] border border-[var(--subtle-border)] hover:border-orange-500/40 transition-colors"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .about-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 3rem;
-        }
-        .bento-metrics-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1rem;
-          align-content: start;
-        }
-        @media (max-width: 768px) {
-          .about-grid {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-          }
-          .bento-metrics-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
     </section>
   );
 }

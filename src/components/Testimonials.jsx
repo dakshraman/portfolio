@@ -1,108 +1,58 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { Icon } from '@iconify/react';
+import { Quote } from 'lucide-react';
 import { testimonials } from '@/data/portfolio';
 
-const colors = ['#5E6AD2', '#A855F7', '#F59E0B', '#06B6D4'];
-
 export default function Testimonials() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    // Reduced motion: reveal statically instead of waiting for the observer.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      section.classList.add('visible');
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          section.classList.add('visible');
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section ref={sectionRef} id="testimonials" className="section testimonials-section" aria-label="Testimonials">
-      <div style={{ marginBottom: '3.5rem' }}>
-        <p className="section-label">[04] Testimonials</p>
-        <h2 className="text-heading">What people say</h2>
-      </div>
+    <section className="py-20 md:py-28 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
+          <div>
+            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+              Client Feedback
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
+              Trusted by engineering leads & founders.
+            </h2>
+          </div>
+          <p className="text-sm text-[var(--muted-fg)] max-w-md">
+            Direct endorsements from founders, CTOs, and product managers across production software deployments.
+          </p>
+        </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 250px), 1fr))', gap: '16px' }}>
-        {testimonials.map((t, i) => {
-          const color = colors[i % colors.length];
-          return (
-            <figure
-              key={i}
-              className="card"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1.25rem',
-                margin: 0,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = `0 8px 32px ${color}15`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = 'var(--glass-shadow)';
-              }}
+        {/* Testimonials Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {testimonials.map((item) => (
+            <div
+              key={item.name}
+              className="bento-card p-6 sm:p-8 flex flex-col justify-between group hover:-translate-y-1"
             >
-              <Icon
-                icon="mdi:format-quote-open"
-                width={28}
-                height={28}
-                style={{ color, opacity: 0.5 }}
-              />
-              <blockquote style={{ margin: 0, fontSize: '0.9rem', color: 'var(--fg-muted)', lineHeight: 1.75, fontStyle: 'italic', flexGrow: 1 }}>
-                {t.quote}
-              </blockquote>
-              <figcaption style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: 'auto' }}>
-                <div
-                  style={{
-                    width: '40px', height: '40px', borderRadius: '50%',
-                    background: `linear-gradient(135deg, ${color}33, ${color}11)`,
-                    border: `1px solid ${color}33`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'var(--font-heading)', fontSize: '0.75rem', fontWeight: 700,
-                    color, flexShrink: 0,
-                  }}
-                >
-                  {t.avatar}
+              <div>
+                <Quote className="w-6 h-6 text-orange-500/50 mb-4" />
+                <p className="text-sm sm:text-base text-[var(--fg-page)] leading-relaxed italic mb-6">
+                  &ldquo;{item.quote}&rdquo;
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3 pt-4 border-t border-[var(--subtle-border)]">
+                <div className="w-10 h-10 rounded-full bg-orange-500/10 text-orange-500 font-bold text-xs flex items-center justify-center border border-orange-500/20">
+                  {item.avatar}
                 </div>
                 <div>
-                  <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--fg)', fontFamily: 'var(--font-heading)' }}>{t.name}</p>
-                  <p style={{ fontSize: '0.65rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.03em' }}>{t.role}</p>
+                  <div className="text-sm font-bold text-[var(--fg-page)]">
+                    {item.name}
+                  </div>
+                  <div className="text-xs text-[var(--muted-fg)] font-mono">
+                    {item.role}
+                  </div>
                 </div>
-              </figcaption>
-            </figure>
-          );
-        })}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <style jsx>{`
-        .testimonials-section > * {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .testimonials-section.visible > * {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .testimonials-section > *:nth-child(1) { transition-delay: 0s; }
-        .testimonials-section > *:nth-child(2) { transition-delay: 0.1s; }
-      `}</style>
     </section>
   );
 }

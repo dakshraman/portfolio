@@ -15,7 +15,7 @@ Freelance software engineer and IT consultant based in Dehradun, India. Speciali
 ## Key Projects
 
 - [Devkit](https://github.com/dakshraman/devkit) - TypeScript developer toolkit and utility library
-- [Borrow Nearby](https://github.com/dakshraman/borrow-nearby) - Location-based peer-to-peer lending platform (Flutter + Laravel API)
+- [Borrow Nearby](https://borrownearby.in) - Location-based peer-to-peer lending platform (Flutter + Laravel API)
 - [Advanced School ERP](https://github.com/dakshraman/schoolerp-parent) - Comprehensive school management system with academics, messaging, payments, payroll
 - [Laravel AI Debugger](https://github.com/dakshraman/laravel-ai-debugger) - Open source AI debugging assistant for Laravel (800+ stars)
 
@@ -43,7 +43,6 @@ Laravel, Flutter, React.js, Python, Dart, PHP, Firebase, Java, C++, SQL, Linux, 
 - [LinkedIn](https://linkedin.com/in/dakshraman) - Professional network
 - [Telegram](https://t.me/dakshraman) - Direct message
 - [Portfolio](https://dakshraman.in) - Full portfolio and case studies
-- [Virtual Studio](https://dakshraman.in/studio) - Interactive isometric 3D portfolio (Three.js)
 - [Hire a Freelance Developer](https://dakshraman.in/freelance) - Availability, services, and engagement details
 
 ## Hiring

@@ -1,87 +1,66 @@
 'use client';
 
 import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { faqItems } from '@/data/portfolio';
-import { Icon } from '@iconify/react';
-
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqItems.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.answer,
-    },
-  })),
-};
 
 export default function Faq() {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState(0);
 
-  const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
+  const toggle = (idx) => {
+    setOpenIndex(openIndex === idx ? -1 : idx);
+  };
 
   return (
-    <section className="section" style={{ paddingTop: 0 }} aria-label="Frequently asked questions">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <div style={{ marginBottom: '2.5rem' }}>
-        <p className="section-label">FAQ</p>
-        <h2 className="text-heading">Frequently asked questions</h2>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {faqItems.map((item, i) => {
-          const isOpen = openIndex === i;
-          return (
-            <div
-              key={i}
-              className="card"
-              style={{
-                padding: '1.25rem 1.5rem',
-                cursor: 'pointer',
-              }}
-              onClick={() => toggle(i)}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(i); }}
-              role="button"
-              tabIndex={0}
-              aria-expanded={isOpen}
-              aria-controls={`faq-answer-${i}`}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-                <h3 style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'var(--font-heading)', color: 'var(--fg)' }}>
-                  {item.question}
-                </h3>
-                <Icon
-                  icon="mdi:chevron-down"
-                  width={18}
-                  height={18}
-                  style={{
-                    color: 'var(--accent)',
-                    flexShrink: 0,
-                    transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s ease',
-                  }}
-                />
-              </div>
+    <section className="py-20 md:py-28 relative">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="text-center mb-14">
+          <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+            Frequently Asked Questions
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)] mb-3">
+            Everything you need to know.
+          </h2>
+          <p className="text-sm text-[var(--muted-fg)] max-w-lg mx-auto">
+            Clear answers regarding rates, timezone overlap, delivery timelines, and project engagements.
+          </p>
+        </div>
+
+        {/* Accordion Container */}
+        <div className="space-y-3">
+          {faqItems.map((item, idx) => {
+            const isOpen = openIndex === idx;
+
+            return (
               <div
-                id={`faq-answer-${i}`}
-                style={{
-                  overflow: 'hidden',
-                  maxHeight: isOpen ? '300px' : '0px',
-                  opacity: isOpen ? 1 : 0,
-                  transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                }}
+                key={item.question}
+                className="bento-card transition-all"
               >
-                <p style={{ fontSize: '0.85rem', color: 'var(--fg-muted)', lineHeight: 1.7, paddingTop: '0.75rem' }}>
-                  {item.answer}
-                </p>
+                <button
+                  onClick={() => toggle(idx)}
+                  className="w-full py-5 px-6 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
+                  aria-expanded={isOpen}
+                >
+                  <span className="text-base font-bold text-[var(--fg-page)]">
+                    {item.question}
+                  </span>
+                  <ChevronDown
+                    className={`w-5 h-5 text-[var(--muted-fg)] shrink-0 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 text-orange-500' : ''
+                    }`}
+                  />
+                </button>
+
+                {isOpen && (
+                  <div className="px-6 pb-6 text-sm text-[var(--muted-fg)] leading-relaxed border-t border-[var(--subtle-border)] pt-4 animate-in fade-in duration-200">
+                    {item.answer}
+                  </div>
+                )}
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </section>
   );

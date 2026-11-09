@@ -248,7 +248,6 @@ export const highlights = [
     description: 'A live location-based lending platform — Flutter app on the App Store with a Laravel API backend. Built from concept to production.',
     tags: ['Flutter', 'Laravel', 'API', 'Mobile'],
     github: 'https://borrownearby.in',
-    backend: 'https://github.com/dakshraman/borrow-nearby-backend',
     accent: '#22C55E',
     icon: 'local',
   },

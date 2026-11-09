@@ -1,132 +1,80 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Icon } from '@iconify/react';
+import { ArrowUpRight, Clock, Calendar } from 'lucide-react';
 import { blogs } from '@/data/portfolio';
 
-function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('en-US', {
-    year: 'numeric', month: 'short', day: 'numeric',
-  });
-}
-
 export default function Blog() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    // Reduced motion: reveal statically instead of waiting for the observer.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      section.classList.add('visible');
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          section.classList.add('visible');
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
-  const featured = blogs.find((b) => b.featured);
-  const rest = blogs.filter((b) => !b.featured);
+  const featuredBlogs = blogs.slice(0, 4);
 
   return (
-    <section ref={sectionRef} id="blog" className="section blog-section" aria-label="Blog posts">
-      <div style={{ marginBottom: '3.5rem' }}>
-        <p className="section-label">[05] Blog</p>
-        <h2 className="text-heading">Writings</h2>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        {featured && (
-          <article className="card" aria-label={`Featured post: ${featured.title}`}>
-          <Link
-            href={`/blog/${featured.slug}`}
-           
-            style={{
-              display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem',
-              textDecoration: 'none', color: 'var(--fg)',
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                <span style={{
-                  fontSize: '0.55rem', textTransform: 'uppercase', letterSpacing: '0.1em',
-                  color: 'var(--accent)', background: 'var(--accent-glow)',
-                  border: '1px solid var(--accent-glow-strong)', borderRadius: 'var(--radius-full)',
-                  padding: '3px 10px', fontFamily: 'var(--font-heading)', fontWeight: 700,
-                }}>Featured</span>
-                <time dateTime={featured.date} style={{ fontSize: '0.65rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
-                  {formatDate(featured.date)} · {featured.readTime}
-                </time>
-              </div>
-              <h3 style={{ fontSize: '1.4rem', fontWeight: 700, lineHeight: 1.3, fontFamily: 'var(--font-heading)' }}>{featured.title}</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--fg-muted)', lineHeight: 1.7, maxWidth: '600px' }}>
-                {featured.excerpt}
-              </p>
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '0.25rem' }}>
-                {featured.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}
-              </div>
+    <section id="blog" className="py-20 md:py-28 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
+          <div>
+            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+              Engineering Notes & Thoughts
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Icon icon="mdi:arrow-top-right" width={24} height={24} style={{ color: 'var(--accent)', opacity: 0.6 }} />
-            </div>
-          </Link>
-          </article>
-        )}
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
+              Latest technical writing.
+            </h2>
+          </div>
+          <p className="text-sm text-[var(--muted-fg)] max-w-md">
+            Architectural patterns, benchmark studies, and practical guides on Laravel, Flutter, real-time systems, and software security.
+          </p>
+        </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 250px), 1fr))', gap: '16px' }}>
-          {rest.map((post) => (
-            <article key={post.slug} className="card" aria-label={`Blog post: ${post.title}`}>
+        {/* Blog Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {featuredBlogs.map((article) => (
             <Link
-              href={`/blog/${post.slug}`}
-             
-              style={{
-                display: 'flex', flexDirection: 'column', gap: '0.75rem',
-                textDecoration: 'none', color: 'var(--fg)',
-              }}
+              key={article.slug}
+              href={`/blog/${article.slug}`}
+              className="bento-card p-6 sm:p-8 flex flex-col justify-between group hover:-translate-y-1 block"
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <time dateTime={post.date} style={{ fontSize: '0.65rem', color: 'var(--fg-dim)', fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
-                  {formatDate(post.date)} · {post.readTime}
-                </time>
-                <Icon icon="mdi:arrow-top-right" width={16} height={16} style={{ color: 'var(--fg-dim)' }} />
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3 text-xs font-mono text-[var(--muted-fg)]">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {article.date}
+                    </span>
+                    <span>•</span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5" />
+                      {article.readTime}
+                    </span>
+                  </div>
+
+                  <div className="w-7 h-7 rounded-full border border-[var(--subtle-border)] flex items-center justify-center text-[var(--muted-fg)] group-hover:text-orange-500 group-hover:border-orange-500/50 transition-colors">
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-bold text-[var(--fg-page)] mb-3 group-hover:text-orange-500 transition-colors">
+                  {article.title}
+                </h3>
+
+                <p className="text-sm text-[var(--muted-fg)] leading-relaxed mb-6">
+                  {article.excerpt}
+                </p>
               </div>
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, lineHeight: 1.35, fontFamily: 'var(--font-heading)' }}>{post.title}</h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--fg-muted)', lineHeight: 1.65, flexGrow: 1 }}>
-                {post.excerpt}
-              </p>
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                {post.tags.map((tag) => <span key={tag} className="tag">{tag}</span>)}
+
+              <div className="pt-4 border-t border-[var(--subtle-border)] flex flex-wrap gap-1.5">
+                {article.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-[var(--muted-bg)] text-[var(--muted-fg)]"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </Link>
-            </article>
           ))}
         </div>
       </div>
-      <style jsx>{`
-        .blog-section > * {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .blog-section.visible > * {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .blog-section > *:nth-child(1) { transition-delay: 0s; }
-        .blog-section > *:nth-child(2) { transition-delay: 0.1s; }
-      `}</style>
     </section>
   );
 }
