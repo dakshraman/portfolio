@@ -49,7 +49,7 @@ export default function Process() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+            <div className="section-label">
               Predictable Delivery
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
@@ -73,15 +73,15 @@ export default function Process() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <span className="text-2xl font-black font-mono text-orange-500/80">
+                    <span className="text-2xl font-bold font-mono text-[var(--accent)]">
                       {step.number}
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20">
                       {step.duration}
                     </span>
                   </div>
 
-                  <div className="w-10 h-10 rounded-xl bg-[var(--muted-bg)] flex items-center justify-center text-[var(--fg-page)] mb-4 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-2xl bg-[var(--muted-bg)] flex items-center justify-center text-[var(--fg-page)] mb-4 group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
                     <Icon className="w-5 h-5" />
                   </div>
 
@@ -101,7 +101,7 @@ export default function Process() {
                   <ul className="space-y-1">
                     {step.deliverables.map((del) => (
                       <li key={del} className="text-xs text-[var(--fg-page)] flex items-center gap-1.5 font-medium">
-                        <span className="w-1 h-1 rounded-full bg-orange-500 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] shrink-0" />
                         <span>{del}</span>
                       </li>
                     ))}
@@ -113,7 +113,7 @@ export default function Process() {
         </div>
 
         {/* Bottom Banner */}
-        <div className="mt-10 bento-card p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 border-l-4 border-l-orange-500">
+        <div className="mt-10 bento-card p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 border-l-4 border-l-[var(--accent)]">
           <div>
             <h4 className="text-lg font-bold text-[var(--fg-page)]">
               Have an urgent timeline or fixed launch date?
@@ -125,7 +125,7 @@ export default function Process() {
 
           <Link
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-500 hover:bg-orange-600 text-white shrink-0 shadow-md shadow-orange-500/20 transition-all active:scale-95"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-medium tracking-tight bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shrink-0 shadow-xs transition-all active:scale-95"
           >
             <span>Request Project Timeline</span>
             <ArrowRight className="w-4 h-4" />

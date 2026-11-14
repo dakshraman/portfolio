@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Copy, Check, Calendar } from 'lucide-react';
+import { ArrowUpRight, Copy, Check, Mail, Server, Smartphone, Layers } from 'lucide-react';
 import { siteConfig } from '@/data/portfolio';
 
 export default function Hero() {
   const [copied, setCopied] = useState(false);
+  const [activeConsoleTab, setActiveConsoleTab] = useState('backend');
 
   const copyEmail = () => {
     navigator.clipboard.writeText(siteConfig.email);
@@ -15,66 +16,55 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-grid-pattern">
-      {/* Background ambient radial glow */}
-      <div className="editorial-glow top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[380px] pointer-events-none" />
+    <section className="relative pt-20 pb-10 md:pt-24 md:pb-14 overflow-hidden bg-grid-pattern">
+      {/* Background ambient Apple radial glow */}
+      <div className="editorial-glow top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px]" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-        {/* Availability & Exclusivity Pill */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs mb-6">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="text-xs font-mono tracking-wide text-[var(--fg-page)] font-medium">
-            Available for Q1/Q2 Engagements · 1 MVP Slot Open
-          </span>
-        </div>
-
-        {/* Primary Client-Centric Headline */}
-        <div className="max-w-4xl">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[var(--fg-page)] leading-[1.08] mb-6">
-            Senior Laravel & Flutter engineer for{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-orange-400">
-              ambitious startups.
+        {/* Headline & Human-Written Intro */}
+        <div className="max-w-4xl text-center md:text-left mb-8">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--fg-page)] leading-[1.1] mb-5">
+            I build scalable web backends &amp;{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] via-[#47a3ff] to-[#70baff] dark:from-[var(--accent)] dark:via-[#60a5fa] dark:to-[#93c5fd]">
+              cross-platform mobile apps.
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-[var(--muted-fg)] leading-relaxed max-w-2xl font-light mb-8">
-            I help founders and engineering teams ship scalable web and mobile products without the bloat of agencies or the gamble of junior hires. High-throughput backends, native mobile apps, and 99.9% uptime.
+          <p className="text-base sm:text-lg text-[var(--muted-fg)] leading-relaxed max-w-2xl font-normal mb-7">
+            Hi, I&apos;m Raman Daksh — a freelance Laravel and Flutter developer with over 4 years of experience. I help startups and businesses build reliable web applications, clean REST APIs, and smooth iOS &amp; Android apps that are easy to maintain.
           </p>
 
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-12">
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-4">
             <Link
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-bold text-xs uppercase tracking-wider bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/25 active:scale-95 transition-all"
+              className="btn-primary"
             >
-              <Calendar className="w-4 h-4" />
-              <span>Book Discovery Call</span>
+              <Mail className="w-4 h-4" />
+              <span>Get in Touch</span>
             </Link>
 
             <Link
               href="#projects"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-medium text-sm border border-[var(--card-border)] bg-[var(--card-bg)] hover:bg-[var(--muted-bg)] text-[var(--fg-page)] transition-all cursor-pointer shadow-xs active:scale-95"
+              className="btn-ghost"
             >
-              <span>View Case Studies</span>
+              <span>View My Work</span>
               <ArrowUpRight className="w-4 h-4" />
             </Link>
 
             <button
               onClick={copyEmail}
-              className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-full font-mono text-xs text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-[var(--muted-bg)] transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-mono text-xs border border-transparent hover:border-[var(--card-border)] bg-transparent hover:bg-[var(--muted-bg)] text-[var(--muted-fg)] hover:text-[var(--fg-page)] transition-all cursor-pointer"
               aria-label="Copy email address"
             >
               {copied ? (
                 <>
-                  <Check className="w-4 h-4 text-emerald-500" />
-                  <span className="text-emerald-500 font-semibold">Copied!</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                  <span className="text-emerald-500 font-medium">Email copied!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4" />
+                  <Copy className="w-3.5 h-3.5" />
                   <span>{siteConfig.email}</span>
                 </>
               )}
@@ -82,30 +72,207 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Client Trust & Impact Bento Row */}
+        {/* Apple-Style Development Window Preview */}
+        <div className="my-10 bento-card p-0 shadow-xl">
+          {/* Window Header */}
+          <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--subtle-border)] bg-black/[0.02] dark:bg-white/[0.03]">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/50" />
+              <span className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/50" />
+              <span className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/50" />
+              <span className="ml-2 font-mono text-xs text-[var(--muted-fg)] hidden sm:inline">
+                what-i-build.dakshraman.in
+              </span>
+            </div>
+
+            {/* Segmented Control Tabs */}
+            <div className="flex items-center gap-1 p-1 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-xs font-medium border border-[var(--subtle-border)]">
+              <button
+                onClick={() => setActiveConsoleTab('backend')}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeConsoleTab === 'backend'
+                    ? 'bg-[var(--card-bg)] text-[var(--fg-page)] shadow-xs border border-[var(--card-border)] font-semibold'
+                    : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-transparent'
+                }`}
+              >
+                <Server className="w-3.5 h-3.5 text-[var(--accent)]" />
+                <span>Backend &amp; APIs</span>
+              </button>
+
+              <button
+                onClick={() => setActiveConsoleTab('mobile')}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeConsoleTab === 'mobile'
+                    ? 'bg-[var(--card-bg)] text-[var(--fg-page)] shadow-xs border border-[var(--card-border)] font-semibold'
+                    : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-transparent'
+                }`}
+              >
+                <Smartphone className="w-3.5 h-3.5 text-emerald-500" />
+                <span>Flutter Apps</span>
+              </button>
+
+              <button
+                onClick={() => setActiveConsoleTab('fullstack')}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeConsoleTab === 'fullstack'
+                    ? 'bg-[var(--card-bg)] text-[var(--fg-page)] shadow-xs border border-[var(--card-border)] font-semibold'
+                    : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-transparent'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5 text-blue-500" />
+                <span>Full-Stack Solutions</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Window Body: Real Capabilities */}
+          <div className="p-6 sm:p-7">
+            {activeConsoleTab === 'backend' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-in fade-in duration-200">
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-[var(--accent)] font-semibold mb-1">
+                    01. RESTful APIs
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    Structured Laravel APIs
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    Clean controllers, form request validation, API resource transformers, and clear documentation for mobile &amp; web clients.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-[var(--accent)] font-semibold mb-1">
+                    02. Database &amp; Speed
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    MySQL, Postgres &amp; Redis
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    Proper schema design, indexing, eager-loaded relationships to prevent slow queries, and Redis caching for frequently accessed data.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-[var(--accent)] font-semibold mb-1">
+                    03. Auth &amp; Payments
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    Integrations &amp; Security
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    Secure JWT / Laravel Sanctum authentication, Stripe and Razorpay payment gateway integrations, and background queue workers.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeConsoleTab === 'mobile' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-in fade-in duration-200">
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-emerald-500 font-semibold mb-1">
+                    01. Cross-Platform
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    iOS &amp; Android Apps
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    A single high-quality Flutter codebase that looks native on both iPhone and Android devices, saving you time and cost.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-emerald-500 font-semibold mb-1">
+                    02. State Management
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    BLoC &amp; Provider
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    Predictable application state, clean separation between UI and logic, and code that remains easy to test as your app expands.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-emerald-500 font-semibold mb-1">
+                    03. Storage &amp; Sync
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    Offline Caching &amp; APIs
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    Offline support with local SQLite / Hive caching, graceful error handling, and push notifications via Firebase.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {activeConsoleTab === 'fullstack' && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-in fade-in duration-200">
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-blue-500 font-semibold mb-1">
+                    01. End-to-End Delivery
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    From Concept to Launch
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    I take full ownership of the technical setup: database architecture, backend logic, mobile UI, and deployment.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-blue-500 font-semibold mb-1">
+                    02. Admin Dashboards
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    Custom Portals &amp; CRMs
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    Tailored dashboards for your team to manage users, view analytics, process orders, and handle daily operations easily.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-[var(--subtle-border)]">
+                  <div className="text-xs font-mono text-blue-500 font-semibold mb-1">
+                    03. Cloud Deployment
+                  </div>
+                  <div className="text-base font-bold text-[var(--fg-page)] mb-1.5">
+                    Servers &amp; Stores
+                  </div>
+                  <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
+                    Setup on DigitalOcean, AWS, or Docker VPS with SSL, Nginx, automated backups, and app submissions to App Store &amp; Play Store.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Real Metrics & Human Values */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-[var(--subtle-border)]">
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-[var(--fg-page)] tracking-tight">4+</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Years Engineering</div>
-            <div className="text-[10px] text-orange-500 font-mono mt-0.5">Senior Specialist</div>
+            <div className="text-2xl sm:text-3xl font-bold font-mono text-[var(--fg-page)] tracking-tight">4+</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Years Experience</div>
+            <div className="text-[11px] text-[var(--accent)] font-mono mt-0.5">Laravel &amp; Flutter</div>
           </div>
 
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-orange-500 tracking-tight">20+</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Delivered Projects</div>
-            <div className="text-[10px] text-[var(--muted-fg)] font-mono mt-0.5">100% On-Time Delivery</div>
+            <div className="text-2xl sm:text-3xl font-bold font-mono text-[var(--accent)] tracking-tight">20+</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Projects Built</div>
+            <div className="text-[11px] text-[var(--muted-fg)] font-mono mt-0.5">Startups &amp; Businesses</div>
           </div>
 
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-[var(--fg-page)] tracking-tight">50K+</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Daily API Volume</div>
-            <div className="text-[10px] text-[var(--muted-fg)] font-mono mt-0.5">High-Concurrency Scale</div>
+            <div className="text-2xl sm:text-3xl font-bold font-mono text-[var(--fg-page)] tracking-tight">Full Stack</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">End-to-End Scope</div>
+            <div className="text-[11px] text-[var(--muted-fg)] font-mono mt-0.5">Backend, APIs &amp; Apps</div>
           </div>
 
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-500 tracking-tight">&lt;12h</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Response Time</div>
-            <div className="text-[10px] text-emerald-500 font-mono mt-0.5">US & EU Live Overlap</div>
+            <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-500 tracking-tight">Direct</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Clear Communication</div>
+            <div className="text-[11px] text-emerald-500 font-mono mt-0.5">Fast async replies</div>
           </div>
         </div>
       </div>

@@ -10,11 +10,11 @@ export default function Testimonials() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+            <div className="section-label">
               Client Feedback
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
-              Trusted by engineering leads & founders.
+              Trusted by engineering leads &amp; founders.
             </h2>
           </div>
           <p className="text-sm text-[var(--muted-fg)] max-w-md">
@@ -30,18 +30,18 @@ export default function Testimonials() {
               className="bento-card p-6 sm:p-8 flex flex-col justify-between group hover:-translate-y-1"
             >
               <div>
-                <Quote className="w-6 h-6 text-orange-500/50 mb-4" />
+                <Quote className="w-6 h-6 text-[var(--accent)]/50 mb-4" />
                 <p className="text-sm sm:text-base text-[var(--fg-page)] leading-relaxed italic mb-6">
                   &ldquo;{item.quote}&rdquo;
                 </p>
               </div>
 
               <div className="flex items-center gap-3 pt-4 border-t border-[var(--subtle-border)]">
-                <div className="w-10 h-10 rounded-full bg-orange-500/10 text-orange-500 font-bold text-xs flex items-center justify-center border border-orange-500/20">
+                <div className="w-10 h-10 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] font-semibold text-xs flex items-center justify-center border border-[var(--accent)]/20 shadow-xs">
                   {item.avatar}
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-[var(--fg-page)]">
+                  <div className="text-sm font-semibold text-[var(--fg-page)]">
                     {item.name}
                   </div>
                   <div className="text-xs text-[var(--muted-fg)] font-mono">

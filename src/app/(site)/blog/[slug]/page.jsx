@@ -48,7 +48,7 @@ function parseInlineMarkup(text) {
   // Italic
   parsed = parsed.replace(/\*(.*?)\*/g, '<em>$1</em>');
   // Inline code
-  parsed = parsed.replace(/`(.*?)`/g, '<code style="background:rgba(255,255,255,0.1);padding:0.15rem 0.3rem;border-radius:4px;font-family:var(--font-mono);font-size:0.85em;color:var(--accent)">$1</code>');
+  parsed = parsed.replace(/`(.*?)`/g, '<code style="background:var(--muted-bg);border:1px solid var(--subtle-border);padding:0.15rem 0.35rem;border-radius:6px;font-family:var(--font-mono);font-size:0.85em;color:var(--accent)">$1</code>');
   // Links
   parsed = parsed.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;text-underline-offset:4px;">$1</a>');
   return <span dangerouslySetInnerHTML={{ __html: parsed }} />;
@@ -68,7 +68,7 @@ function renderContent(content) {
       <div key={`table-${elements.length}`} style={{ overflowX: 'auto', margin: '2rem 0' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
           <thead>
-            <tr style={{ borderBottom: '2px solid rgba(255,255,255,0.1)' }}>
+            <tr style={{ borderBottom: '2px solid var(--card-border)' }}>
               {tableRows[0].split('|').filter(c => c.trim()).map((h, i) => (
                 <th key={i} style={{ padding: '0.75rem 1rem', color: 'var(--fg)', fontWeight: 600 }}>{h.trim()}</th>
               ))}
@@ -76,7 +76,7 @@ function renderContent(content) {
           </thead>
           <tbody>
             {tableRows.slice(2).map((row, i) => (
-              <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
+              <tr key={i} style={{ borderBottom: '1px solid var(--subtle-border)', background: i % 2 === 0 ? 'var(--muted-bg)' : 'transparent' }}>
                 {row.split('|').filter(c => c.trim()).map((c, j) => (
                   <td key={j} style={{ padding: '0.75rem 1rem', color: 'var(--fg-muted)' }}>{parseInlineMarkup(c.trim())}</td>
                 ))}
@@ -196,7 +196,7 @@ function renderContent(content) {
           borderLeft: '4px solid var(--accent)',
           padding: '1rem 1.5rem',
           margin: '2rem 0',
-          background: 'rgba(255,255,255,0.03)',
+          background: 'var(--muted-bg)',
           borderRadius: '0 8px 8px 0',
           fontStyle: 'italic',
           color: 'var(--fg)',
@@ -342,15 +342,9 @@ export default async function BlogPost({ params }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
         
-        {/* Main Content Container - Glassmorphism */}
-        <div style={{
-          background: 'var(--glass-bg)',
-          backdropFilter: 'var(--glass-blur-heavy)',
-          WebkitBackdropFilter: 'var(--glass-blur-heavy)',
-          border: '1px solid var(--glass-border)',
-          borderRadius: '24px',
+        {/* Main Content Container - Glassmorphism Bento Card */}
+        <div className="bento-card" style={{
           padding: 'clamp(2rem, 5vw, 4rem)',
-          boxShadow: 'var(--glass-shadow)'
         }}>
           
           <Link
@@ -372,7 +366,7 @@ export default async function BlogPost({ params }) {
             {post.tags.map((tag) => (
               <span key={tag} style={{ 
                 fontSize: '0.7rem', 
-                background: 'rgba(255,255,255,0.05)', 
+                background: 'var(--muted-bg)', 
                 padding: '4px 12px', 
                 borderRadius: '100px',
                 color: 'var(--accent)',
@@ -380,7 +374,7 @@ export default async function BlogPost({ params }) {
                 fontWeight: 600,
                 letterSpacing: '0.03em',
                 textTransform: 'uppercase',
-                border: '1px solid rgba(255,255,255,0.1)'
+                border: '1px solid var(--subtle-border)'
               }}>{tag}</span>
             ))}
           </div>
@@ -392,9 +386,7 @@ export default async function BlogPost({ params }) {
             lineHeight: 1.15,
             letterSpacing: '-0.02em',
             marginBottom: '1.5rem',
-            background: 'linear-gradient(to right, #fff, #a1a1aa)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+            color: 'var(--fg-page)',
           }}>
             {post.title}
           </h1>
@@ -411,20 +403,19 @@ export default async function BlogPost({ params }) {
           <div style={{
             display: 'flex', alignItems: 'center', gap: '16px',
             marginBottom: '3rem', paddingBottom: '2.5rem',
-            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            borderBottom: '1px solid var(--subtle-border)',
           }}>
             <div style={{
-              width: '48px', height: '48px', borderRadius: '50%',
-              background: 'linear-gradient(135deg, var(--accent-glow-strong), var(--accent-glow))',
-              border: '1px solid rgba(254, 127, 45, 0.4)',
+              width: '44px', height: '44px', borderRadius: '50%',
+              background: 'var(--fg-page)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 800,
-              color: '#fff',
+              fontFamily: 'var(--font-heading)', fontSize: '0.95rem', fontWeight: 700,
+              color: 'var(--bg-page)',
             }}>
               RD
             </div>
             <div>
-              <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--fg)', fontFamily: 'var(--font-heading)' }}>Raman Daksh</p>
+              <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--fg-page)', fontFamily: 'var(--font-heading)' }}>Raman Daksh</p>
               <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--fg-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '2px' }}>
                 {formatDate(post.date)} · {post.readTime}
               </p>
@@ -438,11 +429,12 @@ export default async function BlogPost({ params }) {
           {cta && (
             <div style={{
               marginTop: '4rem', padding: '2rem',
-              background: 'linear-gradient(to right, rgba(254, 127, 45, 0.05), transparent)',
+              background: 'var(--muted-bg)',
+              border: '1px solid var(--subtle-border)',
               borderLeft: '4px solid var(--accent)',
-              borderRadius: '0 12px 12px 0',
+              borderRadius: '0 16px 16px 0',
             }}>
-              <p style={{ fontSize: '1.1rem', color: 'var(--fg)', fontWeight: 600, marginBottom: '1rem' }}>
+              <p style={{ fontSize: '1.1rem', color: 'var(--fg-page)', fontWeight: 600, marginBottom: '1rem' }}>
                 {cta.text}
               </p>
               <Link

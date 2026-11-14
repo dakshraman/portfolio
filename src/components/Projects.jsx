@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 
-const categories = ['All', 'Laravel', 'Flutter', 'API', 'Full Stack'];
+const categories = ['All', 'Laravel', 'Flutter', 'DevOps', 'API', 'Full Stack'];
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -12,6 +13,7 @@ export default function Projects() {
     if (activeCategory === 'All') return true;
     if (activeCategory === 'Laravel') return project.tags.some((t) => t.toLowerCase().includes('laravel'));
     if (activeCategory === 'Flutter') return project.tags.some((t) => t.toLowerCase().includes('flutter'));
+    if (activeCategory === 'DevOps') return project.tags.some((t) => t.toLowerCase().includes('devops') || t.toLowerCase().includes('cloud') || t.toLowerCase().includes('linux'));
     if (activeCategory === 'API') return project.tags.some((t) => t.toLowerCase().includes('api'));
     if (activeCategory === 'Full Stack') return project.tags.some((t) => t.toLowerCase().includes('full stack') || t.toLowerCase().includes('erp'));
     return true;
@@ -23,7 +25,7 @@ export default function Projects() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+            <div className="section-label">
               Selected Portfolio
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
@@ -31,15 +33,15 @@ export default function Projects() {
             </h2>
           </div>
 
-          {/* Category Filter Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs">
+          {/* Category Filter Tabs (Apple Pill Design) */}
+          <div className="flex flex-wrap items-center gap-1 p-1 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
                   activeCategory === category
-                    ? 'bg-orange-500 text-white shadow-xs'
+                    ? 'bg-[var(--accent)] text-white shadow-xs'
                     : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-[var(--muted-bg)]'
                 }`}
               >
@@ -61,13 +63,37 @@ export default function Projects() {
                   <span className="text-[11px] font-mono tracking-wider uppercase px-2.5 py-1 rounded-md bg-[var(--muted-bg)] text-[var(--muted-fg)] border border-[var(--subtle-border)]">
                     {project.category}
                   </span>
-                  <span className="text-xs font-mono text-[var(--muted-fg)]">
-                    #{String(idx + 1).padStart(2, '0')}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono text-[var(--muted-fg)]">
+                      #{String(idx + 1).padStart(2, '0')}
+                    </span>
+                    {(project.link || project.github) && (
+                      <a
+                        href={project.link || project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-7 h-7 rounded-full border border-[var(--subtle-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-[var(--accent)] hover:border-[var(--card-hover-border)] transition-colors"
+                        aria-label={`Open ${project.title}`}
+                      >
+                        <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </a>
+                    )}
+                  </div>
                 </div>
 
-                <h3 className="text-lg font-bold text-[var(--fg-page)] mb-2.5 group-hover:text-orange-500 transition-colors">
-                  {project.title}
+                <h3 className="text-lg font-bold text-[var(--fg-page)] mb-2.5 group-hover:text-[var(--accent)] transition-colors">
+                  {(project.link || project.github) ? (
+                    <a
+                      href={project.link || project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      {project.title}
+                    </a>
+                  ) : (
+                    project.title
+                  )}
                 </h3>
                 <p className="text-xs sm:text-sm text-[var(--muted-fg)] leading-relaxed mb-6">
                   {project.description}

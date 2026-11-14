@@ -28,61 +28,58 @@ export default function Navigation() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-3 sm:py-4 px-4 sm:px-6">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <nav
-          className={`nav-glass rounded-full px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between transition-all duration-300 ${
-            scrolled ? 'shadow-lg shadow-black/5 dark:shadow-black/25' : ''
+          className={`nav-glass rounded-full px-4 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between transition-all duration-300 border ${
+            scrolled
+              ? 'shadow-[0_12px_36px_rgba(0,0,0,0.12)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.7)] border-black/20 dark:border-white/20'
+              : 'shadow-[0_4px_24px_-2px_rgba(0,0,0,0.1),0_8px_16px_-4px_rgba(0,0,0,0.06)] dark:shadow-[0_12px_36px_-4px_rgba(0,0,0,0.65)] border-black/15 dark:border-white/15'
           }`}
           aria-label="Main Navigation"
         >
           {/* Brand & Availability Status */}
           <Link
             href="/"
-            className="flex items-center gap-3 group focus:outline-none"
+            className="flex items-center gap-2.5 group focus:outline-none"
             aria-label="Raman Daksh - Home"
           >
-            <div className="relative flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-tr from-orange-500 to-amber-500 text-white font-bold text-sm tracking-tight shadow-md group-hover:scale-105 transition-transform">
+            <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-[var(--fg-page)] text-[var(--bg-page)] font-semibold text-xs tracking-tight shadow-xs group-hover:scale-105 transition-transform">
               RD
             </div>
             <div className="flex flex-col">
-              <span className="font-semibold text-sm tracking-tight text-[var(--fg-page)] leading-none group-hover:text-orange-500 transition-colors">
+              <span className="font-semibold text-xs sm:text-sm tracking-tight text-[var(--fg-page)] leading-none group-hover:text-[var(--accent)] transition-colors">
                 Raman Daksh
               </span>
-              <span className="flex items-center gap-1.5 text-[11px] text-[var(--muted-fg)] mt-1 font-mono">
-                <span className="relative flex h-2 w-2">
+              <span className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-[var(--muted-fg)] mt-0.5 tracking-tight">
+                <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
                 </span>
-                Available for work
+                Available
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1 lg:gap-2">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="px-3.5 py-1.5 text-xs lg:text-sm font-medium text-[var(--muted-fg)] hover:text-[var(--fg-page)] rounded-full hover:bg-[var(--muted-bg)] transition-colors flex items-center gap-1.5"
+                className="px-3.5 py-1.5 text-[13px] font-medium text-[#3a3a3c] dark:text-[#a1a1a6] hover:text-[var(--fg-page)] rounded-full hover:bg-black/[0.06] dark:hover:bg-white/[0.08] transition-all"
               >
                 {item.label}
-                {item.badge && (
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20">
-                    {item.badge}
-                  </span>
-                )}
               </Link>
             ))}
           </div>
 
           {/* Right Controls: Theme Toggle + CTA */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-2.5">
             <ThemeToggle />
 
             <Link
               href="#contact"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-full bg-[var(--fg-page)] text-[var(--bg-page)] hover:opacity-90 active:scale-95 transition-all shadow-sm"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shadow-xs active:scale-95 transition-all"
             >
               <span>Get in Touch</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -91,7 +88,7 @@ export default function Navigation() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--fg-page)]"
+              className="md:hidden w-8 h-8 flex items-center justify-center rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--fg-page)]"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileOpen}
             >
@@ -102,28 +99,23 @@ export default function Navigation() {
 
         {/* Mobile Dropdown Menu */}
         {mobileOpen && (
-          <div className="md:hidden mt-2 nav-glass rounded-2xl p-4 shadow-xl border border-[var(--card-border)] animate-in fade-in duration-200">
+          <div className="md:hidden mt-2 nav-glass rounded-3xl p-4 shadow-2xl border border-[var(--card-border)] animate-in fade-in zoom-in-95 duration-200">
             <div className="flex flex-col gap-1">
               {navLinks.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="px-4 py-2.5 text-sm font-medium text-[var(--fg-page)] hover:bg-[var(--muted-bg)] rounded-xl transition-colors flex items-center justify-between"
+                  className="px-4 py-2.5 text-sm font-medium text-[var(--fg-page)] hover:bg-[var(--muted-bg)] rounded-2xl transition-colors flex items-center justify-between"
                 >
                   <span>{item.label}</span>
-                  {item.badge && (
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20">
-                      {item.badge}
-                    </span>
-                  )}
                 </Link>
               ))}
               <div className="pt-2 mt-2 border-t border-[var(--subtle-border)]">
                 <Link
                   href="#contact"
                   onClick={() => setMobileOpen(false)}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-xl bg-[var(--fg-page)] text-[var(--bg-page)] hover:opacity-90 transition-opacity"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-2xl bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white transition-opacity shadow-xs"
                 >
                   <span>Get in Touch</span>
                   <ArrowUpRight className="w-4 h-4" />

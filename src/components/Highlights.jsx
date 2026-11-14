@@ -11,7 +11,7 @@ export default function Highlights() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+            <div className="section-label">
               Featured Flagships
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
@@ -24,7 +24,7 @@ export default function Highlights() {
         </div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {highlights.map((item) => (
             <div
               key={item.title}
@@ -36,7 +36,7 @@ export default function Highlights() {
                   <div className="flex items-center gap-2">
                     <span
                       className="w-2.5 h-2.5 rounded-full"
-                      style={{ backgroundColor: item.accent || '#f97316' }}
+                      style={{ backgroundColor: item.accent || 'var(--accent)' }}
                     />
                     <span className="text-xs font-mono uppercase tracking-wider text-[var(--muted-fg)]">
                       {item.tags[0]}
@@ -48,7 +48,7 @@ export default function Highlights() {
                       href={item.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-8 h-8 rounded-full border border-[var(--subtle-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-orange-500 hover:border-orange-500/50 transition-colors"
+                      className="w-8 h-8 rounded-full border border-[var(--subtle-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-[var(--accent)] hover:border-[var(--card-hover-border)] transition-colors"
                       aria-label={`Visit ${item.title}`}
                     >
                       <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -57,7 +57,7 @@ export default function Highlights() {
                 </div>
 
                 {/* Title & Description */}
-                <h3 className="text-xl font-bold text-[var(--fg-page)] mb-3 group-hover:text-orange-500 transition-colors">
+                <h3 className="text-xl font-bold text-[var(--fg-page)] mb-3 group-hover:text-[var(--accent)] transition-colors">
                   {item.title}
                 </h3>
                 <p className="text-sm text-[var(--muted-fg)] leading-relaxed mb-6">
@@ -84,7 +84,7 @@ export default function Highlights() {
                       href={item.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 font-semibold text-[var(--fg-page)] hover:text-orange-500 transition-colors"
+                      className="inline-flex items-center gap-1 font-semibold text-[var(--fg-page)] hover:text-[var(--accent)] transition-colors"
                     >
                       <span>Live Site</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -98,7 +98,7 @@ export default function Highlights() {
                       className="inline-flex items-center gap-1 text-[var(--muted-fg)] hover:text-[var(--fg-page)] transition-colors"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
-                      <span>Backend Repo</span>
+                      <span>Source Code</span>
                     </a>
                   )}
                 </div>

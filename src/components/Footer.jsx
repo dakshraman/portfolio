@@ -1,80 +1,49 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowUp } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, TelegramIcon, InstagramIcon } from './Icons';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
 import { siteConfig } from '@/data/portfolio';
 
 export default function Footer() {
+  const [copied, setCopied] = useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const copyEmail = () => {
+    navigator.clipboard.writeText(siteConfig.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <footer className="border-t border-[var(--subtle-border)] bg-[var(--card-bg)] py-12 md:py-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-12">
-          {/* Brand Column */}
+    <footer className="border-t border-[var(--subtle-border)] bg-[var(--bg-page)] text-[var(--fg-page)] pt-16 pb-12 transition-colors">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-12">
+        {/* Big Editorial Statement */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-[var(--subtle-border)]">
           <div>
-            <div className="flex items-center gap-2.5 mb-2">
-              <span className="w-8 h-8 rounded-full bg-orange-500 text-white font-bold text-xs flex items-center justify-center">
+            <div className="flex items-center gap-2.5 mb-3">
+              <span className="w-8 h-8 rounded-full bg-[var(--fg-page)] text-[var(--bg-page)] font-semibold text-xs flex items-center justify-center shadow-xs">
                 RD
               </span>
-              <span className="font-bold text-lg text-[var(--fg-page)] tracking-tight">
+              <span className="font-semibold text-lg text-[var(--fg-page)] tracking-tight">
                 Raman Daksh
               </span>
             </div>
-            <p className="text-xs text-[var(--muted-fg)] max-w-sm">
-              Freelance Laravel & Flutter Developer building scalable backends and cross-platform mobile apps for global startups.
+            <p className="text-base text-[var(--muted-fg)] max-w-lg leading-relaxed">
+              Senior Freelance Laravel &amp; Flutter Engineer. Building scalable backend architectures, high-concurrency APIs, and cross-platform mobile apps for global startups.
             </p>
           </div>
 
-          {/* Social Links */}
           <div className="flex items-center gap-3">
-            <a
-              href={siteConfig.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-[var(--card-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-orange-500 hover:border-orange-500/50 transition-colors"
-              aria-label="GitHub Profile"
-            >
-              <GithubIcon className="w-4 h-4" />
+            <a href="#contact" className="btn-primary text-xs py-2.5 px-5">
+              Start a Project
             </a>
-
-            <a
-              href={siteConfig.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-[var(--card-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-orange-500 hover:border-orange-500/50 transition-colors"
-              aria-label="LinkedIn Profile"
-            >
-              <LinkedinIcon className="w-4 h-4" />
-            </a>
-
-            <a
-              href={siteConfig.telegram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-[var(--card-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-orange-500 hover:border-orange-500/50 transition-colors"
-              aria-label="Telegram"
-            >
-              <TelegramIcon className="w-4 h-4" />
-            </a>
-
-            <a
-              href={siteConfig.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-[var(--card-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-orange-500 hover:border-orange-500/50 transition-colors"
-              aria-label="Instagram"
-            >
-              <InstagramIcon className="w-4 h-4" />
-            </a>
-
             <button
               onClick={scrollToTop}
-              className="w-9 h-9 rounded-full border border-[var(--card-border)] bg-[var(--muted-bg)] flex items-center justify-center text-[var(--fg-page)] hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all cursor-pointer"
-              aria-label="Scroll to top"
+              className="w-10 h-10 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] flex items-center justify-center hover:bg-[var(--muted-bg)] text-[var(--fg-page)] transition-colors cursor-pointer shadow-xs"
               title="Back to top"
             >
               <ArrowUp className="w-4 h-4" />
@@ -82,16 +51,77 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-[var(--subtle-border)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--muted-fg)]">
+        {/* Clean Multi-Column Directory */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 text-xs">
           <div>
-            &copy; {new Date().getFullYear()} Raman Daksh. All rights reserved.
+            <h4 className="font-semibold text-[var(--fg-page)] mb-3 tracking-tight">Navigation</h4>
+            <ul className="space-y-2 text-[var(--muted-fg)]">
+              <li><Link href="#projects" className="hover:text-[var(--fg-page)] transition-colors">Selected Work</Link></li>
+              <li><Link href="#services" className="hover:text-[var(--fg-page)] transition-colors">Services</Link></li>
+              <li><Link href="#pricing" className="hover:text-[var(--fg-page)] transition-colors">Sprint Pricing</Link></li>
+              <li><Link href="#blog" className="hover:text-[var(--fg-page)] transition-colors">Technical Writing</Link></li>
+            </ul>
           </div>
 
-          <div className="flex items-center gap-4">
-            <Link href="#contact" className="hover:text-orange-500 transition-colors">
-              Inquire
-            </Link>
+          <div>
+            <h4 className="font-semibold text-[var(--fg-page)] mb-3 tracking-tight">Specialization</h4>
+            <ul className="space-y-2 text-[var(--muted-fg)]">
+              <li><span className="text-[var(--fg-page)] font-medium">Laravel</span> Backend Architecture</li>
+              <li><span className="text-[var(--fg-page)] font-medium">Flutter</span> iOS &amp; Android</li>
+              <li><span className="text-[var(--fg-page)] font-medium">RESTful</span> API Design</li>
+              <li><span className="text-[var(--fg-page)] font-medium">PostgreSQL &amp; Redis</span> Scaling</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-[var(--fg-page)] mb-3 tracking-tight">Flagship Builds</h4>
+            <ul className="space-y-2 text-[var(--muted-fg)]">
+              <li>
+                <a href="https://clouddeck.dakshraman.in" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  <span>CloudDeck</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
+              </li>
+              <li>
+                <a href="https://devkit.dakshraman.in" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  <span>Devkit Platform</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
+              </li>
+              <li>
+                <a href="https://erp-web-lctn.onrender.com/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  <span>School ERP</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-[var(--fg-page)] mb-3 tracking-tight">Contact &amp; Location</h4>
+            <div className="space-y-2 text-[var(--muted-fg)] font-mono text-[11px]">
+              <div>Dehradun, India · IST (UTC+5:30)</div>
+              <button
+                onClick={copyEmail}
+                className="text-[var(--accent)] hover:underline block cursor-pointer text-left"
+              >
+                {copied ? 'Copied to clipboard ✓' : siteConfig.email}
+              </button>
+              <div className="text-emerald-500 font-medium flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Available for Hire</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Hairline Divider & Bottom Rights */}
+        <div className="pt-6 border-t border-[var(--subtle-border)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--muted-fg)]">
+          <div>&copy; {new Date().getFullYear()} Raman Daksh. Crafted with Apple design principles.</div>
+          <div className="flex items-center gap-5">
+            <a href={siteConfig.github} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--fg-page)] transition-colors">GitHub</a>
+            <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--fg-page)] transition-colors">LinkedIn</a>
+            <a href={siteConfig.telegram} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--fg-page)] transition-colors">Telegram</a>
           </div>
         </div>
       </div>

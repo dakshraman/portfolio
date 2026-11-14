@@ -32,15 +32,18 @@ export default function ThemeToggle() {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     const root = document.documentElement;
     const meta = document.querySelector('meta[name="color-scheme"]');
+    const themeColor = document.querySelector('meta[name="theme-color"]');
 
     if (nextTheme === 'dark') {
       root.classList.add('dark');
       root.setAttribute('data-theme', 'dark');
       if (meta) meta.content = 'dark';
+      if (themeColor) themeColor.content = '#000000';
     } else {
       root.classList.remove('dark');
       root.setAttribute('data-theme', 'light');
       if (meta) meta.content = 'light';
+      if (themeColor) themeColor.content = '#f5f5f7';
     }
 
     try {

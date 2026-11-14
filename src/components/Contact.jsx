@@ -46,13 +46,13 @@ ${formState.message}`
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="max-w-3xl mb-14">
-          <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+          <div className="section-label">
             Let&apos;s Build Together
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--fg-page)] leading-tight mb-4">
             Ready to ship? Let&apos;s discuss your roadmap.
           </h2>
-          <p className="text-base text-[var(--muted-fg)] leading-relaxed font-light">
+          <p className="text-base text-[var(--muted-fg)] leading-relaxed font-normal">
             I work directly with founders and product teams. No middlemen, no sales reps. Submit your project requirements below to receive a proposal within 24 hours.
           </p>
         </div>
@@ -63,24 +63,24 @@ ${formState.message}`
           <div className="lg:col-span-5 space-y-4">
             {/* Primary Email Card */}
             <div className="bento-card p-6">
-              <div className="flex items-center gap-3 text-orange-500 mb-3">
+              <div className="flex items-center gap-3 text-[var(--accent)] mb-3">
                 <Mail className="w-5 h-5" />
                 <span className="text-xs font-mono uppercase tracking-wider font-semibold">Direct Email</span>
               </div>
               <div className="text-base sm:text-lg font-bold text-[var(--fg-page)] mb-2 font-mono break-all">
                 {siteConfig.email}
               </div>
-              <p className="text-xs text-[var(--muted-fg)] mb-4">
+              <p className="text-xs text-[var(--muted-fg)] mb-4 leading-relaxed">
                 Replies guaranteed within 12 hours. Send briefs, wireframes, or RFPs directly.
               </p>
               <button
                 onClick={copyEmail}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] hover:bg-[var(--card-bg)] text-xs font-semibold text-[var(--fg-page)] transition-all cursor-pointer"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[var(--card-border)] bg-[var(--muted-bg)] hover:bg-[var(--card-bg)] text-xs font-medium text-[var(--fg-page)] transition-all cursor-pointer shadow-2xs"
               >
                 {copied ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-emerald-500" />
-                    <span className="text-emerald-500">Copied to Clipboard!</span>
+                    <span className="text-emerald-500 font-medium">Copied to Clipboard!</span>
                   </>
                 ) : (
                   <>
@@ -97,9 +97,9 @@ ${formState.message}`
                 href={siteConfig.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bento-card p-4 flex flex-col justify-between group hover:border-orange-500/50"
+                className="bento-card p-4 flex flex-col justify-between group hover:border-[var(--card-hover-border)]"
               >
-                <div className="flex items-center justify-between text-[var(--muted-fg)] group-hover:text-orange-500 transition-colors">
+                <div className="flex items-center justify-between text-[var(--muted-fg)] group-hover:text-[var(--accent)] transition-colors">
                   <TelegramIcon className="w-5 h-5" />
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
@@ -113,9 +113,9 @@ ${formState.message}`
                 href={siteConfig.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bento-card p-4 flex flex-col justify-between group hover:border-orange-500/50"
+                className="bento-card p-4 flex flex-col justify-between group hover:border-[var(--card-hover-border)]"
               >
-                <div className="flex items-center justify-between text-[var(--muted-fg)] group-hover:text-orange-500 transition-colors">
+                <div className="flex items-center justify-between text-[var(--muted-fg)] group-hover:text-[var(--accent)] transition-colors">
                   <LinkedinIcon className="w-5 h-5" />
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
@@ -127,15 +127,15 @@ ${formState.message}`
             </div>
 
             {/* Working Arrangement / Availability Note */}
-            <div className="bento-card p-5 border-l-4 border-l-orange-500 space-y-3">
+            <div className="bento-card p-5 border-l-4 border-l-[var(--accent)] space-y-3">
               <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-orange-500" />
+                <Globe className="w-4 h-4 text-[var(--accent)]" />
                 <h4 className="text-xs font-bold uppercase tracking-wider font-mono text-[var(--fg-page)]">
-                  Availability & Guarantees
+                  Availability &amp; Work Terms
                 </h4>
               </div>
               <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
-                Currently booking projects for Q1/Q2. Guaranteed 4-hour daily live sync overlap with US (EST/PST) and Europe timezones.
+                Available for freelance projects, MVP development, and ongoing consulting. Transparent communication with regular updates and clear milestones.
               </p>
               <div className="pt-2 border-t border-[var(--subtle-border)] flex items-center gap-2 text-xs text-emerald-500 font-medium">
                 <ShieldCheck className="w-4 h-4" />
@@ -148,7 +148,7 @@ ${formState.message}`
           <div className="lg:col-span-7">
             <div className="bento-card p-6 sm:p-8">
               <h3 className="text-xl font-bold text-[var(--fg-page)] mb-2">
-                Project Inquiry & Scope Form
+                Project Inquiry &amp; Scope Form
               </h3>
               <p className="text-xs text-[var(--muted-fg)] mb-6">
                 Tell me about your product. I will review your requirements and reply with feasibility and estimates within 24 hours.
@@ -165,7 +165,7 @@ ${formState.message}`
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="text-xs font-semibold text-orange-500 hover:underline mt-2 inline-block cursor-pointer"
+                    className="text-xs font-semibold text-[var(--accent)] hover:underline mt-2 inline-block cursor-pointer"
                   >
                     Send another message
                   </button>
@@ -184,7 +184,7 @@ ${formState.message}`
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                         placeholder="e.g. Alex Smith"
-                        className="w-full px-4 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-orange-500 transition-colors"
+                        className="w-full px-4 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
                       />
                     </div>
 
@@ -199,7 +199,7 @@ ${formState.message}`
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                         placeholder="alex@company.com"
-                        className="w-full px-4 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-orange-500 transition-colors"
+                        className="w-full px-4 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
                       />
                     </div>
                   </div>
@@ -213,14 +213,15 @@ ${formState.message}`
                         id="service"
                         value={formState.service}
                         onChange={(e) => setFormState({ ...formState, service: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-orange-500 transition-colors"
+                        style={{ colorScheme: 'inherit' }}
+                        className="w-full px-3 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
                       >
                         <option value="Full-Cycle MVP (Laravel + Flutter)">Full MVP Sprint</option>
                         <option value="Laravel Backend Architecture">Laravel Backend</option>
                         <option value="Flutter Mobile App">Flutter Mobile App</option>
                         <option value="REST API Architecture">REST API Design</option>
                         <option value="Fractional Staff Engineer">Fractional / Retainer</option>
-                        <option value="Architecture & Code Audit">Code & Security Audit</option>
+                        <option value="Architecture & Code Audit">Code &amp; Security Audit</option>
                       </select>
                     </div>
 
@@ -232,7 +233,8 @@ ${formState.message}`
                         id="budget"
                         value={formState.budget}
                         onChange={(e) => setFormState({ ...formState, budget: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-orange-500 transition-colors"
+                        style={{ colorScheme: 'inherit' }}
+                        className="w-full px-3 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
                       >
                         <option value="< $3,000 (Small sprint / Audit)">&lt; $3,000</option>
                         <option value="$3,000 – $6,000">$3,000 – $6,000</option>
@@ -249,7 +251,8 @@ ${formState.message}`
                         id="timeline"
                         value={formState.timeline}
                         onChange={(e) => setFormState({ ...formState, timeline: e.target.value })}
-                        className="w-full px-3 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-orange-500 transition-colors"
+                        style={{ colorScheme: 'inherit' }}
+                        className="w-full px-3 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
                       >
                         <option value="ASAP (Within 2–3 weeks)">ASAP (2–3 weeks)</option>
                         <option value="Within 1 Month">Within 1 Month</option>
@@ -261,7 +264,7 @@ ${formState.message}`
 
                   <div>
                     <label htmlFor="message" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
-                      Project Details & Goals
+                      Project Details &amp; Goals
                     </label>
                     <textarea
                       id="message"
@@ -270,13 +273,13 @@ ${formState.message}`
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                       placeholder="Briefly describe what you are building, the current state of code (if any), and key deliverables you need..."
-                      className="w-full px-4 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-orange-500 transition-colors resize-none"
+                      className="w-full px-4 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-orange-500 hover:bg-orange-600 text-white shadow-lg shadow-orange-500/25 active:scale-95 transition-all cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-medium text-xs tracking-tight bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shadow-xs active:scale-95 transition-all cursor-pointer"
                   >
                     <span>Send Project Inquiry</span>
                     <Send className="w-4 h-4" />

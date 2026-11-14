@@ -21,7 +21,7 @@ export default function Services() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+            <div className="section-label">
               Capabilities & Offerings
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
@@ -45,20 +45,20 @@ export default function Services() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center border border-orange-500/20 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all">
+                    <div className="w-10 h-10 rounded-2xl bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center border border-[var(--accent)]/20 group-hover:scale-110 group-hover:bg-[var(--accent)] group-hover:text-white transition-all shadow-xs">
                       <Icon className="w-5 h-5" />
                     </div>
 
                     <Link
                       href={`/services/${service.slug}`}
-                      className="w-8 h-8 rounded-full border border-[var(--subtle-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-orange-500 hover:border-orange-500/50 transition-colors"
+                      className="w-8 h-8 rounded-full border border-[var(--subtle-border)] flex items-center justify-center text-[var(--muted-fg)] hover:text-[var(--accent)] hover:border-[var(--card-hover-border)] transition-colors"
                       aria-label={`Learn more about ${service.title}`}
                     >
                       <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </Link>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[var(--fg-page)] mb-2.5 group-hover:text-orange-500 transition-colors">
+                  <h3 className="text-xl font-bold text-[var(--fg-page)] mb-2.5 group-hover:text-[var(--accent)] transition-colors">
                     {service.title}
                   </h3>
 
@@ -74,7 +74,7 @@ export default function Services() {
                   <ul className="space-y-2">
                     {service.features.map((feat) => (
                       <li key={feat} className="flex items-center gap-2 text-xs text-[var(--muted-fg)]">
-                        <Check className="w-3.5 h-3.5 text-orange-500 shrink-0" />
+                        <Check className="w-3.5 h-3.5 text-[var(--accent)] shrink-0" />
                         <span>{feat}</span>
                       </li>
                     ))}

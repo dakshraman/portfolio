@@ -10,11 +10,11 @@ export default function Experience() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+            <div className="section-label">
               Career Journey
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
-              Experience & track record.
+              Experience &amp; track record.
             </h2>
           </div>
           <p className="text-sm text-[var(--muted-fg)] max-w-md">
@@ -27,15 +27,15 @@ export default function Experience() {
           {experiences.map((exp) => (
             <div key={`${exp.company}-${exp.period}`} className="relative pl-7 md:pl-10 group">
               {/* Timeline marker */}
-              <span className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[var(--card-border)] group-hover:bg-orange-500 transition-colors ring-4 ring-[var(--bg-page)]" />
+              <span className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-[var(--card-border)] group-hover:bg-[var(--accent)] transition-colors ring-4 ring-[var(--bg-page)]" />
 
               <div className="bento-card p-6 md:p-8 hover:-translate-y-0.5 transition-all">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                   <div>
-                    <h3 className="text-xl font-bold text-[var(--fg-page)] group-hover:text-orange-500 transition-colors">
+                    <h3 className="text-xl font-bold text-[var(--fg-page)] group-hover:text-[var(--accent)] transition-colors">
                       {exp.role}
                     </h3>
-                    <div className="text-sm font-semibold text-orange-500 mt-0.5">
+                    <div className="text-sm font-semibold text-[var(--accent)] mt-0.5">
                       {exp.company}
                     </div>
                   </div>

@@ -4,15 +4,16 @@ import { useEffect, useRef } from 'react';
 import { Icon } from '@iconify/react';
 
 const PINNED_REPOS = [
+  { name: 'clouddeck', desc: 'The modern, blazing-fast, open-source cPanel alternative (<50MB RAM)', lang: 'Go', stars: 8, forks: 2 },
   { name: 'laravel-ai-debugger', desc: 'AI Debugging Assistant for Laravel using CLI tools', lang: 'PHP', stars: 1, forks: 0 },
   { name: 'Messager', desc: 'Cross-platform messaging app with real-time updates', lang: 'Dart', stars: 2, forks: 0 },
   { name: 'Weather_forecast_web_application', desc: 'Weather forecast with interactive maps and alerts', lang: 'JavaScript', stars: 0, forks: 0 },
   { name: 'Virtual-Assistant', desc: 'Voice-controlled virtual assistant with NLP', lang: 'Python', stars: 0, forks: 0 },
-  { name: 'AI-Image-Enhancer', desc: 'AI image enhancement using machine learning', lang: 'Python', stars: 0, forks: 0 },
   { name: 'laravel-browser-guard', desc: 'Browser fingerprinting & bot detection for Laravel', lang: 'PHP', stars: 0, forks: 0 },
 ];
 
 const langColors = {
+  Go: '#00ADD8',
   PHP: '#777BB4',
   Dart: '#0175C2',
   JavaScript: '#F7DF1E',

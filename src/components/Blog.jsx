@@ -13,8 +13,8 @@ export default function Blog() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
-              Engineering Notes & Thoughts
+            <div className="section-label">
+              Engineering Notes &amp; Thoughts
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
               Latest technical writing.
@@ -47,12 +47,12 @@ export default function Blog() {
                     </span>
                   </div>
 
-                  <div className="w-7 h-7 rounded-full border border-[var(--subtle-border)] flex items-center justify-center text-[var(--muted-fg)] group-hover:text-orange-500 group-hover:border-orange-500/50 transition-colors">
+                  <div className="w-7 h-7 rounded-full border border-[var(--subtle-border)] flex items-center justify-center text-[var(--muted-fg)] group-hover:text-[var(--accent)] group-hover:border-[var(--card-hover-border)] transition-colors">
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-[var(--fg-page)] mb-3 group-hover:text-orange-500 transition-colors">
+                <h3 className="text-xl font-bold text-[var(--fg-page)] mb-3 group-hover:text-[var(--accent)] transition-colors">
                   {article.title}
                 </h3>
 

@@ -16,7 +16,7 @@ export default function Faq() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="text-center mb-14">
-          <div className="text-xs font-mono uppercase tracking-widest text-orange-500 mb-2">
+          <div className="section-label">
             Frequently Asked Questions
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)] mb-3">
@@ -42,12 +42,12 @@ export default function Faq() {
                   className="w-full py-5 px-6 text-left flex items-center justify-between gap-4 focus:outline-none cursor-pointer"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-base font-bold text-[var(--fg-page)]">
+                  <span className="text-base font-semibold text-[var(--fg-page)] tracking-tight">
                     {item.question}
                   </span>
                   <ChevronDown
                     className={`w-5 h-5 text-[var(--muted-fg)] shrink-0 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-orange-500' : ''
+                      isOpen ? 'rotate-180 text-[var(--accent)]' : ''
                     }`}
                   />
                 </button>

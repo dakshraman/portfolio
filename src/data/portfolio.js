@@ -10,7 +10,7 @@ export const siteConfig = {
   availability: 'Available for freelance & consulting',
   tagline: 'I help startups and businesses ship scalable products faster — from idea to production.',
   description:
-    '4+ years turning complex requirements into clean, maintainable code. Trusted by 20+ projects across healthcare, education, and e-commerce.',
+    '4+ years turning complex requirements into clean, maintainable code. Creator of CloudDeck and trusted across 20+ production web and mobile projects.',
 };
 
 export const experiences = [
@@ -53,6 +53,15 @@ export const experiences = [
 ];
 
 export const projects = [
+  {
+    title: 'CloudDeck — Open-Source Cloud Hosting Control Panel',
+    description: 'The modern, blazing-fast cPanel alternative. Multi-PHP (8.1–8.4), polyglot app runtimes, MariaDB, Postfix/Dovecot email, PowerDNS, and 1-click SSL under 50MB idle RAM.',
+    tags: ['Go', 'Next.js', 'DevOps', 'Linux', 'Full Stack'],
+    category: 'Cloud / DevOps',
+    link: 'https://clouddeck.dakshraman.in',
+    github: 'https://github.com/dakshraman/clouddeck',
+    icon: 'cloud',
+  },
   {
     title: 'E-Learning Mobile App',
     description: 'Built a live-streaming e-learning platform serving students across Android and iOS — with zero downtime during peak hours.',
@@ -121,6 +130,7 @@ export const projects = [
     description: 'Comprehensive school management system — academics, messaging, payroll, and online payments in one platform.',
     tags: ['ERP', 'Full Stack'],
     category: 'Education',
+    link: 'https://erp-web-lctn.onrender.com/',
     icon: 'enterprise',
   }
 ];
@@ -236,6 +246,15 @@ export const faqItems = [
 
 export const highlights = [
   {
+    title: 'CloudDeck',
+    description: 'The modern, blazing-fast, open-source cPanel alternative. Multi-PHP (8.1–8.4), Nginx, MariaDB, PowerDNS, and automated SSL in under 50MB idle RAM.',
+    tags: ['Go', 'Next.js', 'DevOps', 'Linux'],
+    github: 'https://clouddeck.dakshraman.in',
+    backend: 'https://github.com/dakshraman/clouddeck',
+    accent: '#0071E3',
+    icon: 'cloud',
+  },
+  {
     title: 'Devkit',
     description: 'Open-source developer toolkit — modular TypeScript utilities that save setup time on every new project.',
     tags: ['TypeScript', 'Developer Tools', 'SDK'],
@@ -255,7 +274,7 @@ export const highlights = [
     title: 'Advanced School ERP',
     description: 'End-to-end school management system handling academics, payments, and payroll for 500+ students.',
     tags: ['ERP', 'Full Stack', 'Laravel'],
-    github: 'https://schoolerp.codeloomtechnologies.com',
+    github: 'https://erp-web-lctn.onrender.com/',
     accent: '#F59E0B',
     icon: 'enterprise',
   },

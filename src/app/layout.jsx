@@ -144,17 +144,21 @@ export default function RootLayout({ children }) {
                     document.documentElement.classList.add('dark');
                     document.documentElement.setAttribute('data-theme', 'dark');
                     if (meta) meta.content = 'dark';
+                    var tc = document.querySelector('meta[name="theme-color"]');
+                    if (tc) tc.content = '#000000';
                   } else {
                     document.documentElement.classList.remove('dark');
                     document.documentElement.setAttribute('data-theme', 'light');
                     if (meta) meta.content = 'light';
+                    var tc = document.querySelector('meta[name="theme-color"]');
+                    if (tc) tc.content = '#f5f5f7';
                   }
                 } catch(e) {}
               })();
             `,
           }}
         />
-        <meta name="theme-color" content="#f97316" />
+        <meta name="theme-color" content="#f5f5f7" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
