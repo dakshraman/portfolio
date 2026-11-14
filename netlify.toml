@@ -1,3 +1,11 @@
 [build]
   command = "npm run build"
   publish = ".out"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/api/contact"
+  to = "/.netlify/functions/contact"
+  status = 200

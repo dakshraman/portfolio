@@ -10,7 +10,7 @@ export default function Contact() {
   const [copiedDetails, setCopiedDetails] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState({ needsActivation: false });
+  const [errorMsg, setErrorMsg] = useState(null);
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -60,6 +60,7 @@ ${formState.message}
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMsg(null);
 
     const payload = {
       name: formState.name,
@@ -68,56 +69,52 @@ ${formState.message}
       budget: formState.budget,
       timeline: formState.timeline,
       message: formState.message,
-      _subject: `New Project Inquiry: ${formState.service} from ${formState.name || 'Startup Client'}`,
-      _template: 'table',
-      _captcha: 'false',
     };
 
-    let needsActivation = false;
-
     try {
-      // 1. Direct FormSubmit endpoint to ramandaksh6161@gmail.com
-      const res = await fetch('https://formsubmit.co/ajax/ramandaksh6161@gmail.com', {
+      // 1. Dispatch via Resend API endpoint
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
         },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json().catch(() => null);
-      if (data && data.message && data.message.includes('Activation')) {
-        needsActivation = true;
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to dispatch email via Resend.');
       }
-    } catch {
-      // Fallback if network blocked
+
+      setSubmitted(true);
+    } catch (err) {
+      console.warn('API submission failed, falling back:', err);
+      try {
+        // Fallback: Netlify form capture if deployed statically
+        const formData = new URLSearchParams({
+          'form-name': 'contact',
+          name: formState.name,
+          email: formState.email,
+          service: formState.service,
+          budget: formState.budget,
+          timeline: formState.timeline,
+          message: formState.message,
+        });
+
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: formData.toString(),
+        });
+        setSubmitted(true);
+      } catch {
+        setErrorMsg('Could not send message automatically. Please click "Send Direct via Web Gmail" below.');
+        setSubmitted(true);
+      }
+    } finally {
+      setIsSubmitting(false);
     }
-
-    try {
-      // 2. Secondary Netlify submission if deployed on Netlify
-      const formData = new URLSearchParams({
-        'form-name': 'contact',
-        name: formState.name,
-        email: formState.email,
-        service: formState.service,
-        budget: formState.budget,
-        timeline: formState.timeline,
-        message: formState.message,
-      });
-
-      await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData.toString(),
-      });
-    } catch {
-      // Graceful fallback
-    }
-
-    setSubmitStatus({ needsActivation });
-    setIsSubmitting(false);
-    setSubmitted(true);
   };
 
   return (
@@ -240,14 +237,10 @@ ${formState.message}
                   </div>
                   <h4 className="text-xl sm:text-2xl font-bold text-[var(--fg-page)]">Inquiry Dispatched!</h4>
                   
-                  {submitStatus.needsActivation ? (
+                  {errorMsg ? (
                     <div className="max-w-md mx-auto p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-left space-y-2">
-                      <div className="text-xs font-bold text-amber-500 uppercase tracking-wider font-mono flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-                        First-Time Activation Notice
-                      </div>
                       <p className="text-xs text-[var(--fg-page)] leading-relaxed">
-                        FormSubmit has sent a one-time activation link to <span className="font-mono font-semibold">{siteConfig.email}</span>. Click <span className="underline font-semibold">Activate Form</span> in that email to allow future inquiries to land straight into your inbox.
+                        {errorMsg}
                       </p>
                     </div>
                   ) : (
