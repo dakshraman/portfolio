@@ -34,14 +34,14 @@ export default function Projects() {
           </div>
 
           {/* Category Filter Tabs (Apple Pill Design) */}
-          <div className="flex flex-wrap items-center gap-1 p-1 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs">
+          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl sm:rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
                   activeCategory === category
-                    ? 'bg-[var(--accent)] text-white shadow-xs'
+                    ? 'bg-[var(--accent)] text-white shadow-xs font-semibold'
                     : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-[var(--muted-bg)]'
                 }`}
               >

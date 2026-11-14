@@ -61,7 +61,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((item) => (
               <Link
                 key={item.label}
@@ -85,10 +85,10 @@ export default function Navigation() {
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile / Tablet Menu Button */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden w-8 h-8 flex items-center justify-center rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--fg-page)]"
+              className="lg:hidden w-8 h-8 flex items-center justify-center rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-[var(--fg-page)] cursor-pointer hover:bg-[var(--muted-bg)] transition-colors"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileOpen}
             >
@@ -97,9 +97,9 @@ export default function Navigation() {
           </div>
         </nav>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile & Tablet Dropdown Menu */}
         {mobileOpen && (
-          <div className="md:hidden mt-2 nav-glass rounded-3xl p-4 shadow-2xl border border-[var(--card-border)] animate-in fade-in zoom-in-95 duration-200">
+          <div className="lg:hidden mt-2 nav-glass rounded-3xl p-4 sm:p-5 shadow-2xl border border-[var(--card-border)] animate-in fade-in zoom-in-95 duration-200">
             <div className="flex flex-col gap-1">
               {navLinks.map((item) => (
                 <Link
@@ -111,7 +111,7 @@ export default function Navigation() {
                   <span>{item.label}</span>
                 </Link>
               ))}
-              <div className="pt-2 mt-2 border-t border-[var(--subtle-border)]">
+              <div className="pt-2.5 mt-2 border-t border-[var(--subtle-border)]">
                 <Link
                   href="#contact"
                   onClick={() => setMobileOpen(false)}

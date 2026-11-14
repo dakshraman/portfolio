@@ -10,6 +10,7 @@ export default function Contact() {
   const [copiedDetails, setCopiedDetails] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ needsActivation: false });
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -60,9 +61,41 @@ ${formState.message}
     e.preventDefault();
     setIsSubmitting(true);
 
+    const payload = {
+      name: formState.name,
+      email: formState.email,
+      service: formState.service,
+      budget: formState.budget,
+      timeline: formState.timeline,
+      message: formState.message,
+      _subject: `New Project Inquiry: ${formState.service} from ${formState.name || 'Startup Client'}`,
+      _template: 'table',
+      _captcha: 'false',
+    };
+
+    let needsActivation = false;
+
     try {
-      // 1. Submit to Netlify Forms (or custom endpoint)
-      const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT || '/';
+      // 1. Direct FormSubmit endpoint to ramandaksh6161@gmail.com
+      const res = await fetch('https://formsubmit.co/ajax/ramandaksh6161@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json().catch(() => null);
+      if (data && data.message && data.message.includes('Activation')) {
+        needsActivation = true;
+      }
+    } catch {
+      // Fallback if network blocked
+    }
+
+    try {
+      // 2. Secondary Netlify submission if deployed on Netlify
       const formData = new URLSearchParams({
         'form-name': 'contact',
         name: formState.name,
@@ -73,17 +106,18 @@ ${formState.message}
         message: formState.message,
       });
 
-      await fetch(endpoint, {
+      await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: formData.toString(),
       });
     } catch {
-      // Graceful fallback: local dev or offline
-    } finally {
-      setIsSubmitting(false);
-      setSubmitted(true);
+      // Graceful fallback
     }
+
+    setSubmitStatus({ needsActivation });
+    setIsSubmitting(false);
+    setSubmitted(true);
   };
 
   return (
@@ -200,14 +234,27 @@ ${formState.message}
               </p>
 
               {submitted ? (
-                <div className="py-10 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
+                <div className="py-8 sm:py-10 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
                   <div className="w-12 h-12 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center mx-auto shadow-xs">
                     <Check className="w-6 h-6" />
                   </div>
-                  <h4 className="text-xl font-bold text-[var(--fg-page)]">Inquiry Received!</h4>
-                  <p className="text-xs text-[var(--muted-fg)] max-w-md mx-auto leading-relaxed">
-                    Thank you, <span className="font-semibold text-[var(--fg-page)]">{formState.name || 'there'}</span>. Your project details have been logged and routed to <span className="font-mono text-[var(--fg-page)]">{siteConfig.email}</span>. I will review and reply within 24 hours.
-                  </p>
+                  <h4 className="text-xl sm:text-2xl font-bold text-[var(--fg-page)]">Inquiry Dispatched!</h4>
+                  
+                  {submitStatus.needsActivation ? (
+                    <div className="max-w-md mx-auto p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-left space-y-2">
+                      <div className="text-xs font-bold text-amber-500 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
+                        First-Time Activation Notice
+                      </div>
+                      <p className="text-xs text-[var(--fg-page)] leading-relaxed">
+                        FormSubmit has sent a one-time activation link to <span className="font-mono font-semibold">{siteConfig.email}</span>. Click <span className="underline font-semibold">Activate Form</span> in that email to allow future inquiries to land straight into your inbox.
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="text-xs sm:text-sm text-[var(--muted-fg)] max-w-md mx-auto leading-relaxed">
+                      Thank you, <span className="font-semibold text-[var(--fg-page)]">{formState.name || 'there'}</span>! Your requirements were submitted directly to <span className="font-mono text-[var(--fg-page)] font-semibold">{siteConfig.email}</span>. I will review and reply within 24 hours.
+                    </p>
+                  )}
 
                   {/* Guaranteed Webmail & Copy Fallbacks */}
                   <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5 max-w-md mx-auto">
@@ -215,17 +262,17 @@ ${formState.message}
                       href={gmailWebUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-xs font-semibold shadow-xs transition-transform hover:scale-105"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-xs font-semibold shadow-xs transition-transform hover:scale-105"
                     >
-                      <Mail className="w-3.5 h-3.5" />
+                      <Mail className="w-4 h-4" />
                       <span>Send Direct via Web Gmail ↗</span>
                     </a>
 
                     <button
                       onClick={copyFormDetails}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] font-medium hover:bg-[var(--muted-bg)] transition-colors cursor-pointer"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] font-medium hover:bg-[var(--muted-bg)] transition-colors cursor-pointer"
                     >
-                      {copiedDetails ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5 text-[var(--muted-fg)]" />}
+                      {copiedDetails ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-[var(--muted-fg)]" />}
                       <span>{copiedDetails ? 'Details Copied!' : 'Copy Summary'}</span>
                     </button>
                   </div>
@@ -255,7 +302,7 @@ ${formState.message}
                       Don&apos;t fill this out: <input name="bot-field" />
                     </label>
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                     <div>
                       <label htmlFor="name" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
                         Your Name
@@ -267,7 +314,7 @@ ${formState.message}
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                         placeholder="e.g. Alex Smith"
-                        className="w-full px-4 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+                        className="w-full px-4 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
                       />
                     </div>
 
@@ -282,12 +329,12 @@ ${formState.message}
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                         placeholder="alex@company.com"
-                        className="w-full px-4 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+                        className="w-full px-4 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
                     <div>
                       <label htmlFor="service" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
                         Primary Need
@@ -297,7 +344,7 @@ ${formState.message}
                         value={formState.service}
                         onChange={(e) => setFormState({ ...formState, service: e.target.value })}
                         style={{ colorScheme: 'inherit' }}
-                        className="w-full px-3 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
+                        className="w-full px-3 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
                       >
                         <option value="Full-Cycle MVP (Laravel + Flutter)">Full MVP Sprint</option>
                         <option value="Laravel Backend Architecture">Laravel Backend</option>
@@ -317,7 +364,7 @@ ${formState.message}
                         value={formState.budget}
                         onChange={(e) => setFormState({ ...formState, budget: e.target.value })}
                         style={{ colorScheme: 'inherit' }}
-                        className="w-full px-3 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
+                        className="w-full px-3 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
                       >
                         <option value="< $3,000 (Small sprint / Audit)">&lt; $3,000</option>
                         <option value="$3,000 – $6,000">$3,000 – $6,000</option>
@@ -335,7 +382,7 @@ ${formState.message}
                         value={formState.timeline}
                         onChange={(e) => setFormState({ ...formState, timeline: e.target.value })}
                         style={{ colorScheme: 'inherit' }}
-                        className="w-full px-3 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
+                        className="w-full px-3 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
                       >
                         <option value="ASAP (Within 2–3 weeks)">ASAP (2–3 weeks)</option>
                         <option value="Within 1 Month">Within 1 Month</option>
@@ -356,7 +403,7 @@ ${formState.message}
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                       placeholder="Briefly describe what you are building, the current state of code (if any), and key deliverables you need..."
-                      className="w-full px-4 py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
+                      className="w-full px-4 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
                     />
                   </div>
 

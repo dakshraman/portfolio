@@ -27,6 +27,7 @@ export default function PricingEngagements() {
   const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
 
   const handleMouseMove = (e) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches) return;
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -63,11 +64,11 @@ export default function PricingEngagements() {
         </div>
 
         {/* Animate-UI Sliding Pill Tabs */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex items-center p-1.5 rounded-full nav-glass border border-[var(--card-border)] shadow-sm">
+        <div className="flex justify-center mb-10 sm:mb-12 px-2">
+          <div className="inline-flex items-center p-1 sm:p-1.5 rounded-full nav-glass border border-[var(--card-border)] shadow-sm max-w-full overflow-x-auto">
             <button
               onClick={() => setActiveTab('fixed')}
-              className={`relative px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
+              className={`relative px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer shrink-0 ${
                 activeTab === 'fixed'
                   ? 'text-white'
                   : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)]'
@@ -80,7 +81,7 @@ export default function PricingEngagements() {
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10 flex items-center gap-1.5 sm:gap-2">
                 <Rocket className="w-3.5 h-3.5" />
                 <span>Fixed-Price Sprints</span>
               </span>
@@ -88,7 +89,7 @@ export default function PricingEngagements() {
 
             <button
               onClick={() => setActiveTab('fractional')}
-              className={`relative px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
+              className={`relative px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer shrink-0 ${
                 activeTab === 'fractional'
                   ? 'text-white'
                   : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)]'
@@ -101,7 +102,7 @@ export default function PricingEngagements() {
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                 />
               )}
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10 flex items-center gap-1.5 sm:gap-2">
                 <Clock className="w-3.5 h-3.5" />
                 <span>Fractional &amp; Retainer</span>
               </span>
@@ -407,10 +408,10 @@ export default function PricingEngagements() {
                       className="w-full h-2 rounded-lg bg-[var(--card-border)] accent-[var(--accent)] cursor-pointer"
                     />
 
-                    <div className="flex justify-between text-[10px] font-mono text-[var(--muted-fg)] mt-2">
-                      <span>10 hrs (Part-Time)</span>
-                      <span>20 hrs (Core Sprint)</span>
-                      <span>35 hrs (Full Focus)</span>
+                    <div className="flex justify-between text-[9px] sm:text-[10px] font-mono text-[var(--muted-fg)] mt-2">
+                      <span>10h (Part-Time)</span>
+                      <span>20h (Core)</span>
+                      <span>35h (Full Focus)</span>
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-[var(--subtle-border)] flex items-center justify-between">

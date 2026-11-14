@@ -269,13 +269,13 @@ export default function Hero() {
           </div>
 
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-[var(--fg-page)] tracking-tight">Full Stack</div>
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-[var(--fg-page)] tracking-tight truncate">Full Stack</div>
             <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">End-to-End Scope</div>
-            <div className="text-[11px] text-[var(--muted-fg)] font-mono mt-0.5">Backend, APIs &amp; Apps</div>
+            <div className="text-[11px] text-[var(--muted-fg)] font-mono mt-0.5 truncate">Backend, APIs &amp; Apps</div>
           </div>
 
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-500 tracking-tight">Direct</div>
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-emerald-500 tracking-tight truncate">Direct</div>
             <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Clear Communication</div>
             <div className="text-[11px] text-emerald-500 font-mono mt-0.5">Fast async replies</div>
           </div>
