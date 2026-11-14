@@ -105,7 +105,7 @@ export default function Footer() {
                 onClick={copyEmail}
                 className="text-[var(--accent)] hover:underline block cursor-pointer text-left"
               >
-                {copied ? 'Copied to clipboard ✓' : siteConfig.email}
+                {copied ? 'Copied ✓' : siteConfig.email}
               </button>
               <div className="text-emerald-500 font-medium flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -117,7 +117,7 @@ export default function Footer() {
 
         {/* Hairline Divider & Bottom Rights */}
         <div className="pt-6 border-t border-[var(--subtle-border)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[var(--muted-fg)]">
-          <div>&copy; {new Date().getFullYear()} Raman Daksh. Crafted with Apple design principles.</div>
+          <div>&copy; {new Date().getFullYear()} Raman Daksh.</div>
           <div className="flex items-center gap-5">
             <a href={siteConfig.github} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--fg-page)] transition-colors">GitHub</a>
             <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-[var(--fg-page)] transition-colors">LinkedIn</a>

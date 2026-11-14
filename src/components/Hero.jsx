@@ -73,54 +73,59 @@ export default function Hero() {
         </div>
 
         {/* Apple-Style Development Window Preview */}
-        <div className="my-10 bento-card p-0 shadow-xl">
+        <div className="my-10 bento-card p-0 shadow-xl overflow-hidden">
           {/* Window Header */}
-          <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--subtle-border)] bg-black/[0.02] dark:bg-white/[0.03]">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/50" />
-              <span className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/50" />
-              <span className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/50" />
-              <span className="ml-2 font-mono text-xs text-[var(--muted-fg)] hidden sm:inline">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 sm:px-5 border-b border-[var(--subtle-border)] bg-black/[0.02] dark:bg-white/[0.03]">
+            <div className="flex items-center justify-between sm:justify-start gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]/50" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]/50" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27c93f] border border-[#1aab29]/50" />
+              </div>
+              <span className="ml-2 font-mono text-[11px] sm:text-xs text-[var(--muted-fg)] truncate max-w-[200px] sm:max-w-none">
                 what-i-build.dakshraman.in
               </span>
             </div>
 
-            {/* Segmented Control Tabs */}
-            <div className="flex items-center gap-1 p-1 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-xs font-medium border border-[var(--subtle-border)]">
+            {/* Segmented Control Tabs (Responsive on Mobile & Tablet) */}
+            <div className="w-full sm:w-auto overflow-x-auto flex items-center justify-between sm:justify-start gap-1 p-1 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-[11px] sm:text-xs font-medium border border-[var(--subtle-border)] shrink-0">
               <button
                 onClick={() => setActiveConsoleTab('backend')}
-                className={`px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-2.5 sm:px-3 py-1 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap flex-1 sm:flex-initial ${
                   activeConsoleTab === 'backend'
                     ? 'bg-[var(--card-bg)] text-[var(--fg-page)] shadow-xs border border-[var(--card-border)] font-semibold'
                     : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-transparent'
                 }`}
               >
-                <Server className="w-3.5 h-3.5 text-[var(--accent)]" />
-                <span>Backend &amp; APIs</span>
+                <Server className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[var(--accent)] shrink-0" />
+                <span className="hidden sm:inline">Backend &amp; APIs</span>
+                <span className="sm:hidden">Backend</span>
               </button>
 
               <button
                 onClick={() => setActiveConsoleTab('mobile')}
-                className={`px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-2.5 sm:px-3 py-1 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap flex-1 sm:flex-initial ${
                   activeConsoleTab === 'mobile'
                     ? 'bg-[var(--card-bg)] text-[var(--fg-page)] shadow-xs border border-[var(--card-border)] font-semibold'
                     : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-transparent'
                 }`}
               >
-                <Smartphone className="w-3.5 h-3.5 text-emerald-500" />
-                <span>Flutter Apps</span>
+                <Smartphone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 shrink-0" />
+                <span className="hidden sm:inline">Flutter Apps</span>
+                <span className="sm:hidden">Mobile</span>
               </button>
 
               <button
                 onClick={() => setActiveConsoleTab('fullstack')}
-                className={`px-3 py-1 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-2.5 sm:px-3 py-1 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap flex-1 sm:flex-initial ${
                   activeConsoleTab === 'fullstack'
                     ? 'bg-[var(--card-bg)] text-[var(--fg-page)] shadow-xs border border-[var(--card-border)] font-semibold'
                     : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-transparent'
                 }`}
               >
-                <Layers className="w-3.5 h-3.5 text-blue-500" />
-                <span>Full-Stack Solutions</span>
+                <Layers className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-blue-500 shrink-0" />
+                <span className="hidden sm:inline">Full-Stack Solutions</span>
+                <span className="sm:hidden">Full Stack</span>
               </button>
             </div>
           </div>
