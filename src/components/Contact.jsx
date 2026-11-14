@@ -1,7 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Mail, Send, Check, Copy, Globe, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { 
+  Mail, 
+  Send, 
+  Check, 
+  Copy, 
+  ShieldCheck 
+} from 'lucide-react';
 import { LinkedinIcon, TelegramIcon } from './Icons';
 import { siteConfig } from '@/data/portfolio';
 
@@ -11,6 +17,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -19,6 +26,29 @@ export default function Contact() {
     timeline: 'Within 1 Month',
     message: '',
   });
+
+  const servicesList = [
+    { id: 'Full-Cycle MVP (Laravel + Flutter)', label: 'Full MVP Sprint' },
+    { id: 'Laravel Backend Architecture', label: 'Laravel Backend' },
+    { id: 'Flutter Mobile App', label: 'Flutter Mobile App' },
+    { id: 'REST API Design & Architecture', label: 'REST API Design' },
+    { id: 'Fractional Staff Engineer', label: 'Fractional Retainer' },
+    { id: 'Architecture & Code Audit', label: 'Code & Security Audit' },
+  ];
+
+  const budgetList = [
+    { id: '< $3,000', label: '< $3,000' },
+    { id: '$3,000 – $6,000', label: '$3,000 – $6,000' },
+    { id: '$6,000 – $15,000+', label: '$6,000 – $15,000+' },
+    { id: 'Hourly / Retainer ($45–$65/hr)', label: 'Hourly ($45–$65/hr)' },
+  ];
+
+  const timelineList = [
+    { id: 'ASAP (2–3 Weeks)', label: 'ASAP (2–3 Weeks)' },
+    { id: 'Within 1 Month', label: 'Within 1 Month' },
+    { id: '2–3 Months', label: '2–3 Months' },
+    { id: 'Flexible / Ongoing', label: 'Flexible / Ongoing' },
+  ];
 
   const copyEmail = () => {
     navigator.clipboard.writeText(siteConfig.email);
@@ -38,7 +68,7 @@ Message: ${formState.message}`;
     setTimeout(() => setCopiedDetails(false), 2000);
   };
 
-  // Gmail Web direct compose URL
+  // Gmail Web direct compose URL fallback
   const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
     siteConfig.email
   )}&su=${encodeURIComponent(
@@ -58,7 +88,7 @@ ${formState.message}
   )}`;
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setIsSubmitting(true);
     setErrorMsg(null);
 
@@ -109,7 +139,7 @@ ${formState.message}
         });
         setSubmitted(true);
       } catch {
-        setErrorMsg('Could not send message automatically. Please click "Send Direct via Web Gmail" below.');
+        setErrorMsg('Could not send message automatically. Please click "Open in Web Gmail" below.');
         setSubmitted(true);
       }
     } finally {
@@ -118,307 +148,256 @@ ${formState.message}
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="contact" className="py-20 md:py-32 relative">
+      {/* Background ambient lighting */}
+      <div className="editorial-glow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] opacity-25" />
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        
         {/* Section Header */}
-        <div className="max-w-3xl mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="section-label">
             Let&apos;s Build Together
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--fg-page)] leading-tight mb-4">
             Ready to ship? Let&apos;s discuss your roadmap.
           </h2>
-          <p className="text-base text-[var(--muted-fg)] leading-relaxed font-normal">
-            I work directly with founders and product teams. No middlemen, no sales reps. Submit your project requirements below to receive a proposal within 24 hours.
+          <p className="text-base sm:text-lg text-[var(--muted-fg)] leading-relaxed font-normal">
+            Direct collaboration with founders and product teams. No agency middlemen, no sales gatekeepers.
           </p>
         </div>
 
-        {/* Contact Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Direct Channels Column */}
-          <div className="lg:col-span-5 space-y-4">
-            {/* Primary Email Card */}
-            <div className="bento-card p-6">
-              <div className="flex items-center gap-3 text-[var(--accent)] mb-3">
-                <Mail className="w-5 h-5" />
-                <span className="text-xs font-mono uppercase tracking-wider font-semibold">Direct Email</span>
+        {/* ========================================================
+            SUCCESS STATE (Inquiry Dispatched)
+            ======================================================== */}
+        {submitted ? (
+          <div className="bento-card p-8 sm:p-12 max-w-2xl mx-auto text-center space-y-5 animate-in fade-in zoom-in-95 duration-200">
+            <div className="w-14 h-14 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center mx-auto shadow-xs">
+              <Check className="w-7 h-7" />
+            </div>
+            
+            <h4 className="text-2xl sm:text-3xl font-bold text-[var(--fg-page)]">
+              Inquiry Dispatched Successfully!
+            </h4>
+            
+            {errorMsg ? (
+              <div className="max-w-md mx-auto p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-left space-y-2">
+                <p className="text-xs text-[var(--fg-page)] leading-relaxed">
+                  {errorMsg}
+                </p>
               </div>
-              <div className="text-base sm:text-lg font-bold text-[var(--fg-page)] mb-2 font-mono break-all">
-                {siteConfig.email}
-              </div>
-              <p className="text-xs text-[var(--muted-fg)] mb-4 leading-relaxed">
-                Replies guaranteed within 12 hours. Send briefs, wireframes, or RFPs directly.
+            ) : (
+              <p className="text-sm text-[var(--muted-fg)] max-w-lg mx-auto leading-relaxed">
+                Thank you, <span className="font-semibold text-[var(--fg-page)]">{formState.name || 'there'}</span>! Your project brief has been sent straight to <span className="font-mono text-[var(--fg-page)] font-semibold">{siteConfig.email}</span>. I review all inquiries personally and will respond within 24 hours.
               </p>
-              <button
-                onClick={copyEmail}
-                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[var(--card-border)] bg-[var(--muted-bg)] hover:bg-[var(--card-bg)] text-xs font-medium text-[var(--fg-page)] transition-all cursor-pointer shadow-2xs"
+            )}
+
+            {/* Guaranteed Fallback Options */}
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href={gmailWebUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-xs font-semibold shadow-xs transition-transform hover:scale-105"
               >
-                {copied ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-emerald-500" />
-                    <span className="text-emerald-500 font-medium">Copied to Clipboard!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5 text-[var(--muted-fg)]" />
-                    <span>Copy Email Address</span>
-                  </>
-                )}
+                <Mail className="w-4 h-4" />
+                <span>Open in Web Gmail ↗</span>
+              </a>
+
+              <button
+                onClick={copyFormDetails}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] font-medium hover:bg-[var(--muted-bg)] transition-colors cursor-pointer"
+              >
+                {copiedDetails ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-[var(--muted-fg)]" />}
+                <span>{copiedDetails ? 'Details Copied!' : 'Copy Brief Summary'}</span>
               </button>
             </div>
 
-            {/* Quick Links */}
-            <div className="grid grid-cols-2 gap-3">
-              <a
-                href={siteConfig.telegram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bento-card p-4 flex flex-col justify-between group hover:border-[var(--card-hover-border)]"
+            <div className="pt-4">
+              <button
+                onClick={() => setSubmitted(false)}
+                className="text-xs font-mono text-[var(--muted-fg)] hover:text-[var(--accent)] underline cursor-pointer"
               >
-                <div className="flex items-center justify-between text-[var(--muted-fg)] group-hover:text-[var(--accent)] transition-colors">
-                  <TelegramIcon className="w-5 h-5" />
-                  <ArrowUpRight className="w-4 h-4" />
-                </div>
-                <div className="mt-4">
-                  <div className="text-xs font-mono text-[var(--muted-fg)]">Fast Async Chat</div>
-                  <div className="text-sm font-bold text-[var(--fg-page)]">Telegram</div>
-                </div>
-              </a>
-
-              <a
-                href={siteConfig.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bento-card p-4 flex flex-col justify-between group hover:border-[var(--card-hover-border)]"
-              >
-                <div className="flex items-center justify-between text-[var(--muted-fg)] group-hover:text-[var(--accent)] transition-colors">
-                  <LinkedinIcon className="w-5 h-5" />
-                  <ArrowUpRight className="w-4 h-4" />
-                </div>
-                <div className="mt-4">
-                  <div className="text-xs font-mono text-[var(--muted-fg)]">Connect Profile</div>
-                  <div className="text-sm font-bold text-[var(--fg-page)]">LinkedIn</div>
-                </div>
-              </a>
-            </div>
-
-            {/* Working Arrangement / Availability Note */}
-            <div className="bento-card p-5 border-l-4 border-l-[var(--accent)] space-y-3">
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-[var(--accent)]" />
-                <h4 className="text-xs font-bold uppercase tracking-wider font-mono text-[var(--fg-page)]">
-                  Availability &amp; Work Terms
-                </h4>
-              </div>
-              <p className="text-xs text-[var(--muted-fg)] leading-relaxed">
-                Available for freelance projects, MVP development, and ongoing consulting. Transparent communication with regular updates and clear milestones.
-              </p>
-              <div className="pt-2 border-t border-[var(--subtle-border)] flex items-center gap-2 text-xs text-emerald-500 font-medium">
-                <ShieldCheck className="w-4 h-4" />
-                <span>30-Day Post-Launch Bug Warranty included</span>
-              </div>
+                ← Submit another inquiry
+              </button>
             </div>
           </div>
+        ) : (
+          /* ========================================================
+              SPLIT EXECUTIVE CONSOLE (Selected Favorite)
+              ======================================================== */
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
+            {/* Left Executive Briefing Column */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="bento-card p-6 sm:p-7 space-y-5">
+                <h3 className="text-xl sm:text-2xl font-bold text-[var(--fg-page)] leading-snug">
+                  Tell me what you&apos;re building. I&apos;ll engineer how to ship it.
+                </h3>
 
-          {/* Inquiry Form Column */}
-          <div className="lg:col-span-7">
-            <div className="bento-card p-6 sm:p-8">
-              <h3 className="text-xl font-bold text-[var(--fg-page)] mb-2">
-                Project Inquiry &amp; Scope Form
-              </h3>
-              <p className="text-xs text-[var(--muted-fg)] mb-6">
-                Tell me about your product. I will review your requirements and reply with feasibility and estimates within 24 hours.
-              </p>
+                <p className="text-xs sm:text-sm text-[var(--muted-fg)] leading-relaxed">
+                  Every project is handled personally — from database schema and architecture to pixel-perfect Flutter UI. No junior handoffs or agency overhead.
+                </p>
 
-              {submitted ? (
-                <div className="py-8 sm:py-10 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center mx-auto shadow-xs">
-                    <Check className="w-6 h-6" />
+                <div className="space-y-3 pt-2">
+                  <div className="flex items-center gap-2.5 text-xs text-[var(--fg-page)]">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Guaranteed response within 12–24 hours</span>
                   </div>
-                  <h4 className="text-xl sm:text-2xl font-bold text-[var(--fg-page)]">Inquiry Dispatched!</h4>
-                  
-                  {errorMsg ? (
-                    <div className="max-w-md mx-auto p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-left space-y-2">
-                      <p className="text-xs text-[var(--fg-page)] leading-relaxed">
-                        {errorMsg}
-                      </p>
-                    </div>
-                  ) : (
-                    <p className="text-xs sm:text-sm text-[var(--muted-fg)] max-w-md mx-auto leading-relaxed">
-                      Thank you, <span className="font-semibold text-[var(--fg-page)]">{formState.name || 'there'}</span>! Your requirements were submitted directly to <span className="font-mono text-[var(--fg-page)] font-semibold">{siteConfig.email}</span>. I will review and reply within 24 hours.
-                    </p>
-                  )}
-
-                  {/* Guaranteed Webmail & Copy Fallbacks */}
-                  <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5 max-w-md mx-auto">
-                    <a
-                      href={gmailWebUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-xs font-semibold shadow-xs transition-transform hover:scale-105"
-                    >
-                      <Mail className="w-4 h-4" />
-                      <span>Send Direct via Web Gmail ↗</span>
-                    </a>
-
-                    <button
-                      onClick={copyFormDetails}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] font-medium hover:bg-[var(--muted-bg)] transition-colors cursor-pointer"
-                    >
-                      {copiedDetails ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4 text-[var(--muted-fg)]" />}
-                      <span>{copiedDetails ? 'Details Copied!' : 'Copy Summary'}</span>
-                    </button>
+                  <div className="flex items-center gap-2.5 text-xs text-[var(--fg-page)]">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Transparent milestone-based proposals</span>
                   </div>
-
-                  <div className="pt-2">
-                    <button
-                      onClick={() => setSubmitted(false)}
-                      className="text-xs font-mono text-[var(--muted-fg)] hover:text-[var(--accent)] underline cursor-pointer"
-                    >
-                      ← Submit another inquiry
-                    </button>
+                  <div className="flex items-center gap-2.5 text-xs text-[var(--fg-page)]">
+                    <Check className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>30-Day defect warranty post-deployment</span>
                   </div>
                 </div>
-              ) : (
-                <form 
-                  name="contact"
-                  method="POST"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
-                  onSubmit={handleSubmit} 
-                  className="space-y-4"
-                >
-                  {/* Hidden inputs for Netlify form processing */}
-                  <input type="hidden" name="form-name" value="contact" />
-                  <p className="hidden">
-                    <label>
-                      Don&apos;t fill this out: <input name="bot-field" />
-                    </label>
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+              </div>
+
+              {/* Direct Contact Card */}
+              <div className="bento-card p-6 space-y-3">
+                <div className="text-xs font-mono text-[var(--muted-fg)] uppercase">Direct Channels</div>
+                <div className="text-sm font-bold font-mono text-[var(--fg-page)] break-all">
+                  {siteConfig.email}
+                </div>
+                
+                <div className="pt-2 flex items-center gap-2">
+                  <button
+                    onClick={copyEmail}
+                    className="flex-1 py-2.5 rounded-xl bg-[var(--muted-bg)] hover:bg-[var(--card-bg)] border border-[var(--card-border)] text-xs font-mono text-[var(--fg-page)] transition-colors cursor-pointer text-center"
+                  >
+                    {copied ? 'Copied to Clipboard!' : 'Copy Email'}
+                  </button>
+
+                  <a
+                    href={siteConfig.telegram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl bg-[var(--muted-bg)] hover:bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--fg-page)] transition-colors"
+                    aria-label="Telegram"
+                  >
+                    <TelegramIcon className="w-4 h-4" />
+                  </a>
+
+                  <a
+                    href={siteConfig.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl bg-[var(--muted-bg)] hover:bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--fg-page)] transition-colors"
+                    aria-label="LinkedIn"
+                  >
+                    <LinkedinIcon className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Form Column */}
+            <div className="lg:col-span-7">
+              <div className="bento-card p-6 sm:p-8 shadow-xl">
+                <div className="mb-6">
+                  <p className="text-xs text-[var(--muted-fg)]">Submit your requirements below to receive a proposal within 24 hours.</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                      <label htmlFor="name" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
-                        Your Name
-                      </label>
+                      <label className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">Your Name</label>
                       <input
                         type="text"
-                        id="name"
                         required
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        placeholder="e.g. Alex Smith"
-                        className="w-full px-4 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+                        placeholder="Alex Smith"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
                       />
                     </div>
-
                     <div>
-                      <label htmlFor="email" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
-                        Your Email
-                      </label>
+                      <label className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">Your Email</label>
                       <input
                         type="email"
-                        id="email"
                         required
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                         placeholder="alex@company.com"
-                        className="w-full px-4 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
-                      <label htmlFor="service" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
-                        Primary Need
-                      </label>
+                      <label className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">Service Required</label>
                       <select
-                        id="service"
                         value={formState.service}
                         onChange={(e) => setFormState({ ...formState, service: e.target.value })}
-                        style={{ colorScheme: 'inherit' }}
-                        className="w-full px-3 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
+                        className="w-full px-3 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#18181b] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7] transition-colors"
                       >
-                        <option value="Full-Cycle MVP (Laravel + Flutter)">Full MVP Sprint</option>
-                        <option value="Laravel Backend Architecture">Laravel Backend</option>
-                        <option value="Flutter Mobile App">Flutter Mobile App</option>
-                        <option value="REST API Architecture">REST API Design</option>
-                        <option value="Fractional Staff Engineer">Fractional / Retainer</option>
-                        <option value="Architecture & Code Audit">Code &amp; Security Audit</option>
+                        {servicesList.map((s) => (
+                          <option key={s.id} value={s.id}>{s.label}</option>
+                        ))}
                       </select>
                     </div>
 
                     <div>
-                      <label htmlFor="budget" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
-                        Estimated Budget
-                      </label>
+                      <label className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">Budget Target</label>
                       <select
-                        id="budget"
                         value={formState.budget}
                         onChange={(e) => setFormState({ ...formState, budget: e.target.value })}
-                        style={{ colorScheme: 'inherit' }}
-                        className="w-full px-3 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
+                        className="w-full px-3 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#18181b] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7] transition-colors"
                       >
-                        <option value="< $3,000 (Small sprint / Audit)">&lt; $3,000</option>
-                        <option value="$3,000 – $6,000">$3,000 – $6,000</option>
-                        <option value="$6,000 – $15,000+">$6,000 – $15,000+</option>
-                        <option value="Hourly / Retainer ($45–$65/hr)">Hourly ($45–$65/hr)</option>
+                        {budgetList.map((b) => (
+                          <option key={b.id} value={b.id}>{b.label}</option>
+                        ))}
                       </select>
                     </div>
 
                     <div>
-                      <label htmlFor="timeline" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
-                        Target Timeline
-                      </label>
+                      <label className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">Target Timeline</label>
                       <select
-                        id="timeline"
                         value={formState.timeline}
                         onChange={(e) => setFormState({ ...formState, timeline: e.target.value })}
-                        style={{ colorScheme: 'inherit' }}
-                        className="w-full px-3 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] transition-colors cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#1c1c1e] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7]"
+                        className="w-full px-3 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] focus:outline-none focus:border-[var(--accent)] cursor-pointer [&>option]:bg-white dark:[&>option]:bg-[#18181b] [&>option]:text-[#1d1d1f] dark:[&>option]:text-[#f5f5f7] transition-colors"
                       >
-                        <option value="ASAP (Within 2–3 weeks)">ASAP (2–3 weeks)</option>
-                        <option value="Within 1 Month">Within 1 Month</option>
-                        <option value="Within 2–3 Months">2–3 Months</option>
-                        <option value="Flexible / Ongoing">Flexible / Ongoing</option>
+                        {timelineList.map((t) => (
+                          <option key={t.id} value={t.id}>{t.label}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
-                      Project Details &amp; Goals
-                    </label>
+                    <label className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">Project Brief &amp; Roadmap</label>
                     <textarea
-                      id="message"
                       required
                       rows={4}
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      placeholder="Briefly describe what you are building, the current state of code (if any), and key deliverables you need..."
-                      className="w-full px-4 py-3 sm:py-2.5 rounded-2xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] transition-colors resize-none"
+                      placeholder="Outline the product goals, target deliverables, or any existing repository links..."
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--card-border)] bg-[var(--muted-bg)] text-sm text-[var(--fg-page)] placeholder:text-[var(--muted-fg)] focus:outline-none focus:border-[var(--accent)] resize-none transition-colors"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-medium text-xs tracking-tight bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shadow-xs active:scale-95 transition-all cursor-pointer disabled:opacity-60"
+                    className="w-full btn-primary py-3.5 rounded-full text-xs font-semibold cursor-pointer disabled:opacity-60 shadow-sm"
                   >
                     {isSubmitting ? (
-                      <span>Sending Inquiry...</span>
+                      <span>Dispatching via Resend...</span>
                     ) : (
-                      <>
-                        <span>Send Project Inquiry</span>
-                        <Send className="w-4 h-4" />
-                      </>
+                      <span className="flex items-center justify-center gap-1.5">
+                        <span>Send Project Brief</span>
+                        <Send className="w-3.5 h-3.5" />
+                      </span>
                     )}
                   </button>
                 </form>
-              )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
       </div>
     </section>
   );
