@@ -65,7 +65,7 @@ export default function PricingEngagements() {
 
         {/* Animate-UI Sliding Pill Tabs */}
         <div className="flex justify-center mb-10 sm:mb-12 px-2">
-          <div className="inline-flex items-center p-1 sm:p-1.5 rounded-full nav-glass border border-[var(--card-border)] shadow-sm max-w-full overflow-x-auto">
+          <div className="inline-flex items-center p-1 sm:p-1.5 rounded-full nav-glass border border-[var(--card-border)] shadow-sm max-w-full overflow-x-auto no-scrollbar">
             <button
               onClick={() => setActiveTab('fixed')}
               className={`relative px-3.5 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer shrink-0 ${

@@ -88,7 +88,7 @@ export default function Hero() {
             </div>
 
             {/* Segmented Control Tabs (Responsive on Mobile & Tablet) */}
-            <div className="w-full sm:w-auto overflow-x-auto flex items-center justify-between sm:justify-start gap-1 p-1 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-[11px] sm:text-xs font-medium border border-[var(--subtle-border)] shrink-0">
+            <div className="w-full sm:w-auto overflow-x-auto no-scrollbar flex items-center justify-between sm:justify-start gap-1 p-1 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-[11px] sm:text-xs font-medium border border-[var(--subtle-border)] shrink-0">
               <button
                 onClick={() => setActiveConsoleTab('backend')}
                 className={`px-2.5 sm:px-3 py-1 rounded-full transition-all cursor-pointer flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap flex-1 sm:flex-initial ${

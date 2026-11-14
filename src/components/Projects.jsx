@@ -23,7 +23,7 @@ export default function Projects() {
     <section id="projects" className="py-20 md:py-28 relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-5">
           <div>
             <div className="section-label">
               Selected Portfolio
@@ -33,13 +33,13 @@ export default function Projects() {
             </h2>
           </div>
 
-          {/* Category Filter Tabs (Apple Pill Design) */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl sm:rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs">
+          {/* Category Filter Tabs (Apple Pill Design - Always Single Line & Smooth Touch-Scroll on Mobile) */}
+          <div className="w-fit max-w-full overflow-x-auto no-scrollbar flex items-center gap-1 p-1 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs shrink-0">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                className={`whitespace-nowrap shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
                   activeCategory === category
                     ? 'bg-[var(--accent)] text-white shadow-xs font-semibold'
                     : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-[var(--muted-bg)]'
