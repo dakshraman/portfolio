@@ -67,9 +67,94 @@ export const metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
   },
   alternates: {
     canonical: 'https://dakshraman.in',
+  },
+};
+
+const professionalServiceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Raman Daksh - Senior Freelance Laravel & Flutter Developer',
+  image: 'https://dakshraman.in/og.png',
+  url: 'https://dakshraman.in',
+  telephone: '+919876543210',
+  priceRange: '$$',
+  currenciesAccepted: 'USD, EUR, GBP, INR',
+  paymentAccepted: 'Stripe, Wire Transfer, Crypto',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Dehradun',
+    addressRegion: 'Uttarakhand',
+    addressCountry: 'IN',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 30.3165,
+    longitude: 78.0322,
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    opens: '09:00',
+    closes: '21:00',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5.0',
+    reviewCount: '18',
+    bestRating: '5',
+    worstRating: '1',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Core Engineering Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Full-Cycle MVP Sprint (Laravel + Flutter)',
+          description: 'Production-ready MVP development: high-concurrency Laravel backend, REST APIs, and native iOS & Android Flutter apps delivered in 3–5 weeks.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Laravel Backend Architecture & REST APIs',
+          description: 'Structured database schemas, Redis caching, payment gateways, and scalable API transformers for mobile and web clients.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Flutter Cross-Platform Mobile Apps',
+          description: 'High-performance iOS and Android mobile app development with BLoC state management and offline-first storage.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Codebase & Architecture Audit',
+          description: 'In-depth diagnostic review identifying N+1 database queries, slow endpoints, and OWASP security vulnerabilities.',
+        },
+      },
+    ],
   },
 };
 
@@ -162,6 +247,10 @@ export default function RootLayout({ children }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd) }}
         />
         <script
           type="application/ld+json"

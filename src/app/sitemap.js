@@ -8,20 +8,20 @@ export default function sitemap() {
   const blogEntries = blogs.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.date),
-    changeFrequency: 'monthly',
+    changeFrequency: 'weekly',
     priority: 0.8,
   }));
 
   const serviceEntries = services.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly',
+    changeFrequency: 'weekly',
     priority: 0.9,
   }));
 
   return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'monthly', priority: 1 },
-    { url: `${baseUrl}/freelance`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1.0 },
+    { url: `${baseUrl}/freelance`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.95 },
     ...serviceEntries,
     ...blogEntries,
   ];
