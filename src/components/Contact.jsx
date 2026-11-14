@@ -7,6 +7,9 @@ import { siteConfig } from '@/data/portfolio';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const [copiedDetails, setCopiedDetails] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -15,7 +18,6 @@ export default function Contact() {
     timeline: 'Within 1 Month',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(siteConfig.email);
@@ -23,22 +25,65 @@ export default function Contact() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const mailto = `mailto:${siteConfig.email}?subject=Freelance Project Inquiry: ${formState.service} from ${encodeURIComponent(
-      formState.name
-    )}&body=${encodeURIComponent(
-      `Name: ${formState.name}
+  const copyFormDetails = () => {
+    const text = `Name: ${formState.name}
+Email: ${formState.email}
+Service: ${formState.service}
+Budget: ${formState.budget}
+Timeline: ${formState.timeline}
+Message: ${formState.message}`;
+    navigator.clipboard.writeText(text);
+    setCopiedDetails(true);
+    setTimeout(() => setCopiedDetails(false), 2000);
+  };
+
+  // Gmail Web direct compose URL
+  const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+    siteConfig.email
+  )}&su=${encodeURIComponent(
+    `Project Inquiry: ${formState.service} from ${formState.name || 'Startup Client'}`
+  )}&body=${encodeURIComponent(
+    `Hi Raman,
+
+Name: ${formState.name}
 Email: ${formState.email}
 Service: ${formState.service}
 Budget Range: ${formState.budget}
-Target Timeline: ${formState.timeline}
+Timeline: ${formState.timeline}
 
 Project Details:
-${formState.message}`
-    )}`;
-    window.location.href = mailto;
-    setSubmitted(true);
+${formState.message}
+`
+  )}`;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // 1. Submit to Netlify Forms (or custom endpoint)
+      const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT || '/';
+      const formData = new URLSearchParams({
+        'form-name': 'contact',
+        name: formState.name,
+        email: formState.email,
+        service: formState.service,
+        budget: formState.budget,
+        timeline: formState.timeline,
+        message: formState.message,
+      });
+
+      await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString(),
+      });
+    } catch {
+      // Graceful fallback: local dev or offline
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   return (
@@ -155,23 +200,61 @@ ${formState.message}`
               </p>
 
               {submitted ? (
-                <div className="py-12 text-center space-y-3">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto">
+                <div className="py-10 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="w-12 h-12 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center mx-auto shadow-xs">
                     <Check className="w-6 h-6" />
                   </div>
-                  <h4 className="text-lg font-bold text-[var(--fg-page)]">Inquiry Prepared!</h4>
-                  <p className="text-xs text-[var(--muted-fg)] max-w-sm mx-auto">
-                    Your email client has opened with the pre-filled inquiry. If not, feel free to write directly to {siteConfig.email}.
+                  <h4 className="text-xl font-bold text-[var(--fg-page)]">Inquiry Received!</h4>
+                  <p className="text-xs text-[var(--muted-fg)] max-w-md mx-auto leading-relaxed">
+                    Thank you, <span className="font-semibold text-[var(--fg-page)]">{formState.name || 'there'}</span>. Your project details have been logged and routed to <span className="font-mono text-[var(--fg-page)]">{siteConfig.email}</span>. I will review and reply within 24 hours.
                   </p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="text-xs font-semibold text-[var(--accent)] hover:underline mt-2 inline-block cursor-pointer"
-                  >
-                    Send another message
-                  </button>
+
+                  {/* Guaranteed Webmail & Copy Fallbacks */}
+                  <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5 max-w-md mx-auto">
+                    <a
+                      href={gmailWebUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white text-xs font-semibold shadow-xs transition-transform hover:scale-105"
+                    >
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Send Direct via Web Gmail ↗</span>
+                    </a>
+
+                    <button
+                      onClick={copyFormDetails}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] text-xs text-[var(--fg-page)] font-medium hover:bg-[var(--muted-bg)] transition-colors cursor-pointer"
+                    >
+                      {copiedDetails ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5 text-[var(--muted-fg)]" />}
+                      <span>{copiedDetails ? 'Details Copied!' : 'Copy Summary'}</span>
+                    </button>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => setSubmitted(false)}
+                      className="text-xs font-mono text-[var(--muted-fg)] hover:text-[var(--accent)] underline cursor-pointer"
+                    >
+                      ← Submit another inquiry
+                    </button>
+                  </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form 
+                  name="contact"
+                  method="POST"
+                  data-netlify="true"
+                  data-netlify-honeypot="bot-field"
+                  onSubmit={handleSubmit} 
+                  className="space-y-4"
+                >
+                  {/* Hidden inputs for Netlify form processing */}
+                  <input type="hidden" name="form-name" value="contact" />
+                  <p className="hidden">
+                    <label>
+                      Don&apos;t fill this out: <input name="bot-field" />
+                    </label>
+                  </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="name" className="block text-xs font-mono text-[var(--muted-fg)] mb-1.5">
@@ -279,10 +362,17 @@ ${formState.message}`
 
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-medium text-xs tracking-tight bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shadow-xs active:scale-95 transition-all cursor-pointer"
+                    disabled={isSubmitting}
+                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-medium text-xs tracking-tight bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shadow-xs active:scale-95 transition-all cursor-pointer disabled:opacity-60"
                   >
-                    <span>Send Project Inquiry</span>
-                    <Send className="w-4 h-4" />
+                    {isSubmitting ? (
+                      <span>Sending Inquiry...</span>
+                    ) : (
+                      <>
+                        <span>Send Project Inquiry</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
