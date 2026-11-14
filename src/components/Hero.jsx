@@ -23,19 +23,6 @@ export default function Hero() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Headline & Human-Written Intro */}
         <div className="max-w-4xl text-center md:text-left mb-8">
-          {/* High-Converting Social Proof & Availability Trust Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] text-xs font-mono text-[var(--muted-fg)] shadow-xs mb-5">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-[var(--fg-page)] font-semibold">Available for Projects &amp; Sprints</span>
-            <span className="text-[var(--card-border)]">•</span>
-            <span className="text-amber-500 font-medium">★ 5.0 (20+ Builds)</span>
-            <span className="hidden sm:inline text-[var(--card-border)]">•</span>
-            <span className="hidden sm:inline text-emerald-500 font-medium">30-Day Post-Launch Warranty</span>
-          </div>
-
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--fg-page)] leading-[1.1] mb-5">
             I build scalable web backends &amp;{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] via-[#47a3ff] to-[#70baff] dark:from-[var(--accent)] dark:via-[#60a5fa] dark:to-[#93c5fd]">
