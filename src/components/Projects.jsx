@@ -39,21 +39,23 @@ export default function Projects() {
             </h2>
           </div>
 
-          {/* Category Filter Tabs (Apple Pill Design - Always Single Line & Smooth Touch-Scroll on Mobile) */}
-          <div className="w-fit max-w-full overflow-x-auto no-scrollbar flex items-center gap-1 p-1 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs shrink-0">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`whitespace-nowrap shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                  activeCategory === category
-                    ? 'bg-[var(--accent)] text-white shadow-xs font-semibold'
-                    : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-[var(--muted-bg)]'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+          {/* Category Filter Tabs (Apple Pill Design - Smooth Touch-Scroll on Mobile) */}
+          <div className="w-full sm:w-auto overflow-x-auto no-scrollbar py-1">
+            <div className="inline-flex items-center gap-1 sm:gap-1.5 p-1 rounded-full border border-[var(--card-border)] bg-[var(--card-bg)] shadow-xs">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`whitespace-nowrap shrink-0 px-3 sm:px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                    activeCategory === category
+                      ? 'bg-[var(--accent)] text-white shadow-xs font-semibold'
+                      : 'text-[var(--muted-fg)] hover:text-[var(--fg-page)] hover:bg-[var(--muted-bg)]'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

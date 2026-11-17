@@ -41,7 +41,7 @@ export default function Navigation() {
           {/* Brand & Availability Status */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 group focus:outline-none"
+            className="flex items-center gap-2 sm:gap-2.5 group focus:outline-none shrink-0"
             aria-label="Raman Daksh - Home"
           >
             <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-[var(--fg-page)] text-[var(--bg-page)] font-semibold text-xs tracking-tight shadow-xs group-hover:scale-105 transition-transform">

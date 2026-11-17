@@ -257,22 +257,22 @@ ${formState.message}
               {/* Worldwide Localization Trust Card */}
               <div 
                 onClick={() => setIsModalOpen(true)}
-                className="bento-card p-4 flex items-center justify-between text-xs font-mono cursor-pointer hover:border-[var(--accent)] transition-all group/loccard"
+                className="bento-card p-3.5 sm:p-4 flex items-center justify-between text-xs font-mono cursor-pointer hover:border-[var(--accent)] transition-all group/loccard"
                 title="Click to change your country and currency across all 249 countries"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <span className="text-2xl leading-none">{country.flag}</span>
-                  <div className="truncate">
-                    <div className="text-[var(--fg-page)] font-bold flex items-center gap-1.5">
-                      <span>{country.name}</span>
-                      <span className="text-[10px] text-[var(--accent)] font-normal">({country.currency})</span>
+                  <span className="text-2xl leading-none shrink-0">{country.flag}</span>
+                  <div className="truncate min-w-0">
+                    <div className="text-[var(--fg-page)] font-bold flex items-center gap-1.5 truncate">
+                      <span className="truncate">{country.name}</span>
+                      <span className="text-[10px] text-[var(--accent)] font-semibold shrink-0">({country.currency})</span>
                     </div>
                     <div className="text-[11px] text-emerald-500 font-medium truncate">
                       {country.overlap}
                     </div>
                   </div>
                 </div>
-                <span className="text-[10px] text-[var(--accent)] group-hover/loccard:translate-x-0.5 transition-transform shrink-0 font-semibold">
+                <span className="text-[11px] text-[var(--accent)] group-hover/loccard:translate-x-0.5 transition-transform shrink-0 font-semibold ml-2">
                   Change ▾
                 </span>
               </div>

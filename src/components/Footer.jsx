@@ -83,6 +83,12 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <a href="https://borrownearby.in" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors flex items-center gap-1">
+                  <span>Borrow Nearby</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
+              </li>
+              <li>
                 <a href="https://devkit.dakshraman.in" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent)] transition-colors flex items-center gap-1">
                   <span>Devkit Platform</span>
                   <ArrowUpRight className="w-3 h-3" />

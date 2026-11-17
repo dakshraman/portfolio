@@ -11,16 +11,16 @@ function LiveBrowserFrame({ url, title }) {
   return (
     <div className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] shadow-2xl overflow-hidden flex flex-col group/browser">
       {/* Browser Chrome Header */}
-      <div className="px-4 py-3 bg-[var(--muted-bg)] border-b border-[var(--subtle-border)] flex items-center justify-between gap-3">
+      <div className="px-3 sm:px-4 py-2 sm:py-3 bg-[var(--muted-bg)] border-b border-[var(--subtle-border)] flex items-center justify-between gap-2 sm:gap-3">
         {/* macOS Traffic Lights */}
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="w-3 h-3 rounded-full bg-[#ff5f56]/90 border border-[#e0443e]" />
-          <span className="w-3 h-3 rounded-full bg-[#ffbd2e]/90 border border-[#dea123]" />
-          <span className="w-3 h-3 rounded-full bg-[#27c93f]/90 border border-[#1aab29]" />
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]/90 border border-[#e0443e]" />
+          <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]/90 border border-[#dea123]" />
+          <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]/90 border border-[#1aab29]" />
         </div>
 
         {/* Address Bar */}
-        <div className="flex-1 max-w-md mx-auto flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--card-bg)] border border-[var(--subtle-border)] text-xs font-mono text-[var(--muted-fg)] truncate">
+        <div className="flex-1 max-w-md mx-auto flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-[var(--card-bg)] border border-[var(--subtle-border)] text-[11px] sm:text-xs font-mono text-[var(--muted-fg)] truncate">
           <span className="text-emerald-500 font-bold text-[10px]">🔒</span>
           <span className="truncate text-[var(--fg-page)]">{url}</span>
         </div>
@@ -33,20 +33,34 @@ function LiveBrowserFrame({ url, title }) {
           className="shrink-0 p-1.5 rounded-lg hover:bg-[var(--card-bg)] text-[var(--muted-fg)] hover:text-[var(--fg-page)] transition-colors"
           title={`Open ${title} in new tab`}
         >
-          <ExternalLink className="w-4 h-4" />
+          <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </a>
       </div>
 
       {/* Live Site Container */}
-      <div className="relative w-full h-[460px] sm:h-[540px] lg:h-[580px] bg-[var(--card-bg)]">
+      <div className="relative w-full h-[260px] sm:h-[440px] lg:h-[560px] bg-[var(--card-bg)]">
         <iframe
           src={url}
           title={title}
           loading="lazy"
-          className="w-full h-full border-0"
+          className="w-full h-full border-0 pointer-events-none sm:pointer-events-auto"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
         />
+
+        {/* Mobile Touch Overlay - Prevents iframe scrolling lock while allowing direct tap to open */}
+        <div className="absolute inset-x-0 bottom-0 sm:hidden p-2.5 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between pointer-events-auto">
+          <span className="text-[11px] font-mono text-white/90 truncate mr-2">Live Demo Sandbox</span>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--accent)] text-white text-xs font-semibold shadow-md shrink-0 active:scale-95 transition-transform"
+          >
+            <span>Open Live</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -94,7 +108,7 @@ export default function Highlights() {
                     CloudDeck — Open-Source Cloud Hosting Control Panel
                   </h3>
                   <p className="text-sm sm:text-base text-[var(--muted-fg)] leading-relaxed">
-                    Traditional control panels consume over 1GB idle RAM before handling any traffic. CloudDeck was engineered with a Go daemon and Next.js frontend to idle under <strong className="text-[var(--fg-page)]">50MB RAM</strong> while managing multi-PHP (8.1–8.4), automated Let&apos;s Encrypt TLS, MariaDB, Postfix/Dovecot email, and PowerDNS.
+                    Traditional control panels consume over 1GB idle RAM before handling any traffic. CloudDeck was engineered with a Go daemon and Next.js frontend to idle under <strong className="text-[var(--fg-page)]">50MB RAM</strong>{' '}while managing multi-PHP (8.1–8.4), automated Let&apos;s Encrypt TLS, MariaDB, Postfix/Dovecot email, and PowerDNS.
                   </p>
                 </div>
 
@@ -119,28 +133,28 @@ export default function Highlights() {
                 </div>
 
                 {/* Performance Metrics Bento Row */}
-                <div className="grid grid-cols-3 gap-3 pt-2">
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-[var(--accent)] font-mono">&lt; 50 MB</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Idle Memory</div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-[var(--accent)] font-mono">&lt; 50 MB</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Idle Memory</div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-[var(--fg-page)] font-mono">Multi-PHP</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">8.1 through 8.4</div>
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-[var(--fg-page)] font-mono">Multi-PHP</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">8.1 to 8.4</div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-emerald-500 font-mono">100%</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Open Source</div>
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-emerald-500 font-mono">100%</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Open Source</div>
                   </div>
                 </div>
 
                 {/* CTAs */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                   <a
                     href="https://clouddeck.dakshraman.in"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary"
+                    className="btn-primary w-full sm:w-auto"
                   >
                     <span>Launch CloudDeck Demo</span>
                     <ArrowUpRight className="w-4 h-4" />
@@ -150,7 +164,7 @@ export default function Highlights() {
                     href="https://github.com/dakshraman/clouddeck"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-ghost"
+                    className="btn-ghost w-full sm:w-auto"
                   >
                     <GithubIcon className="w-4 h-4" />
                     <span>Source Repository</span>
@@ -223,28 +237,28 @@ export default function Highlights() {
                 </div>
 
                 {/* Performance Metrics Bento Row */}
-                <div className="grid grid-cols-3 gap-3 pt-2">
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-emerald-500 font-mono">&lt; 50 ms</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Spatial Latency</div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-emerald-500 font-mono">&lt; 50 ms</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Spatial Latency</div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-[var(--fg-page)] font-mono">60 FPS</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Native UI Feel</div>
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-[var(--fg-page)] font-mono">60 FPS</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Native UI Feel</div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-[var(--accent)] font-mono">iOS &amp; Android</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">One Codebase</div>
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-[var(--accent)] font-mono">iOS &amp; Android</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">One Codebase</div>
                   </div>
                 </div>
 
                 {/* CTAs */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                   <a
                     href="https://borrownearby.in"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary"
+                    className="btn-primary w-full sm:w-auto"
                   >
                     <span>Visit Live Platform</span>
                     <ArrowUpRight className="w-4 h-4" />
@@ -301,28 +315,28 @@ export default function Highlights() {
                 </div>
 
                 {/* Performance Metrics Bento Row */}
-                <div className="grid grid-cols-3 gap-3 pt-2">
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-purple-500 font-mono">0 Deps</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Zero CVE Risks</div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-purple-500 font-mono">0 Deps</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Zero CVE Risks</div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-[var(--fg-page)] font-mono">1.4 KB</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Gzipped Core</div>
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-[var(--fg-page)] font-mono">1.4 KB</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Gzipped Core</div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-emerald-500 font-mono">4+ Hours</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Saved per Repo</div>
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-emerald-500 font-mono">4+ Hours</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Saved per Repo</div>
                   </div>
                 </div>
 
                 {/* CTAs */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                   <a
                     href="https://devkit.dakshraman.in"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary"
+                    className="btn-primary w-full sm:w-auto"
                   >
                     <span>Explore Devkit Docs</span>
                     <ArrowUpRight className="w-4 h-4" />
@@ -395,28 +409,28 @@ export default function Highlights() {
                 </div>
 
                 {/* Performance Metrics Bento Row */}
-                <div className="grid grid-cols-3 gap-3 pt-2">
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-amber-500 font-mono">500+</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Active Users</div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-amber-500 font-mono">500+</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Active Users</div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-[var(--fg-page)] font-mono">35%</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Admin Time Saved</div>
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-[var(--fg-page)] font-mono">35%</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Time Saved</div>
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)]">
-                    <div className="text-xl sm:text-2xl font-bold text-emerald-500 font-mono">Zero</div>
-                    <div className="text-[11px] font-mono text-[var(--muted-fg)] mt-0.5">Discrepancies</div>
+                  <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-center sm:text-left">
+                    <div className="text-base sm:text-2xl font-bold text-emerald-500 font-mono">Zero</div>
+                    <div className="text-[10px] sm:text-[11px] font-mono text-[var(--muted-fg)] mt-0.5 truncate">Discrepancy</div>
                   </div>
                 </div>
 
                 {/* CTAs */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                   <a
                     href="https://erp-web-lctn.onrender.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-primary"
+                    className="btn-primary w-full sm:w-auto"
                   >
                     <span>Launch ERP Live Demo</span>
                     <ArrowUpRight className="w-4 h-4" />

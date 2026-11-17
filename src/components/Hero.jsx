@@ -25,19 +25,20 @@ export default function Hero() {
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] shadow-xs text-xs font-mono text-[var(--muted-fg)] cursor-pointer hover:border-[var(--accent)] transition-all group/loc"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] shadow-xs text-xs font-mono text-[var(--muted-fg)] cursor-pointer hover:border-[var(--accent)] transition-all group/loc max-w-full"
             title="Click to switch your country and currency across all 249 countries"
           >
-            <span className="text-base leading-none">{country.flag}</span>
-            <span className="text-[var(--fg-page)] font-semibold">{country.name}</span>
+            <span className="text-base leading-none shrink-0">{country.flag}</span>
+            <span className="text-[var(--fg-page)] font-semibold truncate max-w-[120px] sm:max-w-none">{country.name}</span>
             {localTimeStr && (
               <span className="hidden sm:inline text-[var(--muted-fg)]">
                 ({localTimeStr})
               </span>
             )}
-            <span>•</span>
-            <span className="text-emerald-500 font-medium">{country.overlap}</span>
-            <span className="text-[var(--accent)] text-[10px] group-hover/loc:translate-x-0.5 transition-transform">
+            <span className="text-[var(--muted-fg)]">•</span>
+            <span className="text-emerald-500 font-medium hidden sm:inline">{country.overlap}</span>
+            <span className="text-emerald-500 font-medium sm:hidden">Available Worldwide</span>
+            <span className="text-[var(--accent)] text-[10px] group-hover/loc:translate-x-0.5 transition-transform shrink-0 ml-0.5">
               Change ▾
             </span>
           </button>
@@ -258,29 +259,29 @@ export default function Hero() {
         </div>
 
         {/* Key Metrics: Standardized Typography & Calibrated Rhythm */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-[var(--subtle-border)]">
-          <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--fg-page)] font-mono tabular-nums">4+ Years</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Production Experience</div>
-            <div className="text-[11px] text-[var(--muted-fg)] mt-0.5">Laravel, Flutter &amp; Cloud</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 pt-6 border-t border-[var(--subtle-border)]">
+          <div className="bento-card p-3 sm:p-5">
+            <div className="text-xl sm:text-3xl font-bold tracking-tight text-[var(--fg-page)] font-mono tabular-nums">4+ Years</div>
+            <div className="text-[11px] sm:text-xs text-[var(--muted-fg)] mt-1 font-medium truncate">Production Experience</div>
+            <div className="text-[10px] sm:text-[11px] text-[var(--muted-fg)] mt-0.5 truncate">Laravel, Flutter &amp; Cloud</div>
           </div>
 
-          <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--accent)] font-mono tabular-nums">20+ Builds</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Products Shipped</div>
-            <div className="text-[11px] text-[var(--muted-fg)] mt-0.5">Startups &amp; Enterprise</div>
+          <div className="bento-card p-3 sm:p-5">
+            <div className="text-xl sm:text-3xl font-bold tracking-tight text-[var(--accent)] font-mono tabular-nums">20+ Builds</div>
+            <div className="text-[11px] sm:text-xs text-[var(--muted-fg)] mt-1 font-medium truncate">Products Shipped</div>
+            <div className="text-[10px] sm:text-[11px] text-[var(--muted-fg)] mt-0.5 truncate">Startups &amp; Enterprise</div>
           </div>
 
-          <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--fg-page)] font-mono tabular-nums">100%</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Full-Stack Delivery</div>
-            <div className="text-[11px] text-[var(--muted-fg)] mt-0.5">Database, APIs &amp; Stores</div>
+          <div className="bento-card p-3 sm:p-5">
+            <div className="text-xl sm:text-3xl font-bold tracking-tight text-[var(--fg-page)] font-mono tabular-nums">100%</div>
+            <div className="text-[11px] sm:text-xs text-[var(--muted-fg)] mt-1 font-medium truncate">Full-Stack Delivery</div>
+            <div className="text-[10px] sm:text-[11px] text-[var(--muted-fg)] mt-0.5 truncate">Database, APIs &amp; Stores</div>
           </div>
 
-          <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-500 font-mono tabular-nums">&lt; 24h</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Direct Engineering SLA</div>
-            <div className="text-[11px] text-emerald-500 font-mono mt-0.5">Founder to founder</div>
+          <div className="bento-card p-3 sm:p-5">
+            <div className="text-xl sm:text-3xl font-bold tracking-tight text-emerald-500 font-mono tabular-nums">&lt; 24h</div>
+            <div className="text-[11px] sm:text-xs text-[var(--muted-fg)] mt-1 font-medium truncate">Direct SLA</div>
+            <div className="text-[10px] sm:text-[11px] text-emerald-500 font-mono mt-0.5 truncate">Founder to founder</div>
           </div>
         </div>
       </div>
