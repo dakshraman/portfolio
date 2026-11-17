@@ -16,59 +16,37 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative pt-20 pb-10 md:pt-24 md:pb-14 overflow-hidden bg-grid-pattern">
-      {/* Background ambient Apple radial glow */}
-      <div className="editorial-glow top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px]" />
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-        {/* Headline & Human-Written Intro */}
-        <div className="max-w-4xl text-center md:text-left mb-8">
+    <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-grid-pattern">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
+        {/* Headline & Focused Value Proposition */}
+        <div className="max-w-4xl text-center md:text-left mb-10">
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--fg-page)] leading-[1.1] mb-5">
-            I build scalable web backends &amp;{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] via-[#47a3ff] to-[#70baff] dark:from-[var(--accent)] dark:via-[#60a5fa] dark:to-[#93c5fd]">
+            I build scalable backends &amp;{' '}
+            <span className="text-[var(--accent)]">
               cross-platform mobile apps.
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg text-[var(--muted-fg)] leading-relaxed max-w-2xl font-normal mb-7">
-            Hi, I&apos;m Raman Daksh — a senior freelance Laravel and Flutter engineer with over 4 years of experience. I help funded startups and forward-thinking businesses architect scalable REST APIs, reliable cloud backends, and pixel-perfect iOS &amp; Android apps.
+          <p className="text-base sm:text-lg text-[var(--muted-fg)] leading-relaxed max-w-3xl font-normal mb-8">
+            Hi, I&apos;m Raman Daksh — a senior freelance Laravel and Flutter engineer. I help funded startups and product teams architect high-throughput REST APIs, cloud backends, and pixel-perfect iOS &amp; Android applications.
           </p>
 
-          {/* Action Buttons */}
+          {/* Action Buttons: Exactly 1 Primary + 1 Secondary */}
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 sm:gap-4">
             <Link
               href="#contact"
               className="btn-primary"
             >
               <Mail className="w-4 h-4" />
-              <span>Get in Touch</span>
+              <span>Discuss a Project</span>
             </Link>
 
             <Link
-              href="#projects"
+              href="#highlights"
               className="btn-ghost"
             >
-              <span>View My Work</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <span>Explore Flagships ↓</span>
             </Link>
-
-            <button
-              onClick={copyEmail}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full font-mono text-xs border border-transparent hover:border-[var(--card-border)] bg-transparent hover:bg-[var(--muted-bg)] text-[var(--muted-fg)] hover:text-[var(--fg-page)] transition-all cursor-pointer"
-              aria-label="Copy email address"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-500" />
-                  <span className="text-emerald-500 font-medium">Email copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5" />
-                  <span>{siteConfig.email}</span>
-                </>
-              )}
-            </button>
           </div>
         </div>
 
@@ -254,30 +232,30 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Real Metrics & Human Values */}
+        {/* Key Metrics: Standardized Typography & Calibrated Rhythm */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-[var(--subtle-border)]">
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-[var(--fg-page)] tracking-tight">4+</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Years Experience</div>
-            <div className="text-[11px] text-[var(--accent)] font-mono mt-0.5">Laravel &amp; Flutter</div>
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--fg-page)] font-mono tabular-nums">4+ Years</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Production Experience</div>
+            <div className="text-[11px] text-[var(--muted-fg)] mt-0.5">Laravel, Flutter &amp; Cloud</div>
           </div>
 
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-[var(--accent)] tracking-tight">20+</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Projects Built</div>
-            <div className="text-[11px] text-[var(--muted-fg)] font-mono mt-0.5">Startups &amp; Businesses</div>
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--accent)] font-mono tabular-nums">20+ Builds</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Products Shipped</div>
+            <div className="text-[11px] text-[var(--muted-fg)] mt-0.5">Startups &amp; Enterprise</div>
           </div>
 
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-[var(--fg-page)] tracking-tight truncate">Full Stack</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">End-to-End Scope</div>
-            <div className="text-[11px] text-[var(--muted-fg)] font-mono mt-0.5 truncate">Backend, APIs &amp; Apps</div>
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--fg-page)] font-mono tabular-nums">100%</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Full-Stack Delivery</div>
+            <div className="text-[11px] text-[var(--muted-fg)] mt-0.5">Database, APIs &amp; Stores</div>
           </div>
 
           <div className="bento-card p-4 sm:p-5">
-            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-emerald-500 tracking-tight truncate">Direct</div>
-            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Clear Communication</div>
-            <div className="text-[11px] text-emerald-500 font-mono mt-0.5">Fast async replies</div>
+            <div className="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-500 font-mono tabular-nums">&lt; 24h</div>
+            <div className="text-xs text-[var(--muted-fg)] mt-1 font-medium">Direct Engineering SLA</div>
+            <div className="text-[11px] text-emerald-500 font-mono mt-0.5">Founder to founder</div>
           </div>
         </div>
       </div>

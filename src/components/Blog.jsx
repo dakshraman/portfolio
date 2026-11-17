@@ -9,7 +9,7 @@ export default function Blog() {
 
   return (
     <section id="blog" className="py-20 md:py-28 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-4">
           <div>

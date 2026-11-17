@@ -96,7 +96,7 @@ export default async function ServicePage({ params }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Breadcrumb Navigation */}
         <div className="mb-8">
           <Link

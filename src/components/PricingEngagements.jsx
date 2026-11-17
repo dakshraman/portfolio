@@ -49,7 +49,7 @@ export default function PricingEngagements() {
 
   return (
     <section id="pricing" className="py-20 md:py-28 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="section-label">

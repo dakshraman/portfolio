@@ -149,10 +149,7 @@ ${formState.message}
 
   return (
     <section id="contact" className="py-20 md:py-32 relative">
-      {/* Background ambient lighting */}
-      <div className="editorial-glow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] opacity-25" />
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
@@ -226,7 +223,7 @@ ${formState.message}
           /* ========================================================
               SPLIT EXECUTIVE CONSOLE (Selected Favorite)
               ======================================================== */
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
             {/* Left Executive Briefing Column */}
             <div className="lg:col-span-5 space-y-4">
               <div className="bento-card p-6 sm:p-7 space-y-5">

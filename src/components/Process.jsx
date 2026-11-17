@@ -44,91 +44,97 @@ const steps = [
 
 export default function Process() {
   return (
-    <section id="process" className="py-20 md:py-28 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="process" className="py-20 md:py-32 relative">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <div className="section-label">
               Predictable Delivery
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
-              From concept to production in 4 weeks.
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--fg-page)] leading-tight">
+              From whiteboard to production in 4 weeks.
             </h2>
           </div>
-          <p className="text-sm text-[var(--muted-fg)] max-w-md">
+          <p className="text-sm sm:text-base text-[var(--muted-fg)] max-w-md leading-relaxed font-normal">
             No endless meetings or opaque agency handoffs. A transparent, high-velocity engineering workflow designed for founders who value speed and reliability.
           </p>
         </div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((step) => {
-            const Icon = step.icon;
+        {/* Connected Horizontal Sprint Timeline (Desktop) & Vertical Journey (Mobile) */}
+        <div className="relative">
+          {/* Subtle connecting hairline across steps on desktop */}
+          <div className="hidden lg:block absolute top-[28px] left-[5%] right-[5%] h-[1px] bg-gradient-to-r from-[var(--subtle-border)] via-[var(--accent)]/40 to-[var(--subtle-border)] z-0" />
 
-            return (
-              <div
-                key={step.number}
-                className="bento-card p-6 flex flex-col justify-between group hover:-translate-y-1 relative"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="text-2xl font-bold font-mono text-[var(--accent)]">
-                      {step.number}
-                    </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20">
-                      {step.duration}
-                    </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+            {steps.map((step) => {
+              const Icon = step.icon;
+
+              return (
+                <div
+                  key={step.number}
+                  className="flex flex-col justify-between group"
+                >
+                  <div>
+                    {/* Step Node & Indicator */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="w-14 h-14 rounded-2xl bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--fg-page)] flex items-center justify-center font-mono font-bold text-base shadow-sm group-hover:border-[var(--accent)] group-hover:text-[var(--accent)] transition-all">
+                        {step.number}
+                      </div>
+
+                      <span className="text-[11px] font-mono px-3 py-1 rounded-full bg-[var(--muted-bg)] text-[var(--muted-fg)] border border-[var(--subtle-border)]">
+                        {step.duration}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 mb-3">
+                      <Icon className="w-4 h-4 text-[var(--accent)]" />
+                      <h3 className="text-lg font-bold text-[var(--fg-page)]">
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-[var(--muted-fg)] leading-relaxed mb-6 font-normal">
+                      {step.description}
+                    </p>
                   </div>
 
-                  <div className="w-10 h-10 rounded-2xl bg-[var(--muted-bg)] flex items-center justify-center text-[var(--fg-page)] mb-4 group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
-                    <Icon className="w-5 h-5" />
+                  <div className="pt-4 border-t border-[var(--subtle-border)]">
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--muted-fg)] mb-2.5 font-semibold">
+                      Milestone Deliverables
+                    </div>
+                    <ul className="space-y-1.5">
+                      {step.deliverables.map((del) => (
+                        <li key={del} className="text-xs text-[var(--fg-page)] flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                          <span className="truncate">{del}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-
-                  <h3 className="text-lg font-bold text-[var(--fg-page)] mb-2.5">
-                    {step.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-[var(--muted-fg)] leading-relaxed mb-6">
-                    {step.description}
-                  </p>
                 </div>
-
-                <div className="pt-4 border-t border-[var(--subtle-border)]">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--muted-fg)] mb-2 font-semibold">
-                    Outputs
-                  </div>
-                  <ul className="space-y-1">
-                    {step.deliverables.map((del) => (
-                      <li key={del} className="text-xs text-[var(--fg-page)] flex items-center gap-1.5 font-medium">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] shrink-0" />
-                        <span>{del}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
-        {/* Bottom Banner */}
-        <div className="mt-10 bento-card p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 border-l-4 border-l-[var(--accent)]">
+        {/* Bottom Fast-Track Banner */}
+        <div className="mt-16 bento-card p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 border-l-4 border-l-[var(--accent)]">
           <div>
-            <h4 className="text-lg font-bold text-[var(--fg-page)]">
-              Have an urgent timeline or fixed launch date?
+            <h4 className="text-lg sm:text-xl font-bold text-[var(--fg-page)]">
+              Have an urgent launch date or sprint scope?
             </h4>
-            <p className="text-xs sm:text-sm text-[var(--muted-fg)] mt-1">
+            <p className="text-xs sm:text-sm text-[var(--muted-fg)] mt-1 font-normal">
               I can audit your requirements and provide an exact milestone estimate within 24 hours.
             </p>
           </div>
 
           <Link
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-medium tracking-tight bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shrink-0 shadow-xs transition-all active:scale-95"
+            className="btn-primary"
           >
-            <span>Request Project Timeline</span>
-            <ArrowRight className="w-4 h-4" />
+            <span>Request Sprint Roadmap</span>
+            <ArrowRight className="w-4 h-4 ml-1" />
           </Link>
         </div>
       </div>

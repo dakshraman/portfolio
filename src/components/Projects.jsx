@@ -5,31 +5,37 @@ import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 
 const categories = ['All', 'Laravel', 'Flutter', 'DevOps', 'API', 'Full Stack'];
+const flagshipTitles = ['CloudDeck', 'Borrow Nearby', 'Devkit', 'Advanced School ERP'];
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const filteredProjects = projects.filter((project) => {
+  // Filter out flagships so this section acts as a distinct client production archive
+  const clientProjects = projects.filter(
+    (p) => !flagshipTitles.some((flag) => p.title.toLowerCase().includes(flag.toLowerCase()))
+  );
+
+  const filteredProjects = clientProjects.filter((project) => {
     if (activeCategory === 'All') return true;
     if (activeCategory === 'Laravel') return project.tags.some((t) => t.toLowerCase().includes('laravel'));
     if (activeCategory === 'Flutter') return project.tags.some((t) => t.toLowerCase().includes('flutter'));
     if (activeCategory === 'DevOps') return project.tags.some((t) => t.toLowerCase().includes('devops') || t.toLowerCase().includes('cloud') || t.toLowerCase().includes('linux'));
     if (activeCategory === 'API') return project.tags.some((t) => t.toLowerCase().includes('api'));
-    if (activeCategory === 'Full Stack') return project.tags.some((t) => t.toLowerCase().includes('full stack') || t.toLowerCase().includes('erp'));
+    if (activeCategory === 'Full Stack') return project.tags.some((t) => t.toLowerCase().includes('full stack') || t.toLowerCase().includes('commerce') || t.toLowerCase().includes('crm'));
     return true;
   });
 
   return (
     <section id="projects" className="py-20 md:py-28 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-5">
           <div>
             <div className="section-label">
-              Selected Portfolio
+              Production Archive
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--fg-page)]">
-              Proven work shipped to production.
+              Client systems delivered to production.
             </h2>
           </div>
 

@@ -26,7 +26,7 @@
     --muted-bg: rgba(0, 0, 0, 0.05);
     --muted-fg: #6e6e73;
     --subtle-border: rgba(0, 0, 0, 0.08);
-    --nav-bg: rgba(255, 255, 255, 0.92);
+    --nav-bg: rgba(255, 255, 255, 0.96);
     --grid-color: rgba(0, 0, 0, 0.04);
     --glass-bg: rgba(255, 255, 255, 0.94);
     --glass-border: rgba(0, 0, 0, 0.14);
@@ -71,7 +71,7 @@
     --muted-bg: rgba(255, 255, 255, 0.07);
     --muted-fg: #a1a1a6;
     --subtle-border: rgba(255, 255, 255, 0.09);
-    --nav-bg: rgba(18, 18, 22, 0.88);
+    --nav-bg: rgba(12, 12, 15, 0.96);
     --grid-color: rgba(255, 255, 255, 0.03);
     --glass-bg: rgba(24, 24, 27, 0.85);
     --glass-border: rgba(255, 255, 255, 0.14);
@@ -103,7 +103,7 @@
     --muted-bg: rgba(0, 0, 0, 0.05);
     --muted-fg: #6e6e73;
     --subtle-border: rgba(0, 0, 0, 0.08);
-    --nav-bg: rgba(255, 255, 255, 0.92);
+    --nav-bg: rgba(255, 255, 255, 0.96);
     --grid-color: rgba(0, 0, 0, 0.04);
     --glass-bg: rgba(255, 255, 255, 0.94);
     --glass-border: rgba(0, 0, 0, 0.14);
@@ -175,11 +175,11 @@
 
 /* Frosted Glass Navigation Pill */
 .nav-glass {
-  background: var(--nav-bg);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  background-color: var(--nav-bg);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
   border: 1px solid var(--card-border);
-  box-shadow: var(--glass-inner-highlight), var(--glass-shadow);
+  box-shadow: var(--glass-inner-highlight), 0 8px 32px -4px rgba(0, 0, 0, 0.2);
 }
 
 /* Compatibility classes for existing subpages */
