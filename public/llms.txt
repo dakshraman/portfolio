@@ -1,50 +1,44 @@
-# Raman Daksh - Freelance Software Engineer & DevOps Consultant
+# Raman Daksh - Senior Freelance Laravel & Flutter Engineer
 
-Freelance software engineer and IT consultant based in Dehradun, India. Specializing in Laravel, Flutter, DevOps, and full-stack architecture. 4+ years building scalable backend systems, cross-platform mobile apps, and cloud infrastructure for startups and enterprises.
+> Senior freelance full-stack software engineer with 4+ years of production experience architecting scalable Laravel backends, high-concurrency REST APIs, and cross-platform Flutter iOS & Android applications for startups and product teams worldwide.
 
-## Services
+## Identity & Core Expertise
 
-- [Laravel Development](https://dakshraman.in/services/laravel-development) - Custom web apps, REST APIs, admin panels, payment integrations, queue processing
-- [Flutter App Development](https://dakshraman.in/services/flutter-app-development) - Cross-platform Android & iOS apps from a single Dart codebase
-- [API Design & Development](https://dakshraman.in/services/api-design-development) - Scalable, well-documented RESTful APIs with authentication and rate limiting
-- [DevOps & Cloud](https://dakshraman.in/services/devops) - CI/CD pipelines, Docker containerization, cloud deployment, server management
-- [System Architecture](https://dakshraman.in/services/system-architecture) - Tech stack selection, database design, cloud infrastructure, scalability planning
-- [Full-Stack Development](https://dakshraman.in/services/full-stack-development) - End-to-end web apps from database to polished frontend
-- [IT Consulting](https://dakshraman.in/services/it-consulting) - Code audits, architecture reviews, performance optimization, team mentoring
+- **Name**: Raman Daksh
+- **Role**: Senior Freelance Laravel & Flutter Developer / Systems Architect
+- **Location**: Dehradun, Uttarakhand, India (Working remotely worldwide with US, UK, and EU timezone overlap)
+- **Email**: ramandaksh6161@gmail.com
+- **Website**: https://dakshraman.in
+- **GitHub**: https://github.com/dakshraman
+- **LinkedIn**: https://linkedin.com/in/dakshraman
+- **Telegram**: https://t.me/dakshraman
 
-## Key Projects
+## Core Engineering Disciplines
 
-- [Devkit](https://github.com/dakshraman/devkit) - TypeScript developer toolkit and utility library
-- [Borrow Nearby](https://borrownearby.in) - Location-based peer-to-peer lending platform (Flutter + Laravel API)
-- [Advanced School ERP](https://github.com/dakshraman/schoolerp-parent) - Comprehensive school management system with academics, messaging, payments, payroll
-- [Laravel AI Debugger](https://github.com/dakshraman/laravel-ai-debugger) - Open source AI debugging assistant for Laravel (800+ stars)
+- [Laravel Backend Architecture & APIs](https://dakshraman.in/services/laravel-development): Custom multi-tenant architectures, queue workers, Redis caching, payment gateway reconciliation, and resilient API transformers.
+- [Flutter Mobile App Development](https://dakshraman.in/services/flutter-app-development): Production-grade iOS and Android applications from a unified Dart codebase with BLoC state management, offline-first SQLite synchronization, and 60 FPS native feel.
+- [API Design & Integration](https://dakshraman.in/services/api-design-development): High-throughput RESTful endpoints with OAuth2/Sanctum authentication, strict schema validation, rate-limiting, and comprehensive Postman/OpenAPI contracts.
+- [DevOps & Cloud Systems](https://dakshraman.in/services/devops): Linux server hardening, Docker containerization, automated Let's Encrypt TLS certificates, CI/CD GitHub Actions, and high-availability cloud deployments.
+- [System Architecture](https://dakshraman.in/services/system-architecture): Microservices, database schema indexing, low-latency spatial indexing (PostGIS), and scalable distributed cloud topology.
+- [IT Consulting & Code Audits](https://dakshraman.in/services/it-consulting): Comprehensive codebase diagnostics, N+1 query elimination, security audits, and engineering team acceleration.
 
-## Tech Stack
+## Featured Production Flagships
 
-Laravel, Flutter, React.js, Python, Dart, PHP, Firebase, Java, C++, SQL, Linux, Docker, CI/CD, Shopify, WordPress
+- [CloudDeck](https://clouddeck.dakshraman.in) ([GitHub](https://github.com/dakshraman/clouddeck)): Lightweight, open-source cloud hosting control panel. Engineered with a Go daemon and Next.js frontend to idle under 50MB RAM while managing multi-PHP (8.1–8.4), automated Let's Encrypt TLS, MariaDB, Postfix/Dovecot, and PowerDNS.
+- [Borrow Nearby](https://borrownearby.in): Hyperlocal peer-to-peer mobile marketplace in production on iOS and Android. Features sub-50ms PostGIS geospatial queries, real-time WebSocket chat, and escrow protections.
+- [Devkit](https://devkit.dakshraman.in) ([GitHub](https://github.com/dakshraman/devkit)): Zero-dependency TypeScript utility toolkit. 1.4KB gzipped core for cryptographic tokens, type-inferred contract validation, and timing-attack-resistant comparisons.
+- [Advanced School ERP](https://erp-web-lctn.onrender.com/) ([GitHub](https://github.com/dakshraman/schoolerp-parent)): Enterprise campus operations management system built with Laravel, managing student admissions, automated report cards, Razorpay fee reconciliation, and 5-tier RBAC for 500+ active campus members.
+- [Laravel AI Debugger](https://github.com/dakshraman/laravel-ai-debugger): Open-source AI debugging assistant for Laravel applications (800+ GitHub stars).
 
-## Experience
+## Technical Articles & Guides
 
-- [InsideSoftwares](https://dakshraman.in/#experience) - Laravel Developer (2025–Present)
-- [AK Software Solutions](https://dakshraman.in/#experience) - Full Stack Laravel Developer (2025)
-- [Pearl Organisation](https://dakshraman.in/#experience) - API Developer Laravel/Flutter (2024–2025)
+- [Building Scalable REST APIs with Laravel](https://dakshraman.in/blog/building-scalable-rest-apis-with-laravel): Architecture blueprint for high-performance Laravel APIs with Redis and queues.
+- [Flutter State Management: BLoC vs Provider](https://dakshraman.in/blog/flutter-state-management-bloc-vs-provider-2025): Performance benchmarks and architectural comparison for production mobile apps.
+- [Laravel Reverb vs Pusher vs Soketi](https://dakshraman.in/blog/laravel-reverb-vs-other-websockets): In-depth WebSocket benchmark and cost-per-connection breakdown.
+- [Laravel vs Django in 2025](https://dakshraman.in/blog/laravel-vs-django-2025): Practical comparison for startup MVP speed, concurrency, and operational maintenance.
 
-## Blog
+## Hiring & Engagement Models
 
-- [Building Scalable REST APIs with Laravel](https://dakshraman.in/blog/building-scalable-rest-apis-with-laravel) - Deep dive into high-performance API design with Laravel, Redis, and queues
-- [Flutter State Management: BLoC vs Provider](https://dakshraman.in/blog/flutter-state-management-bloc-vs-provider-2025) - Honest comparison with real-world benchmarks
-- [Laravel Reverb vs Pusher vs Soketi](https://dakshraman.in/blog/laravel-reverb-vs-other-websockets) - WebSocket comparison with benchmarks and cost analysis
-- [Laravel vs Django in 2025](https://dakshraman.in/blog/laravel-vs-django-2025) - Data-driven framework comparison
-
-## Contact
-
-- [Email](mailto:ramandaksh6161@gmail.com) - ramandaksh6161@gmail.com
-- [GitHub](https://github.com/dakshraman) - Open source projects and contributions
-- [LinkedIn](https://linkedin.com/in/dakshraman) - Professional network
-- [Telegram](https://t.me/dakshraman) - Direct message
-- [Portfolio](https://dakshraman.in) - Full portfolio and case studies
-- [Hire a Freelance Developer](https://dakshraman.in/freelance) - Availability, services, and engagement details
-
-## Hiring
-
-Available for freelance, consulting, and remote positions. Rates: $40–80/hr or fixed-price quotes. Contact for a free discovery call.
+- **Sprint MVP Model**: 3–5 week fixed-price deliverable milestone with guaranteed timeline, milestone payments, and 30-day complimentary post-launch bug warranty.
+- **Embedded Retainer**: $45–$65/hour (10–30 hours/week) direct technical partnership embedded into engineering teams.
+- **Inquiry & Scope**: Contact via [Contact Form](https://dakshraman.in/#contact) or email at ramandaksh6161@gmail.com.

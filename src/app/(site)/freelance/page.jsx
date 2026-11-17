@@ -3,9 +3,9 @@ import { ArrowUpRight, Check, ShieldCheck, Mail, Clock, Star, Terminal, Zap, Lay
 import { siteConfig, services, skills, testimonials } from '@/data/portfolio';
 
 export const metadata = {
-  title: 'Hire Senior Freelance Laravel & Flutter Developer | Raman Daksh',
+  title: 'Hire Senior Freelance Laravel & Flutter Developer',
   description:
-    'Looking to hire a freelance Laravel or Flutter developer? Raman Daksh provides end-to-end full-stack engineering, high-scale REST APIs, and native iOS & Android mobile apps. Direct founder collaboration with guaranteed 30-day post-launch warranty.',
+    'Hire Raman Daksh for freelance Laravel and Flutter development. Senior engineering partner for scalable backends, high-throughput APIs, and cross-platform apps.',
   keywords: [
     'Hire Freelance Developer',
     'Hire Laravel Developer India',

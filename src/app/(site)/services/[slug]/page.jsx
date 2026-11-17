@@ -12,14 +12,19 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
+  
+  const roleTitle = service.title.toLowerCase().includes('development')
+    ? service.title.replace(/Development/i, 'Developer')
+    : `${service.title} Specialist`;
+
   return {
-    title: `Hire Freelance ${service.title} Developer | Raman Daksh`,
+    title: `Hire Freelance ${roleTitle}`,
     description:
       service.seoDescription ||
       `Hire Raman Daksh for freelance ${service.title.toLowerCase()}. ${service.description} Fast turnaround, scalable architecture, and guaranteed 30-day bug warranty.`,
     keywords: [
       `Freelance ${service.title}`,
-      `Hire ${service.title} Developer`,
+      `Hire ${roleTitle}`,
       'Freelance Laravel Developer',
       'Hire Flutter Engineer',
       `${service.title} Specialist`,
@@ -30,7 +35,7 @@ export async function generateMetadata({ params }) {
       canonical: `https://dakshraman.in/services/${service.slug}`,
     },
     openGraph: {
-      title: `Hire Freelance ${service.title} Developer | Raman Daksh`,
+      title: `Hire Freelance ${roleTitle} | Raman Daksh`,
       description: service.seoDescription || service.description,
       url: `https://dakshraman.in/services/${service.slug}`,
       images: [{ url: '/og.png', width: 1200, height: 630, alt: `${service.title} Services` }],
@@ -122,7 +127,9 @@ export default async function ServicePage({ params }) {
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--fg-page)] leading-[1.15] mb-5">
-            Freelance {service.title} Development
+            {service.title.toLowerCase().includes('development') 
+              ? `Freelance ${service.title}` 
+              : `Freelance ${service.title} Services`}
           </h1>
 
           <p className="text-base sm:text-lg text-[var(--muted-fg)] leading-relaxed max-w-2xl font-normal mb-8">
