@@ -6,10 +6,12 @@ import {
   Send, 
   Check, 
   Copy, 
-  ShieldCheck 
+  ShieldCheck,
+  Globe
 } from 'lucide-react';
 import { LinkedinIcon, TelegramIcon } from './Icons';
 import { siteConfig } from '@/data/portfolio';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
@@ -17,6 +19,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const { country, setIsModalOpen } = useLocale();
 
   const [formState, setFormState] = useState({
     name: '',
@@ -249,6 +252,29 @@ ${formState.message}
                     <span>30-Day defect warranty post-deployment</span>
                   </div>
                 </div>
+              </div>
+
+              {/* Worldwide Localization Trust Card */}
+              <div 
+                onClick={() => setIsModalOpen(true)}
+                className="bento-card p-4 flex items-center justify-between text-xs font-mono cursor-pointer hover:border-[var(--accent)] transition-all group/loccard"
+                title="Click to change your country and currency across all 249 countries"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="text-2xl leading-none">{country.flag}</span>
+                  <div className="truncate">
+                    <div className="text-[var(--fg-page)] font-bold flex items-center gap-1.5">
+                      <span>{country.name}</span>
+                      <span className="text-[10px] text-[var(--accent)] font-normal">({country.currency})</span>
+                    </div>
+                    <div className="text-[11px] text-emerald-500 font-medium truncate">
+                      {country.overlap}
+                    </div>
+                  </div>
+                </div>
+                <span className="text-[10px] text-[var(--accent)] group-hover/loccard:translate-x-0.5 transition-transform shrink-0 font-semibold">
+                  Change ▾
+                </span>
               </div>
 
               {/* Direct Contact Card */}

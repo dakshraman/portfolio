@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Copy, Check, Mail, Server, Smartphone, Layers } from 'lucide-react';
+import { ArrowUpRight, Copy, Check, Mail, Server, Smartphone, Layers, Globe } from 'lucide-react';
 import { siteConfig } from '@/data/portfolio';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function Hero() {
   const [copied, setCopied] = useState(false);
   const [activeConsoleTab, setActiveConsoleTab] = useState('backend');
+  const { country, setIsModalOpen, localTimeStr } = useLocale();
 
   const copyEmail = () => {
     navigator.clipboard.writeText(siteConfig.email);
@@ -18,6 +20,29 @@ export default function Hero() {
   return (
     <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-grid-pattern">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
+        {/* Worldwide Client Localization Trust Badge */}
+        <div className="flex justify-center md:justify-start mb-6">
+          <button
+            type="button"
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] shadow-xs text-xs font-mono text-[var(--muted-fg)] cursor-pointer hover:border-[var(--accent)] transition-all group/loc"
+            title="Click to switch your country and currency across all 249 countries"
+          >
+            <span className="text-base leading-none">{country.flag}</span>
+            <span className="text-[var(--fg-page)] font-semibold">{country.name}</span>
+            {localTimeStr && (
+              <span className="hidden sm:inline text-[var(--muted-fg)]">
+                ({localTimeStr})
+              </span>
+            )}
+            <span>•</span>
+            <span className="text-emerald-500 font-medium">{country.overlap}</span>
+            <span className="text-[var(--accent)] text-[10px] group-hover/loc:translate-x-0.5 transition-transform">
+              Change ▾
+            </span>
+          </button>
+        </div>
+
         {/* Headline & Focused Value Proposition */}
         <div className="max-w-4xl text-center md:text-left mb-10">
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--fg-page)] leading-[1.1] mb-5">

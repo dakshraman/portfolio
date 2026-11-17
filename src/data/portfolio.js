@@ -219,8 +219,8 @@ export const faqItems = [
     answer: 'Rates vary by project complexity. I offer Silicon Valley quality at competitive global rates, typically between $40-80/hr or fixed-price quotes. Contact me with your project details for an accurate estimate.',
   },
   {
-    question: 'Can you work in my timezone?',
-    answer: 'Yes. I work asynchronously and guarantee 4 hours of daily overlap with US (EST/PST), UK, and EU timezones for standups and syncs. I provide daily Loom video updates and use Slack/Teams for fast communication.',
+    question: 'Do you work with international clients across different countries and timezones?',
+    answer: 'Yes. I work with founders, CTOs, and product teams across 195+ countries worldwide (North America, Europe, UK, Australia, Middle East, Asia, and Latin America). I guarantee 3–5 hours of synchronous live meeting overlap in your local workday (EST, PST, GMT, CET, AEST, GST) paired with structured async Loom screen recordings, Slack/Discord communication, and direct GitHub pull requests. Invoices are issued in your preferred currency (USD, EUR, GBP, AUD, etc.) via Stripe, Wise, or SWIFT Wire.',
   },
   {
     question: 'How long does a typical project take?',

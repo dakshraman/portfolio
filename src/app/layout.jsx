@@ -1,6 +1,8 @@
 import './globals.css';
 import Script from 'next/script';
 import { Archivo, Space_Grotesk } from 'next/font/google';
+import { LocaleProvider } from '@/context/LocaleContext';
+import CountrySelectorModal from '@/components/CountrySelectorModal';
 
 const archivo = Archivo({
   subsets: ['latin'],
@@ -263,7 +265,10 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen antialiased bg-[var(--bg-page)] text-[var(--fg-page)]">
-        {children}
+        <LocaleProvider>
+          {children}
+          <CountrySelectorModal />
+        </LocaleProvider>
         <Script
           id="umami-analytics"
           src="https://cloud.umami.is/script.js"

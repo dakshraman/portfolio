@@ -14,12 +14,15 @@ import {
   Rocket, 
   Layers, 
   HelpCircle,
-  Calendar
+  Calendar,
+  Globe
 } from 'lucide-react';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function PricingEngagements() {
   const [activeTab, setActiveTab] = useState('fixed'); // 'fixed' | 'fractional'
   const [selectedHours, setSelectedHours] = useState(20);
+  const { country, formatPrice, setIsModalOpen } = useLocale();
 
   // Tilt and Shine effect state for the spotlight card
   const cardRef = useRef(null);
@@ -168,7 +171,7 @@ export default function PricingEngagements() {
                         Custom Quote
                       </span>
                       <span className="text-xs sm:text-sm text-[var(--muted-fg)] font-mono">
-                        (Typically $3,500 – $7,500)
+                        (Typically {formatPrice(3500)} – {formatPrice(7500)})
                       </span>
                     </div>
                     <p className="text-xs text-[var(--muted-fg)] mt-1.5">
@@ -247,10 +250,10 @@ export default function PricingEngagements() {
                   {/* Fixed Price */}
                   <div className="p-4 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] mb-6">
                     <div className="text-3xl font-extrabold font-mono text-[var(--fg-page)]">
-                      $950
+                      {formatPrice(950)}
                     </div>
                     <div className="text-xs text-[var(--muted-fg)] mt-1">
-                      Flat fee · Full comprehensive review delivered in 72 hours
+                      Flat fee ({country.currency}) · Full comprehensive review delivered in 72 hours
                     </div>
                   </div>
 
@@ -323,7 +326,7 @@ export default function PricingEngagements() {
                   <div className="p-5 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-[var(--subtle-border)] mb-7">
                     <div className="flex items-baseline gap-2">
                       <span className="text-3xl sm:text-4xl font-extrabold font-mono text-[var(--fg-page)]">
-                        $45 – $65
+                        {formatPrice(45)} – {formatPrice(65)}
                       </span>
                       <span className="text-sm text-[var(--muted-fg)] font-mono">
                         / hour
@@ -417,7 +420,7 @@ export default function PricingEngagements() {
                     <div className="mt-4 pt-3 border-t border-[var(--subtle-border)] flex items-center justify-between">
                       <span className="text-xs text-[var(--muted-fg)]">Estimated Weekly Cost:</span>
                       <span className="font-mono font-bold text-lg text-[var(--fg-page)]">
-                        ${selectedHours * 50} – ${selectedHours * 60}
+                        {formatPrice(selectedHours * 50)} – {formatPrice(selectedHours * 60)}
                       </span>
                     </div>
                   </div>
@@ -450,6 +453,23 @@ export default function PricingEngagements() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Dynamic Country Localization Banner (All 249 Countries Supported) */}
+        <div className="mt-8 p-3.5 sm:p-4 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
+          <div className="flex items-center gap-2.5 text-[var(--fg-page)]">
+            <span className="text-xl leading-none">{country.flag}</span>
+            <span>
+              Prices localized for <strong>{country.name}</strong> ({country.currency} &bull; {country.symbol}) &bull; <span className="text-emerald-500 font-medium">{country.overlap}</span>
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsModalOpen(true)}
+            className="text-[var(--accent)] hover:underline flex items-center gap-1 font-semibold cursor-pointer shrink-0"
+          >
+            Switch Country (All 249 Supported) →
+          </button>
+        </div>
 
         {/* Guarantees & Transparency Strip */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 pt-8 border-t border-[var(--subtle-border)]">
