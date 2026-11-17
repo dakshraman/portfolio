@@ -9,7 +9,7 @@ import { useLocale } from '@/context/LocaleContext';
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { country, setIsModalOpen } = useLocale();
+  const { country } = useLocale();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,19 +74,8 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* Right Controls: Country Selector + Theme Toggle + CTA */}
+          {/* Right Controls: Theme Toggle + CTA */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {/* Worldwide Country & Currency Selector Trigger */}
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-mono font-medium border border-[var(--subtle-border)] bg-[var(--card-bg)] hover:bg-[var(--muted-bg)] text-[var(--fg-page)] transition-colors cursor-pointer"
-              title={`Detected country: ${country.name} (${country.currency}). Click to change from all 249 countries.`}
-            >
-              <span className="text-sm leading-none">{country.flag}</span>
-              <span className="text-[11px] font-semibold">{country.currency}</span>
-            </button>
-
             <ThemeToggle />
 
             <Link
@@ -124,21 +113,6 @@ export default function Navigation() {
                 </Link>
               ))}
               <div className="pt-2.5 mt-2 border-t border-[var(--subtle-border)] space-y-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileOpen(false);
-                    setIsModalOpen(true);
-                  }}
-                  className="w-full px-4 py-2 text-xs font-mono rounded-xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] text-[var(--fg-page)] flex items-center justify-between"
-                >
-                  <span className="flex items-center gap-2">
-                    <span className="text-base">{country.flag}</span>
-                    <span>{country.name}</span>
-                  </span>
-                  <span className="font-bold text-[var(--accent)]">{country.currency} ({country.symbol})</span>
-                </button>
-
                 <Link
                   href="#contact"
                   onClick={() => setMobileOpen(false)}

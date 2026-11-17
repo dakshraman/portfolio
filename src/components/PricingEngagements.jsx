@@ -22,7 +22,7 @@ import { useLocale } from '@/context/LocaleContext';
 export default function PricingEngagements() {
   const [activeTab, setActiveTab] = useState('fixed'); // 'fixed' | 'fractional'
   const [selectedHours, setSelectedHours] = useState(20);
-  const { country, formatPrice, setIsModalOpen } = useLocale();
+  const { country, formatPrice } = useLocale();
 
   // Tilt and Shine effect state for the spotlight card
   const cardRef = useRef(null);
@@ -454,22 +454,13 @@ export default function PricingEngagements() {
           )}
         </AnimatePresence>
 
-        {/* Dynamic Country Localization Banner (All 249 Countries Supported) */}
-        <div className="mt-8 p-3.5 sm:p-4 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 text-xs font-mono">
-          <div className="flex items-start sm:items-center gap-2.5 text-[var(--fg-page)] min-w-0">
-            <span className="text-xl leading-none shrink-0 mt-0.5 sm:mt-0">{country.flag}</span>
-            <div className="leading-snug">
-              Prices localized for <strong className="text-[var(--fg-page)]">{country.name}</strong> ({country.currency} &bull; {country.symbol}) &bull;{' '}
-              <span className="text-emerald-500 font-medium">{country.overlap}</span>
-            </div>
+        {/* Dynamic Country Localization Banner (Auto-detected for Visitor Region) */}
+        <div className="mt-8 p-3.5 sm:p-4 rounded-2xl bg-[var(--muted-bg)] border border-[var(--subtle-border)] flex items-center gap-2.5 sm:gap-3 text-xs font-mono">
+          <span className="text-xl leading-none shrink-0">{country.flag}</span>
+          <div className="leading-snug text-[var(--fg-page)]">
+            Rates automatically localized for <strong className="text-[var(--fg-page)]">{country.name}</strong> ({country.currency} &bull; {country.symbol}) &bull;{' '}
+            <span className="text-emerald-500 font-medium">{country.overlap}</span>
           </div>
-          <button
-            type="button"
-            onClick={() => setIsModalOpen(true)}
-            className="text-[var(--accent)] hover:underline flex items-center gap-1 font-semibold cursor-pointer shrink-0 text-left sm:text-right text-[11px] sm:text-xs"
-          >
-            Switch Country (All 249 Supported) →
-          </button>
         </div>
 
         {/* Guarantees & Transparency Strip */}

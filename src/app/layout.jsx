@@ -2,7 +2,6 @@ import './globals.css';
 import Script from 'next/script';
 import { Archivo, Space_Grotesk } from 'next/font/google';
 import { LocaleProvider } from '@/context/LocaleContext';
-import CountrySelectorModal from '@/components/CountrySelectorModal';
 
 const archivo = Archivo({
   subsets: ['latin'],
@@ -230,6 +229,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${archivo.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
+        {/* Early Preconnect & DNS-Prefetch for Flagship Live Projects (loads them early on initial page visit) */}
+        <link rel="preconnect" href="https://clouddeck.dakshraman.in" />
+        <link rel="dns-prefetch" href="https://clouddeck.dakshraman.in" />
+        <link rel="preconnect" href="https://borrownearby.in" />
+        <link rel="dns-prefetch" href="https://borrownearby.in" />
+        <link rel="preconnect" href="https://devkit.dakshraman.in" />
+        <link rel="dns-prefetch" href="https://devkit.dakshraman.in" />
+        <link rel="preconnect" href="https://erp-web-lctn.onrender.com" />
+        <link rel="dns-prefetch" href="https://erp-web-lctn.onrender.com" />
+
         {/* Declare both light and dark scheme support for browser UI & canvas */}
         <meta name="color-scheme" content="light dark" />
         {/* Zero-FOUC theme hydration script */}
@@ -267,7 +276,6 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen antialiased bg-[var(--bg-page)] text-[var(--fg-page)]">
         <LocaleProvider>
           {children}
-          <CountrySelectorModal />
         </LocaleProvider>
         <Script
           id="umami-analytics"

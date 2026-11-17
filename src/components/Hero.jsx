@@ -9,7 +9,7 @@ import { useLocale } from '@/context/LocaleContext';
 export default function Hero() {
   const [copied, setCopied] = useState(false);
   const [activeConsoleTab, setActiveConsoleTab] = useState('backend');
-  const { country, setIsModalOpen, localTimeStr } = useLocale();
+  const { country, localTimeStr } = useLocale();
 
   const copyEmail = () => {
     navigator.clipboard.writeText(siteConfig.email);
@@ -20,14 +20,10 @@ export default function Hero() {
   return (
     <section className="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-grid-pattern">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
-        {/* Worldwide Client Localization Trust Badge */}
+        {/* Worldwide Client Localization Trust Badge (Auto-Detected) */}
         <div className="flex justify-center md:justify-start mb-6">
-          <button
-            type="button"
-            onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] shadow-xs text-xs font-mono text-[var(--muted-fg)] cursor-pointer hover:border-[var(--accent)] transition-all group/loc max-w-full"
-            title="Click to switch your country and currency across all 249 countries"
-          >
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] shadow-xs text-xs font-mono text-[var(--muted-fg)] max-w-full">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
             <span className="text-base leading-none shrink-0">{country.flag}</span>
             <span className="text-[var(--fg-page)] font-semibold truncate max-w-[120px] sm:max-w-none">{country.name}</span>
             {localTimeStr && (
@@ -38,10 +34,7 @@ export default function Hero() {
             <span className="text-[var(--muted-fg)]">•</span>
             <span className="text-emerald-500 font-medium hidden sm:inline">{country.overlap}</span>
             <span className="text-emerald-500 font-medium sm:hidden">Available Worldwide</span>
-            <span className="text-[var(--accent)] text-[10px] group-hover/loc:translate-x-0.5 transition-transform shrink-0 ml-0.5">
-              Change ▾
-            </span>
-          </button>
+          </div>
         </div>
 
         {/* Headline & Focused Value Proposition */}

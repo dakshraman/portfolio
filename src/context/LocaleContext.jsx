@@ -15,11 +15,10 @@ const LocaleContext = createContext({
 
 export function LocaleProvider({ children }) {
   const [country, setCountryState] = useState(DEFAULT_COUNTRY);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [localTimeStr, setLocalTimeStr] = useState('');
 
   useEffect(() => {
-    // Auto-detect visitor's country on client mount
+    // 100% automatic visitor country detection
     const detected = detectUserCountry();
     setCountryState(detected);
   }, []);
@@ -46,13 +45,6 @@ export function LocaleProvider({ children }) {
     return () => clearInterval(interval);
   }, [country]);
 
-  const setCountry = (newCountry) => {
-    setCountryState(newCountry);
-    try {
-      localStorage.setItem('user_country_code', newCountry.code);
-    } catch (e) {}
-  };
-
   const formatPrice = (usdAmount) => {
     return formatCurrencyPrice(usdAmount, country);
   };
@@ -61,12 +53,11 @@ export function LocaleProvider({ children }) {
     <LocaleContext.Provider
       value={{
         country,
-        setCountry,
         formatPrice,
-        isModalOpen,
-        setIsModalOpen,
         localTimeStr,
         allCountries: ALL_COUNTRIES,
+        isModalOpen: false,
+        setIsModalOpen: () => {},
       }}
     >
       {children}

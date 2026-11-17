@@ -2557,16 +2557,7 @@ const TIMEZONE_TO_COUNTRY = {
 export function detectUserCountry() {
   if (typeof window === 'undefined') return DEFAULT_COUNTRY;
 
-  // 1. Check saved user preference in localStorage
-  try {
-    const savedCode = localStorage.getItem('user_country_code');
-    if (savedCode) {
-      const match = ALL_COUNTRIES.find((c) => c.code === savedCode);
-      if (match) return match;
-    }
-  } catch (e) {}
-
-  // 2. Detect from browser timezone
+  // 1. Automatic detection from browser live timezone
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (tz) {

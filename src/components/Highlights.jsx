@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { 
   ArrowUpRight, 
   ExternalLink, 
@@ -8,6 +9,8 @@ import {
 import { GithubIcon } from './Icons';
 
 function LiveBrowserFrame({ url, title }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <div className="rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] shadow-2xl overflow-hidden flex flex-col group/browser">
       {/* Browser Chrome Header */}
@@ -38,18 +41,29 @@ function LiveBrowserFrame({ url, title }) {
       </div>
 
       {/* Live Site Container */}
-      <div className="relative w-full h-[260px] sm:h-[440px] lg:h-[560px] bg-[var(--card-bg)]">
+      <div className="relative w-full h-[260px] sm:h-[440px] lg:h-[560px] bg-[var(--card-bg)] overflow-hidden">
+        {/* Subtle pre-load skeleton while iframe renders */}
+        {!isLoaded && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--muted-bg)]/80 gap-3 z-0 animate-pulse">
+            <div className="w-6 h-6 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
+            <span className="text-xs font-mono text-[var(--muted-fg)]">Pre-rendering live sandbox...</span>
+          </div>
+        )}
+
         <iframe
           src={url}
           title={title}
-          loading="lazy"
-          className="w-full h-full border-0 pointer-events-none sm:pointer-events-auto"
+          loading="eager"
+          onLoad={() => setIsLoaded(true)}
+          className={`w-full h-full border-0 pointer-events-none sm:pointer-events-auto transition-opacity duration-500 relative z-10 ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
         />
 
         {/* Mobile Touch Overlay - Prevents iframe scrolling lock while allowing direct tap to open */}
-        <div className="absolute inset-x-0 bottom-0 sm:hidden p-2.5 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between pointer-events-auto">
+        <div className="absolute inset-x-0 bottom-0 sm:hidden p-2.5 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-between pointer-events-auto z-20">
           <span className="text-[11px] font-mono text-white/90 truncate mr-2">Live Demo Sandbox</span>
           <a
             href={url}

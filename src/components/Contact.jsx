@@ -19,7 +19,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
-  const { country, setIsModalOpen } = useLocale();
+  const { country } = useLocale();
 
   const [formState, setFormState] = useState({
     name: '',
@@ -254,12 +254,8 @@ ${formState.message}
                 </div>
               </div>
 
-              {/* Worldwide Localization Trust Card */}
-              <div 
-                onClick={() => setIsModalOpen(true)}
-                className="bento-card p-3.5 sm:p-4 flex items-center justify-between text-xs font-mono cursor-pointer hover:border-[var(--accent)] transition-all group/loccard"
-                title="Click to change your country and currency across all 249 countries"
-              >
+              {/* Worldwide Localization Trust Card (Auto-detected Region) */}
+              <div className="bento-card p-3.5 sm:p-4 flex items-center justify-between text-xs font-mono">
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-2xl leading-none shrink-0">{country.flag}</span>
                   <div className="truncate min-w-0">
@@ -272,8 +268,8 @@ ${formState.message}
                     </div>
                   </div>
                 </div>
-                <span className="text-[11px] text-[var(--accent)] group-hover/loccard:translate-x-0.5 transition-transform shrink-0 font-semibold ml-2">
-                  Change ▾
+                <span className="text-[11px] text-[var(--muted-fg)] shrink-0 font-medium ml-2">
+                  Auto-Detected
                 </span>
               </div>
 
