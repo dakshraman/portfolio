@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, MapPin } from 'lucide-react';
+import { Calendar, MapPin, ArrowUpRight, FileText } from 'lucide-react';
 import { experiences } from '@/data/portfolio';
 
 export default function Experience() {
@@ -17,9 +17,22 @@ export default function Experience() {
               Experience &amp; track record.
             </h2>
           </div>
-          <p className="text-sm text-[var(--muted-fg)] max-w-md">
-            4+ years partnering with remote engineering teams and scaling distributed software products across healthcare, edtech, and SaaS.
-          </p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <p className="text-sm text-[var(--muted-fg)] max-w-md">
+              4+ years partnering with remote engineering teams and scaling distributed software products across healthcare, edtech, and SaaS.
+            </p>
+            <a
+              href="/Raman-Daksh.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost text-xs font-mono shrink-0 inline-flex items-center gap-1.5"
+              title="Download Raman Daksh Resume PDF"
+            >
+              <FileText className="w-3.5 h-3.5 text-[var(--accent)]" />
+              <span>Resume PDF</span>
+              <ArrowUpRight className="w-3 h-3" />
+            </a>
+          </div>
         </div>
 
         {/* Timeline List */}

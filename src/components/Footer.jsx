@@ -60,6 +60,17 @@ export default function Footer() {
               <li><Link href="#services" className="hover:text-[var(--fg-page)] transition-colors">Services</Link></li>
               <li><Link href="#pricing" className="hover:text-[var(--fg-page)] transition-colors">Sprint Pricing</Link></li>
               <li><Link href="#blog" className="hover:text-[var(--fg-page)] transition-colors">Technical Writing</Link></li>
+              <li>
+                <a 
+                  href="/Raman-Daksh.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-[var(--accent)] font-semibold text-[var(--fg-page)] transition-colors inline-flex items-center gap-1"
+                >
+                  <span>Resume (PDF)</span>
+                  <ArrowUpRight className="w-3 h-3 text-[var(--accent)]" />
+                </a>
+              </li>
             </ul>
           </div>
 
