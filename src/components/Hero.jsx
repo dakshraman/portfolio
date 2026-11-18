@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Copy, Check, ArrowDown } from 'lucide-react';
+import { ArrowUpRight, Copy, Check, ArrowDown, FileText, Download } from 'lucide-react';
 import { siteConfig } from '@/data/portfolio';
 import { useLocale } from '@/context/LocaleContext';
 
@@ -73,6 +73,18 @@ export default function Hero() {
               >
                 See work &darr;
               </Link>
+
+              <a
+                href="/Raman-Daksh.pdf"
+                download="Raman-Daksh-Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[var(--accent)] text-[var(--accent)] transition-colors underline underline-offset-4 inline-flex items-center gap-1 font-semibold"
+                title="Download Raman Daksh Resume PDF"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>Download CV &darr;</span>
+              </a>
 
               <button
                 type="button"
