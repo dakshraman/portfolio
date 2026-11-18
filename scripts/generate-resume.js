@@ -3,257 +3,256 @@ const path = require('path');
 const PDFDocument = require('pdfkit');
 
 function generateResume(outputPath) {
-  // Standard Letter / A4 size with 36pt (0.5 inch) margins for high density
+  // A4 size: 595.28 x 841.89 points
+  // 36pt (0.5 in) margins leaves 523.28pt content width, 769.89pt content height
   const doc = new PDFDocument({
     size: 'A4',
     margins: { top: 32, bottom: 32, left: 36, right: 36 },
     info: {
-      Title: 'Raman Daksh - Senior Software Engineer & System Architect Resume',
+      Title: 'Raman Daksh - Resume',
       Author: 'Raman Daksh',
-      Subject: 'Software Engineer Resume - Laravel, Flutter, Go, Cloud',
-      Keywords: 'Laravel, Flutter, Dart, PHP, Go, PostgreSQL, Redis, REST API, Full Stack, DevOps',
+      Subject: 'Software Engineer Resume',
+      Keywords: 'Software Engineer, Laravel, Flutter, Dart, PHP, Go, PostgreSQL, Redis, REST APIs, Full Stack',
     }
   });
 
   const writeStream = fs.createWriteStream(outputPath);
   doc.pipe(writeStream);
 
-  const primaryColor = '#111827'; // Dark charcoal
-  const secondaryColor = '#374151'; // Medium charcoal
-  const accentColor = '#2563eb'; // Royal blue
-  const mutedColor = '#6b7280'; // Slate grey
-  const ruleColor = '#e5e7eb'; // Light hairline
+  const black = '#000000';
+  const textDark = '#1a1a1a';
+  const textMuted = '#333333';
+  const ruleColor = '#000000';
 
-  const pageWidth = 595.28;
   const marginX = 36;
-  const contentWidth = pageWidth - marginX * 2; // 523.28pt
+  const contentWidth = 595.28 - marginX * 2; // 523.28pt
 
   function drawSectionHeader(title) {
-    doc.moveDown(0.4);
+    doc.moveDown(0.35);
     const y = doc.y;
-    doc.fillColor(primaryColor)
+    doc.fillColor(black)
        .font('Helvetica-Bold')
        .fontSize(10.5)
-       .text(title.toUpperCase(), marginX, y, { characterSpacing: 1 });
+       .text(title.toUpperCase(), marginX, y, { characterSpacing: 0.8 });
 
-    doc.moveTo(marginX, y + 13)
-       .lineTo(marginX + contentWidth, y + 13)
-       .lineWidth(0.75)
-       .strokeColor(accentColor)
+    // Solid black horizontal line spanning full width (Jake's Resume / LaTeX style)
+    doc.moveTo(marginX, y + 12.5)
+       .lineTo(marginX + contentWidth, y + 12.5)
+       .lineWidth(0.6)
+       .strokeColor(ruleColor)
        .stroke();
 
-    doc.y = y + 18;
+    doc.y = y + 16.5;
   }
 
   // ==========================================
-  // HEADER
+  // HEADER (Classic Centered Minimal LaTeX Style)
   // ==========================================
-  doc.fillColor(primaryColor)
+  doc.fillColor(black)
      .font('Helvetica-Bold')
      .fontSize(22)
-     .text('RAMAN DAKSH', { align: 'center', characterSpacing: 0.5 });
+     .text('RAMAN DAKSH', { align: 'center', characterSpacing: 1 });
 
   doc.moveDown(0.15);
-  doc.fillColor(accentColor)
-     .font('Helvetica-Bold')
-     .fontSize(10.5)
-     .text('Senior Full-Stack Engineer & Mobile Architect', { align: 'center' });
-
-  doc.moveDown(0.2);
-  doc.fillColor(secondaryColor)
+  doc.fillColor(textDark)
      .font('Helvetica')
      .fontSize(8.5);
 
-  const contactLine = [
-    { text: 'ramandaksh6161@gmail.com', link: 'mailto:ramandaksh6161@gmail.com' },
-    { text: '+91 8958224019', link: 'tel:+918958224019' },
-    { text: 'dakshraman.in', link: 'https://dakshraman.in' },
-    { text: 'github.com/dakshraman', link: 'https://github.com/dakshraman' },
-    { text: 'linkedin.com/in/dakshraman', link: 'https://linkedin.com/in/dakshraman' },
-    { text: 'Dehradun, India' }
-  ];
-
-  let contactStr = '';
-  contactLine.forEach((c, idx) => {
-    contactStr += c.text + (idx < contactLine.length - 1 ? '  •  ' : '');
-  });
-  doc.text(contactStr, { align: 'center' });
+  const contactText = '+91 8958224019   |   ramandaksh6161@gmail.com   |   linkedin.com/in/dakshraman   |   github.com/dakshraman   |   dakshraman.in';
+  doc.text(contactText, { align: 'center' });
 
   // ==========================================
-  // PROFESSIONAL SUMMARY
-  // ==========================================
-  drawSectionHeader('Professional Summary');
-  doc.fillColor(secondaryColor)
-     .font('Helvetica')
-     .fontSize(8.5)
-     .lineGap(1.5)
-     .text(
-       'Senior Full-Stack Software Engineer with 4+ years of production experience architecting high-concurrency Laravel REST APIs, cross-platform Flutter applications, and lightweight Linux cloud infrastructure. Creator of CloudDeck (open-source cloud hosting control panel idling under 50MB RAM). Proven track record delivering 20+ production systems with 100% full-stack ownership across database design, real-time messaging, and App Store deployments.',
-       { align: 'justify' }
-     );
-
-  // ==========================================
-  // CORE TECHNICAL SKILLS (From GitHub & Production Stack)
+  // TECHNICAL SKILLS (NO versions, cleanly categorized)
   // ==========================================
   drawSectionHeader('Technical Skills');
-  const skillsList = [
-    { label: 'Languages & Core:', val: 'PHP 8.1–8.4, Dart, TypeScript, JavaScript (ES6+), Go (Golang), Python, Swift (Basics), C++, HTML5/CSS3' },
-    { label: 'Frameworks & Libs:', val: 'Laravel 11, Flutter 3.x, Next.js, React, Vue.js, Inertia.js, Tailwind CSS, BLoC State Architecture' },
-    { label: 'Databases & Cache:', val: 'PostgreSQL, PostGIS (Spatial), MySQL, MariaDB, Redis 7.2 (Cache & Pub/Sub), SQLite, Firebase' },
-    { label: 'Architecture & APIs:', val: 'RESTful API Design, Microservices, WebSockets / Reverb, Sanctum & JWT Auth, Queue Workers (Horizon)' },
-    { label: 'DevOps & Tooling:', val: 'Docker, Linux (Ubuntu/Debian), Nginx, Let\'s Encrypt TLS, PowerDNS, Git/GitHub, App Store Connect, Play Console' }
+
+  const skillsData = [
+    { cat: 'Languages:', items: 'PHP, Dart, TypeScript, JavaScript, Go, Python, C++, SQL, HTML/CSS' },
+    { cat: 'Frameworks & Libraries:', items: 'Laravel, Flutter, Next.js, React, Vue.js, Inertia.js, Tailwind CSS, BLoC' },
+    { cat: 'Databases & Storage:', items: 'PostgreSQL, MySQL, MariaDB, PostGIS, Redis, SQLite, Firebase' },
+    { cat: 'DevOps & Infrastructure:', items: 'Docker, Linux, Nginx, Git, GitHub Actions, CI/CD, PowerDNS, Let\'s Encrypt' },
+    { cat: 'Architecture & Design:', items: 'RESTful APIs, WebSockets, Microservices, Authentication (JWT/Sanctum), Queue Workers' },
   ];
 
-  skillsList.forEach(s => {
+  skillsData.forEach(s => {
     const y = doc.y;
-    doc.fillColor(primaryColor).font('Helvetica-Bold').fontSize(8.5).text(s.label, marginX, y, { width: 110 });
-    doc.fillColor(secondaryColor).font('Helvetica').fontSize(8.5).text(s.val, marginX + 115, y, { width: contentWidth - 115 });
-    doc.y += 1.5;
+    doc.fillColor(black).font('Helvetica-Bold').fontSize(8.5).text(s.cat, marginX, y, { width: 130 });
+    doc.fillColor(textDark).font('Helvetica').fontSize(8.5).text(s.items, marginX + 132, y, { width: contentWidth - 132 });
+    doc.y += 1.2;
   });
 
   // ==========================================
-  // WORK EXPERIENCE (From LinkedIn & Production History)
+  // WORK EXPERIENCE (LinkedIn Synchronized, Google XYZ Format)
   // ==========================================
-  drawSectionHeader('Work Experience');
+  drawSectionHeader('Experience');
 
   const experiences = [
     {
-      role: 'Laravel Developer / Full-Stack Engineer',
       company: 'InsideSoftwares',
-      period: '2025 – Present',
       location: 'Remote',
+      role: 'Laravel Developer / Full-Stack Engineer',
+      period: 'June 2025 – Present',
       bullets: [
-        'Architect and ship production Laravel applications from concept to deployment, ensuring sub-50ms P99 API response latencies.',
-        'Engineer scalable relational schemas in PostgreSQL/MySQL with eager-loaded Eloquent queries, Redis caching, and automated queue jobs.',
-        'Collaborate directly with cross-functional teams to integrate secure authentication (Sanctum/JWT), payment gateways, and third-party APIs.'
+        'Architect and deploy high-concurrency Laravel backend APIs and microservices, ensuring sub-50ms P99 API response latencies.',
+        'Engineer scalable relational database schemas in PostgreSQL with eager-loaded Eloquent queries, Redis caching, and automated queue jobs.',
+        'Integrate secure Sanctum/JWT token authentication, automated webhooks, payment gateways, and third-party partner APIs.'
       ]
     },
     {
-      role: 'Full Stack Laravel Developer',
       company: 'AK Software Solutions',
-      period: '2025 – 2025',
       location: 'Dehradun, India',
+      role: 'Full Stack Laravel Developer',
+      period: 'Jan 2025 – June 2025',
       bullets: [
-        'Led end-to-end full-stack delivery for commercial web applications, database schema modeling, and production cloud deployments.',
-        'Engineered responsive user interfaces using Vue.js and Tailwind CSS integrated seamlessly with high-throughput Laravel backends.',
-        'Configured hardened Linux VPS server environments with Nginx reverse proxy, automated Let\'s Encrypt SSL, and scheduled backups.'
+        'Led end-to-end full-stack development for client web applications using Laravel, MySQL, and Vue.js with 99.9% production uptime.',
+        'Designed modular database migrations, optimized indexing on relational tables, and implemented role-based access control (RBAC).',
+        'Configured hardened Linux VPS server environments with Nginx reverse proxy, automated Let\'s Encrypt SSL, and scheduled cron jobs.'
       ]
     },
     {
-      role: 'API Developer (Laravel & Flutter) / Technology Executive',
       company: 'Pearl Organisation',
-      period: '2024 – 2025',
       location: 'Dehradun, India',
+      role: 'API Developer (Laravel & Flutter) / Technology Executive',
+      period: 'May 2024 – May 2025',
       bullets: [
         'Architected and maintained RESTful APIs powering cross-platform Flutter applications serving 5,000+ daily active international users.',
-        'Engineered real-time chat, push notification pipelines via Firebase Cloud Messaging, and optimized spatial queries for location services.',
-        'Collaborated with mobile engineers to enforce strict OpenAPI payload contracts, offline-first SQLite caching, and zero jank rendering.'
+        'Engineered real-time chat infrastructure, push notification pipelines via Firebase Cloud Messaging, and optimized spatial queries for geolocation.',
+        'Collaborated closely with mobile engineers to enforce strict OpenAPI payload contracts, offline-first SQLite caching, and fluid 60 FPS UI.'
       ]
     },
     {
-      role: 'Reputation & Technical Data Operations',
       company: 'Zenvista Meditech Pvt. Ltd.',
-      period: '2022 – 2022',
       location: 'Rudrapur, India',
+      role: 'Technical Operations & Reputation Specialist',
+      period: 'May 2022 – Oct 2022',
       bullets: [
-        'Drove digital presence, analytics tracking, and online reputation strategy — increasing client organic engagement by 40% across campaigns.'
+        'Managed digital presence analytics, technical data tracking, and search visibility — increasing client organic engagement by 40%.'
       ]
     }
   ];
 
   experiences.forEach((exp, idx) => {
-    const y = doc.y;
-    // Line 1: Role (Bold) & Period (Right-aligned)
-    doc.fillColor(primaryColor).font('Helvetica-Bold').fontSize(9).text(exp.role, marginX, y);
-    doc.fillColor(mutedColor).font('Helvetica-Bold').fontSize(8.5).text(exp.period, marginX, y, { align: 'right' });
+    const y1 = doc.y;
+    // Line 1: Company (Bold) on left, Location on right
+    doc.fillColor(black).font('Helvetica-Bold').fontSize(9).text(exp.company, marginX, y1);
+    doc.fillColor(textMuted).font('Helvetica').fontSize(8.5).text(exp.location, marginX, y1, { align: 'right' });
 
-    // Line 2: Company (Italic/Accent) & Location (Right-aligned)
+    // Line 2: Role (Italic) on left, Period on right
     const y2 = doc.y + 0.5;
-    doc.fillColor(accentColor).font('Helvetica-Oblique').fontSize(8.5).text(exp.company, marginX, y2);
-    doc.fillColor(mutedColor).font('Helvetica').fontSize(8).text(exp.location, marginX, y2, { align: 'right' });
+    doc.fillColor(textDark).font('Helvetica-Oblique').fontSize(8.5).text(exp.role, marginX, y2);
+    doc.fillColor(textMuted).font('Helvetica-Oblique').fontSize(8).text(exp.period, marginX, y2, { align: 'right' });
 
-    doc.moveDown(0.2);
+    doc.moveDown(0.18);
 
-    // Bullets
+    // Bullet points with tight, professional indentation
     exp.bullets.forEach(b => {
       const by = doc.y;
-      doc.fillColor(accentColor).font('Helvetica-Bold').fontSize(8.5).text('•', marginX + 4, by);
-      doc.fillColor(secondaryColor).font('Helvetica').fontSize(8).lineGap(1).text(b, marginX + 14, by, { width: contentWidth - 14 });
-      doc.y += 0.5;
+      doc.fillColor(black).font('Helvetica').fontSize(8.5).text('•', marginX + 6, by);
+      doc.fillColor(textDark).font('Helvetica').fontSize(8).lineGap(1).text(b, marginX + 16, by, { width: contentWidth - 16 });
+      doc.y += 0.8;
     });
 
-    if (idx < experiences.length - 1) doc.moveDown(0.25);
+    if (idx < experiences.length - 1) doc.moveDown(0.2);
   });
 
   // ==========================================
-  // FEATURED OPEN-SOURCE & FLAGSHIP PROJECTS (From GitHub)
+  // PROJECTS (GitHub & Flagships, NO versions)
   // ==========================================
-  drawSectionHeader('Featured Flagships & GitHub Projects');
+  drawSectionHeader('Projects');
 
   const projects = [
     {
-      name: 'CloudDeck — Self-Hosted Linux Cloud Hosting Control Panel',
-      stack: 'Go (Golang), Next.js, TypeScript, Linux Daemons, Docker, PowerDNS, MariaDB',
-      link: 'clouddeck.dakshraman.in | github.com/dakshraman/clouddeck',
-      desc: 'Architected an open-source cPanel alternative featuring a lightweight Go background daemon idling under 50MB RAM. Manages multi-PHP (8.1–8.4) FPM sockets, automated Let\'s Encrypt TLS certificates, MariaDB databases, Postfix/Dovecot email, and PowerDNS.'
+      name: 'CloudDeck — Linux Hosting Control Panel',
+      tools: 'Go, Next.js, TypeScript, Linux Daemons, Docker, MariaDB, PowerDNS',
+      linkText: 'clouddeck.dakshraman.in | github.com/dakshraman/clouddeck',
+      linkUrl: 'https://clouddeck.dakshraman.in',
+      bullets: [
+        'Architected an open-source cPanel alternative featuring a compiled Go background daemon idling under 50MB RAM vs. 1GB+ standard.',
+        'Engineered daemon managing multi-PHP FPM sockets, automated Let\'s Encrypt TLS issuance, MariaDB, Postfix/Dovecot email, and PowerDNS.'
+      ]
     },
     {
-      name: 'Borrow Nearby — Hyperlocal Peer-to-Peer Mobile Marketplace',
-      stack: 'Flutter, Dart, Laravel, PostgreSQL, PostGIS, WebSockets, Firebase',
-      link: 'borrownearby.in (iOS & Android)',
-      desc: 'Live cross-platform mobile community lending platform. Implemented sub-50ms PostGIS spatial queries for equipment discovery within custom radiuses, real-time WebSocket chat, and secure peer-to-peer escrow mechanisms.'
+      name: 'Borrow Nearby — Peer-to-Peer Mobile Marketplace',
+      tools: 'Flutter, Dart, Laravel, PostgreSQL, PostGIS, WebSockets, Firebase',
+      linkText: 'borrownearby.in (iOS & Android)',
+      linkUrl: 'https://borrownearby.in',
+      bullets: [
+        'Developed a cross-platform mobile community sharing platform deployed to production on iOS and Android.',
+        'Implemented sub-50ms PostGIS spatial indexing for equipment discovery within custom radiuses, real-time WebSocket chat, and escrow protections.'
+      ]
     },
     {
-      name: 'Devkit — Zero-Dependency TypeScript Utility Runtime SDK',
-      stack: 'TypeScript, ECMAScript Modules, Web Crypto API, Bun/Node',
-      link: 'devkit.dakshraman.in | github.com/dakshraman/devkit',
-      desc: 'Engineered a battle-tested, zero-external-dependency TypeScript toolkit (1.4KB gzipped) for token generation, payload validation, and HTTP contract generation with 100% strict type safety and zero CVE vulnerability risks.'
+      name: 'Devkit — Zero-Dependency TypeScript Runtime SDK',
+      tools: 'TypeScript, ECMAScript Modules, Web Crypto API, Bun/Node',
+      linkText: 'devkit.dakshraman.in | github.com/dakshraman/devkit',
+      linkUrl: 'https://devkit.dakshraman.in',
+      bullets: [
+        'Engineered a zero-external-dependency TypeScript toolkit (1.4KB gzipped) for token generation, payload validation, and HTTP contracts.',
+        'Guaranteed zero CVE dependency vulnerabilities with 100% strict type safety across Node, Bun, and Cloudflare Workers runtimes.'
+      ]
     },
     {
-      name: 'Advanced School ERP / EduAI — Enterprise Campus SaaS Platform',
-      stack: 'Laravel 11, PostgreSQL, Inertia.js, React, Tailwind CSS, RBAC',
-      link: 'erp-web-lctn.onrender.com | github.com/dakshraman/eduai',
-      desc: 'Comprehensive multi-tenant campus management ERP managing admissions, online payment gateway reconciliation, automated gradebook generation, and payroll for 500+ active campus members across 5-role RBAC permissions.'
+      name: 'Advanced School ERP — Enterprise Campus Management Platform',
+      tools: 'Laravel, PostgreSQL, Inertia.js, React, Tailwind CSS, RBAC',
+      linkText: 'erp-web-lctn.onrender.com | github.com/dakshraman/eduai',
+      linkUrl: 'https://erp-web-lctn.onrender.com/',
+      bullets: [
+        'Built comprehensive campus management SaaS managing student admissions, automated gradebooks, and staff payroll for 500+ active users.',
+        'Integrated automated online fee gateway reconciliation and granular 5-role RBAC permissions for administration, teachers, and parents.'
+      ]
     }
   ];
 
   projects.forEach((proj, idx) => {
-    const y = doc.y;
-    doc.fillColor(primaryColor).font('Helvetica-Bold').fontSize(8.5).text(proj.name, marginX, y);
-    doc.fillColor(accentColor).font('Helvetica-Oblique').fontSize(7.5).text(proj.link, marginX, y, { align: 'right' });
+    const py = doc.y;
+    // Project title (Bold) | Tech (Italic) on left, links on right
+    doc.fillColor(black).font('Helvetica-Bold').fontSize(8.5).text(proj.name, marginX, py, { continued: true });
+    doc.fillColor(textMuted).font('Helvetica').fontSize(8).text(`  |  ${proj.tools}`);
+    doc.fillColor(textMuted).font('Helvetica-Oblique').fontSize(7.5).text(proj.linkText, marginX, py, { align: 'right' });
 
-    const y2 = doc.y + 0.5;
-    doc.fillColor(mutedColor).font('Helvetica').fontSize(7.5).text(`Tech Stack: ${proj.stack}`, marginX, y2);
+    doc.moveDown(0.12);
 
-    doc.moveDown(0.15);
-    doc.fillColor(secondaryColor).font('Helvetica').fontSize(8).lineGap(1).text(proj.desc, marginX + 8, doc.y, { width: contentWidth - 8 });
+    proj.bullets.forEach(b => {
+      const by = doc.y;
+      doc.fillColor(black).font('Helvetica').fontSize(8.5).text('•', marginX + 6, by);
+      doc.fillColor(textDark).font('Helvetica').fontSize(8).lineGap(1).text(b, marginX + 16, by, { width: contentWidth - 16 });
+      doc.y += 0.6;
+    });
 
-    if (idx < projects.length - 1) doc.moveDown(0.2);
+    if (idx < projects.length - 1) doc.moveDown(0.15);
   });
 
   // ==========================================
-  // EDUCATION & CREDENTIALS
+  // EDUCATION
   // ==========================================
-  drawSectionHeader('Education & Certifications');
+  drawSectionHeader('Education');
 
-  const eduY = doc.y;
-  doc.fillColor(primaryColor).font('Helvetica-Bold').fontSize(8.5).text('Master of Computer Applications (MCA)', marginX, eduY);
-  doc.fillColor(mutedColor).font('Helvetica').fontSize(8).text('2022 – 2024  •  Dehradun, India', marginX, eduY, { align: 'right' });
-  doc.fillColor(secondaryColor).font('Helvetica-Oblique').fontSize(8).text('Uttaranchal University (IT Software Development Utsav Awardee)', marginX, doc.y);
+  const eduItems = [
+    {
+      school: 'Uttaranchal University',
+      location: 'Dehradun, India',
+      degree: 'Master of Computer Applications (MCA) — Computer Science & Software Engineering',
+      period: '2022 – 2024'
+    },
+    {
+      school: 'Kumaun University',
+      location: 'Rudrapur, India',
+      degree: 'Bachelor of Computer Applications (BCA)',
+      period: '2019 – 2022'
+    }
+  ];
 
-  doc.moveDown(0.2);
-  const edu2Y = doc.y;
-  doc.fillColor(primaryColor).font('Helvetica-Bold').fontSize(8.5).text('Bachelor of Computer Applications (BCA)', marginX, edu2Y);
-  doc.fillColor(mutedColor).font('Helvetica').fontSize(8).text('2019 – 2022  •  Rudrapur, India', marginX, edu2Y, { align: 'right' });
-  doc.fillColor(secondaryColor).font('Helvetica-Oblique').fontSize(8).text('Kumaun University', marginX, doc.y);
+  eduItems.forEach((edu, idx) => {
+    const ey = doc.y;
+    doc.fillColor(black).font('Helvetica-Bold').fontSize(8.5).text(edu.school, marginX, ey);
+    doc.fillColor(textMuted).font('Helvetica').fontSize(8).text(edu.location, marginX, ey, { align: 'right' });
 
-  doc.moveDown(0.3);
-  doc.fillColor(mutedColor).font('Helvetica').fontSize(7.5).text(
-    'Certifications: Flutter & Dart Mobile Architecture  •  Python Specialization (Google)  •  ServiceNow Certified Associate',
-    marginX,
-    doc.y,
-    { align: 'center' }
-  );
+    const ey2 = doc.y + 0.5;
+    doc.fillColor(textDark).font('Helvetica-Oblique').fontSize(8).text(edu.degree, marginX, ey2);
+    doc.fillColor(textMuted).font('Helvetica-Oblique').fontSize(8).text(edu.period, marginX, ey2, { align: 'right' });
+
+    if (idx < eduItems.length - 1) doc.moveDown(0.2);
+  });
 
   doc.end();
 
@@ -266,7 +265,7 @@ function generateResume(outputPath) {
 const targetPath = path.join(__dirname, '../public/Raman-Daksh.pdf');
 generateResume(targetPath)
   .then(() => {
-    console.log('Successfully generated resume PDF at:', targetPath);
+    console.log('Successfully generated professional Jake\'s Resume standard PDF at:', targetPath);
   })
   .catch(err => {
     console.error('Failed to generate resume:', err);
